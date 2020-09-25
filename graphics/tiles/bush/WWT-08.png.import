@@ -2,15 +2,15 @@
 
 importer="texture"
 type="StreamTexture"
-path="res://.import/WWT-08.png-68c86b3819355dffbafaab0311145b11.stex"
+path="res://.import/WWT-08.png-5f30b74755573b40aab016649bcfba06.stex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://graphics/tiles/WWT-08.png"
-dest_files=[ "res://.import/WWT-08.png-68c86b3819355dffbafaab0311145b11.stex" ]
+source_file="res://graphics/tiles/bush/WWT-08.png"
+dest_files=[ "res://.import/WWT-08.png-5f30b74755573b40aab016649bcfba06.stex" ]
 
 [params]
 

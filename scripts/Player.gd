@@ -9,7 +9,7 @@ var move_hint = preload("res://scenes/tileset/MoveHint.tscn")
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
-	move_to(1, 1)
+	move_to(0, 0)
 
 
 func _process(delta):
@@ -32,6 +32,7 @@ func _process(delta):
 			instance.position = HexGrid.get_hex_center(cell)
 			instance.connect("move_hint_clicked", self, "move_hint_clicked")
 			highlights.add_child(instance)
+
 
 func clear_highlights():
 	for node in highlights.get_children():

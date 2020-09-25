@@ -2,15 +2,15 @@
 
 importer="texture"
 type="StreamTexture"
-path="res://.import/WWT-10.png-c5437f13190a523462e74cd742edce5b.stex"
+path="res://.import/attack.png-8a06a7c27f4a3cc5375bbd4104b22702.stex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://graphics/tiles/WWT-10.png"
-dest_files=[ "res://.import/WWT-10.png-c5437f13190a523462e74cd742edce5b.stex" ]
+source_file="res://graphics/attack.png"
+dest_files=[ "res://.import/attack.png-8a06a7c27f4a3cc5375bbd4104b22702.stex" ]
 
 [params]
 

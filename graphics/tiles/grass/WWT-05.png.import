@@ -2,15 +2,15 @@
 
 importer="texture"
 type="StreamTexture"
-path="res://.import/WWT-11.png-7b580814999cb5a9aaa76af1b5184cb4.stex"
+path="res://.import/WWT-05.png-b25104efd0c38fb3cde62a5c982ff530.stex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://graphics/tiles/WWT-11.png"
-dest_files=[ "res://.import/WWT-11.png-7b580814999cb5a9aaa76af1b5184cb4.stex" ]
+source_file="res://graphics/tiles/grass/WWT-05.png"
+dest_files=[ "res://.import/WWT-05.png-b25104efd0c38fb3cde62a5c982ff530.stex" ]
 
 [params]
 

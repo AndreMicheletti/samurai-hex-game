@@ -4,9 +4,12 @@ const HEX_WIDTH = 50
 const HEX_HEIGHT = 50
 
 var HexGrid = preload("res://HexGrid.gd").new()
+var HexCell = preload("res://HexCell.gd")
 onready var tileset = $Tileset
 
 onready var highlights = $Highlights
+
+export(Vector2) var worldZero = Vector2(0, 0)
 
 
 # Called when the node enters the scene tree for the first time.
@@ -18,13 +21,12 @@ func _ready():
 func generate_world(size):
 	
 	var grass = preload("res://scenes/tileset/Grass.tscn")
+	var zeroCell = HexCell.new(worldZero)
 	
-	for x in range(-size, size+1):
-		for y in range (-size, size+1):
-			var pos = Vector2(x, y)
-			var grass_instance = grass.instance()
-			grass_instance.position = HexGrid.get_hex_center(pos)
-			tileset.add_child(grass_instance)
+	for cell in zeroCell.get_all_within(size):
+		var grass_instance = grass.instance()
+		grass_instance.position = HexGrid.get_hex_center(cell.get_axial_coords())
+		tileset.add_child(grass_instance)
 
 
 #func _on_Area2D_input_event(viewport, event, shape_idx):
