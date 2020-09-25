@@ -18,6 +18,10 @@ func _ready():
 	generate_world(10)
 
 
+func get_grid():
+	return HexGrid
+
+
 func generate_world(size):
 	
 	var grass = preload("res://scenes/tileset/Grass.tscn")

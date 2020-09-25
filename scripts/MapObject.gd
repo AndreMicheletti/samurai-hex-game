@@ -9,7 +9,7 @@ const HEX_HEIGHT = 50
 
 var HexCell = preload("res://HexCell.gd")
 var HexGrid = preload("res://HexGrid.gd").new()
-var hex_pos = Vector2()
+export var hex_pos = Vector2()
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
