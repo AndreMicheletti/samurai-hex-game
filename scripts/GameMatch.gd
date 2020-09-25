@@ -26,6 +26,7 @@ func _ready():
 	set_state_draw()
 	for card in Cards.get_children():
 		card.connect("card_selected", self, "on_card_selected")
+	
 
 func _process(delta):
 	if state == MatchState.DRAW:
@@ -66,9 +67,9 @@ func _process_choose_card():
 
 
 func _process_play(delta):
-	
 	if turn_mov <= 0:
 		assalt_turn += 1
+		resolve_turn_effects()
 		if assalt_turn >= assalt_cards.size():
 			set_state_draw()
 		else:
@@ -89,6 +90,17 @@ func show_moves():
 		instance.connect("move_hint_clicked", self, "move_hint_clicked")
 		Highlights.add_child(instance)
 
+
+func resolve_turn_effects():
+	# check attack
+	var attack_range = 1
+	if turn_atk > 0:
+		var targets = get_tree().get_nodes_in_group("Character")
+		for target in targets:
+			if target == Player:
+				continue
+			if Player.get_cell().distance_to(target.hex_pos) <= attack_range:
+				target.queue_free()
 
 func move_hint_clicked(move_hex_pos):
 	var move_cost = Player.get_cell().distance_to(move_hex_pos)
@@ -112,5 +124,4 @@ func reset_assalt():
 func clear_highlights():
 	for node in Highlights.get_children():
 		node.queue_free()
-
 
