@@ -19,6 +19,8 @@ signal choose_card_state
 signal play_state
 signal ai_state
 
+signal start_turn
+
 export var play_turn = 0
 export var controller_turn = 0
 
@@ -26,9 +28,9 @@ var controllers = []
 
 func _ready():
 	set_state_draw()
-	for card in Cards.get_children():
-		card.connect("card_selected", self, "on_card_selected")
 	for ctr in get_tree().get_nodes_in_group("Controller"):
+		print("connecting ", ctr.name)
+		self.connect("start_turn", ctr, "on_start_turn")
 		controllers.append(ctr)
 
 
@@ -74,11 +76,7 @@ func set_state_play_turn():
 	controller_turn = 0
 	state = MatchState.PLAY_TURN
 	emit_signal("play_state")
-
-
-func set_state_ai_turn():
-	state = MatchState.PLAY_TURN
-	emit_signal("ai_state")
+	emit_signal("start_turn")
 
 
 func _process_draw():
@@ -102,6 +100,7 @@ func _process_play(delta):
 				# if everybody played, end turn and go to next
 				controller_turn = 0
 				play_turn += 1
+				emit_signal("start_turn")
 
 func this_turn_ctr():
 	return controllers[controller_turn]

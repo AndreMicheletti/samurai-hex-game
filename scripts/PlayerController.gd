@@ -48,26 +48,35 @@ func _process_play(delta):
 		return
 	
 	if game_match.Highlights.get_child_count() <= 0:
-		character.set_turn_stats(cards_selected[0])
 		show_possible_moves()
 
 	if character.turn_mov - character.moved <= 0:
 		# TODO end turn
-		ready = true
+		if ready == false:
+			# process_effects()
+			ready = true
 		return
+	ready = false
+
+
+func on_start_turn():
+	print("start turn!!")
+	character.set_turn_stats(cards_selected[0])
 
 
 func show_possible_moves():
 	var moves = character.turn_mov - character.moved
 	for cell in character.get_cell().get_all_within(moves):
-		if cell.get_axial_coords() == character.hex_pos:
+		var cell_coords = cell.get_axial_coords()
+		if cell_coords == character.hex_pos:
 			continue
-		var path = character.get_world().find_path(character.hex_pos, cell.get_axial_coords())
-		print(path.size())
+		if character.get_world().is_outside_world(cell_coords):
+			continue
+		var path = character.get_world().find_path(character.hex_pos, cell_coords)
 		if path.size() - 1 > moves:
 			continue
 		var instance = MoveHint.instance()
-		instance.hex_pos = cell.get_axial_coords()
+		instance.hex_pos = cell_coords
 		instance.move_cost = path.size() - 1
 		instance.position = character.get_world().get_grid().get_hex_center(cell)
 		instance.connect("move_hint_clicked", self, "move_hint_clicked")

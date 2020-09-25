@@ -9,6 +9,8 @@ onready var tileset = $Tileset
 
 onready var highlights = $Highlights
 
+var world_size = 10
+
 export(Vector2) var worldZero = Vector2(0, 0)
 
 
@@ -37,7 +39,7 @@ func find_path(start, goal):
 
 
 func generate_world(size):
-	
+	world_size = size
 	var grass = preload("res://scenes/tileset/Grass.tscn")
 	var zeroCell = HexCell.new(worldZero)
 	
@@ -47,6 +49,13 @@ func generate_world(size):
 		tileset.add_child(grass_instance)
 	HexGrid.set_bounds(Vector2(-size, -size), Vector2(size, size))
 
+
+func is_outside_world(hex_pos : Vector2):
+	if hex_pos.x > world_size or hex_pos.x < -world_size:
+		return true
+	if hex_pos.y > world_size or hex_pos.y < -world_size:
+		return true
+	return false
 
 #func _on_Area2D_input_event(viewport, event, shape_idx):
 	#if "position" in event:
