@@ -22,10 +22,33 @@ func _ready():
 func get_world():
 	return get_tree().get_nodes_in_group("World")[0]
 
+func get_game_match():
+	return get_tree().get_nodes_in_group("GameMatch")[0]
+
 func move_to(x, y):
+	get_game_match().set_ctr_process(false)
+	var target_hex = Vector2(x, y)
+	var target_pos = get_world().get_grid().get_hex_center(target_hex)
+	var start_pos = self.position
+	var path = get_world().find_path(hex_pos, target_hex)
+	
+	hex_pos = target_hex
+	
+	for hex in path:
+		start_pos = self.position
+		var goto_pos = get_world().get_grid().get_hex_center(hex)
+		$Tween.interpolate_property(self, "position", start_pos, goto_pos, 0.2)
+		$Tween.start()
+		yield($Tween, "tween_completed")
+	
+	get_game_match().set_ctr_process(true)
+	emit_signal("character_moved")
+
+
+func teleport_to(x, y):
 	hex_pos = Vector2(x, y)
 	self.position = get_world().get_grid().get_hex_center(hex_pos)
-	emit_signal("character_moved")
+
 
 func get_cell():
 	return HexCell.new(hex_pos)

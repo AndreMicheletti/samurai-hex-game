@@ -18,7 +18,7 @@
 [ext_resource path="res://resources/cards/card_1.tres" type="Resource" id=18]
 [ext_resource path="res://resources/cards/card_4.tres" type="Resource" id=19]
 
-[sub_resource type="DynamicFont" id=3]
+[sub_resource type="DynamicFont" id=1]
 size = 18
 font_data = ExtResource( 14 )
 
@@ -50,6 +50,8 @@ __meta__ = {
 "_edit_lock_": true
 }
 
+[node name="Tween" type="Tween" parent="World/Enemies/Enemy"]
+
 [node name="Enemy2" type="Node2D" parent="World/Enemies" groups=[
 "Character",
 ]]
@@ -64,6 +66,8 @@ __meta__ = {
 "_edit_lock_": true
 }
 
+[node name="Tween" type="Tween" parent="World/Enemies/Enemy2"]
+
 [node name="Enemy3" type="Node2D" parent="World/Enemies" groups=[
 "Character",
 ]]
@@ -77,6 +81,8 @@ texture = ExtResource( 11 )
 __meta__ = {
 "_edit_lock_": true
 }
+
+[node name="Tween" type="Tween" parent="World/Enemies/Enemy3"]
 
 [node name="Player" type="Node2D" parent="World" groups=[
 "Character",
@@ -94,6 +100,8 @@ texture = ExtResource( 2 )
 __meta__ = {
 "_edit_lock_": true
 }
+
+[node name="Tween" type="Tween" parent="World/Player"]
 
 [node name="Highlights" type="Node2D" parent="World"]
 
@@ -277,7 +285,7 @@ valign = 1
 margin_right = 40.0
 margin_bottom = 14.0
 rect_min_size = Vector2( 100, 50 )
-custom_fonts/font = SubResource( 3 )
+custom_fonts/font = SubResource( 1 )
 text = "Debug text here"
 __meta__ = {
 "_edit_use_anchors_": false

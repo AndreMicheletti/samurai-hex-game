@@ -58,12 +58,13 @@ func _process_play(delta):
 
 
 func show_possible_moves():
-	for cell in character.get_cell().get_all_within(character.turn_mov - character.moved):
+	var moves = character.turn_mov - character.moved
+	for cell in character.get_cell().get_all_within(moves):
 		if cell.get_axial_coords() == character.hex_pos:
 			continue
 		var path = character.get_world().find_path(character.hex_pos, cell.get_axial_coords())
 		print(path.size())
-		if path.size() - 1 > character.turn_mov:
+		if path.size() - 1 > moves:
 			continue
 		var instance = MoveHint.instance()
 		instance.hex_pos = cell.get_axial_coords()

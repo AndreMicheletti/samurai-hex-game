@@ -113,3 +113,8 @@ func resolve_turn_effects():
 func clear_highlights():
 	for node in Highlights.get_children():
 		node.queue_free()
+
+
+func set_ctr_process(value : bool):
+	for ctr in controllers:
+		ctr.set_process(value)
