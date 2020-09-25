@@ -7,17 +7,20 @@ export(Vector2) var hex_pos = Vector2()
 signal character_moved
 
 export var DamageLimit = 4
-var damage = 0
+var damage_counter = 0
 
 var turn_atk = 0
 var turn_def = 0
 var turn_mov = 0
 export var moved = 0
 
+onready var anim_player = $AnimPlayer
+onready var hitEffect = $HitEffect
+
 # Called when the node enters the scene tree for the first time.
 func _ready():
 	add_to_group("Character")
-	self.damage = 0
+	self.damage_counter = 0
 
 func get_world():
 	return get_tree().get_nodes_in_group("World")[0]
@@ -43,6 +46,36 @@ func move_to(x, y):
 	
 	get_game_match().set_ctr_process(true)
 	emit_signal("character_moved")
+
+
+func hit(atk):
+	get_game_match().set_ctr_process(false)
+	
+	print(self.name, " GOT ATTACKED WITH ", atk, "atk. HAS ", turn_def, " DEFENSE")
+	turn_def -= atk
+	var damage = 0
+	if turn_def <= 0:
+		damage = abs(turn_def)
+		turn_def = 0
+
+	if damage >= 0:
+		print("SUFFERED ", damage, "dmg")
+		damage_counter += damage
+		$AnimPlayer.play("hit")
+		yield($AnimPlayer, "animation_finished")
+
+	print(turn_def, " DEFENSE LEFT")
+	if damage_counter >= DamageLimit:
+		print("CHARACTER ", self.name, " DIED")
+		queue_free()
+
+	get_game_match().set_ctr_process(true)
+
+func _process_damage_effect():
+	get_game_match().set_ctr_process(false)
+	$AnimPlayer.play("hit")
+	yield($AnimPlayer, "animation_finished")
+	get_game_match().set_ctr_process(true)
 
 
 func teleport_to(x, y):

@@ -43,7 +43,6 @@ func _process_choose_card():
 
 
 func _process_play(delta):
-	hand = []
 	if not game_match.this_turn_ctr() == self:
 		return
 	
@@ -51,16 +50,26 @@ func _process_play(delta):
 		show_possible_moves()
 
 	if character.turn_mov - character.moved <= 0:
-		# TODO end turn
 		if ready == false:
-			# process_effects()
+			process_effects()
 			ready = true
 		return
 	ready = false
 
 
+func process_effects():
+	var atk = character.turn_atk
+	if atk > 0:
+		# has attacks to make
+		var characters = get_tree().get_nodes_in_group("Character")
+		for target in characters:
+			if target != character and character.get_cell().distance_to(target.hex_pos) <= 1:
+				target.hit(atk)
+
+
 func on_start_turn():
 	print("start turn!!")
+	hand = []
 	character.set_turn_stats(cards_selected[0])
 
 
