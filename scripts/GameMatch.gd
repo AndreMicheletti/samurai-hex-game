@@ -102,6 +102,7 @@ func resolve_turn_effects():
 			if Player.get_cell().distance_to(target.hex_pos) <= attack_range:
 				target.queue_free()
 
+
 func move_hint_clicked(move_hex_pos):
 	var move_cost = Player.get_cell().distance_to(move_hex_pos)
 	Player.move_to(move_hex_pos.x, move_hex_pos.y)

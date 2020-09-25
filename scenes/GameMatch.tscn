@@ -2,7 +2,7 @@
 
 [ext_resource path="res://scripts/World.gd" type="Script" id=1]
 [ext_resource path="res://graphics/samurai_player.png" type="Texture" id=2]
-[ext_resource path="res://scripts/Player.gd" type="Script" id=3]
+[ext_resource path="res://scripts/Character.gd" type="Script" id=3]
 [ext_resource path="res://graphics/attack.png" type="Texture" id=4]
 [ext_resource path="res://fonts/DefaultFont.tres" type="DynamicFont" id=5]
 [ext_resource path="res://graphics/defense.png" type="Texture" id=6]

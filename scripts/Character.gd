@@ -14,6 +14,7 @@ signal character_moved
 func _ready():
 	HexGrid.hex_scale = Vector2(HEX_WIDTH, HEX_HEIGHT)
 	move_to(hex_pos.x, hex_pos.y)
+	add_to_group("Character")
 
 func move_to(x, y):
 	hex_pos = Vector2(x, y)
