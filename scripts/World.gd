@@ -16,11 +16,11 @@ export(Vector2) var worldZero = Vector2(0, 0)
 func _ready():
 	HexGrid.hex_scale = Vector2(HEX_WIDTH, HEX_HEIGHT)
 	generate_world(10)
-
+	for charact in get_tree().get_nodes_in_group("Character"):
+		charact.move_to(charact.hex_pos.x, charact.hex_pos.y)
 
 func get_grid():
 	return HexGrid
-
 
 func generate_world(size):
 	

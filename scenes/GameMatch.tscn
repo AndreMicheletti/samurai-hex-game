@@ -1,4 +1,4 @@
-[gd_scene load_steps=12 format=2]
+[gd_scene load_steps=19 format=2]
 
 [ext_resource path="res://scripts/World.gd" type="Script" id=1]
 [ext_resource path="res://graphics/samurai_player.png" type="Texture" id=2]
@@ -7,17 +7,29 @@
 [ext_resource path="res://fonts/DefaultFont.tres" type="DynamicFont" id=5]
 [ext_resource path="res://graphics/defense.png" type="Texture" id=6]
 [ext_resource path="res://graphics/move.png" type="Texture" id=7]
-[ext_resource path="res://scenes/Card.tscn" type="PackedScene" id=8]
-[ext_resource path="res://scripts/GameMatch.gd" type="Script" id=9]
 [ext_resource path="res://scripts/UI.gd" type="Script" id=10]
 [ext_resource path="res://graphics/samurai_enemy.png" type="Texture" id=11]
+[ext_resource path="res://scripts/PlayerController.gd" type="Script" id=12]
+[ext_resource path="res://scripts/GameMatch.gd" type="Script" id=13]
+[ext_resource path="res://fonts/RockSalt-Regular.ttf" type="DynamicFontData" id=14]
+[ext_resource path="res://resources/cards/card_5.tres" type="Resource" id=15]
+[ext_resource path="res://resources/cards/card_3.tres" type="Resource" id=16]
+[ext_resource path="res://resources/cards/card_2.tres" type="Resource" id=17]
+[ext_resource path="res://resources/cards/card_1.tres" type="Resource" id=18]
+[ext_resource path="res://resources/cards/card_4.tres" type="Resource" id=19]
+
+[sub_resource type="DynamicFont" id=3]
+size = 18
+font_data = ExtResource( 14 )
 
 [node name="GameMatch" type="Node" groups=[
 "GameMatch",
 ]]
-script = ExtResource( 9 )
+script = ExtResource( 13 )
 
-[node name="World" type="Node2D" parent="."]
+[node name="World" type="Node2D" parent="." groups=[
+"World",
+]]
 script = ExtResource( 1 )
 
 [node name="Tileset" type="Node2D" parent="World"]
@@ -72,6 +84,10 @@ __meta__ = {
 position = Vector2( 37.5, -64 )
 script = ExtResource( 3 )
 
+[node name="PlayerController" type="Node" parent="World/Player"]
+script = ExtResource( 12 )
+CardDeck = [ ExtResource( 18 ), ExtResource( 17 ), ExtResource( 16 ), ExtResource( 19 ), ExtResource( 15 ) ]
+
 [node name="Sprite" type="Sprite" parent="World/Player"]
 scale = Vector2( 0.547215, 0.547215 )
 texture = ExtResource( 2 )
@@ -87,12 +103,14 @@ current = true
 [node name="UI" type="CanvasLayer" parent="."]
 layer = 2
 script = ExtResource( 10 )
+playerControllerPath = NodePath("../World/Player/PlayerController")
 
 [node name="BottomUI" type="MarginContainer" parent="UI"]
 anchor_top = 1.0
 anchor_right = 1.0
 anchor_bottom = 1.0
 margin_top = -220.0
+mouse_filter = 1
 custom_constants/margin_right = 20
 custom_constants/margin_top = 20
 custom_constants/margin_left = 20
@@ -108,44 +126,12 @@ margin_right = 1004.0
 margin_bottom = 200.0
 alignment = 1
 
-[node name="Investida" parent="UI/BottomUI/CardsContainer" instance=ExtResource( 8 )]
-margin_left = 184.0
-margin_right = 304.0
-CardTitle = "Investida"
-MoveValue = 1
-AttackValue = 3
-
-[node name="GolpeRapido" parent="UI/BottomUI/CardsContainer" instance=ExtResource( 8 )]
-margin_left = 308.0
-margin_right = 428.0
-CardTitle = "Golpe Rápido"
-MoveValue = 2
-AttackValue = 1
-DefenseValue = 1
-
-[node name="GolpePreciso" parent="UI/BottomUI/CardsContainer" instance=ExtResource( 8 )]
-CardTitle = "Golpe preciso"
-MoveValue = 1
-AttackValue = 2
-DefenseValue = 1
-
-[node name="Posicionar" parent="UI/BottomUI/CardsContainer" instance=ExtResource( 8 )]
-margin_left = 556.0
-margin_right = 676.0
-CardTitle = "Posicionar"
-MoveValue = 3
-DefenseValue = 1
-
-[node name="Enganar" parent="UI/BottomUI/CardsContainer" instance=ExtResource( 8 )]
-margin_left = 680.0
-margin_right = 800.0
-CardTitle = "Enganar"
-AttackValue = 1
-DefenseValue = 3
-
 [node name="TopHUD" type="MarginContainer" parent="UI"]
+anchor_left = 1.0
 anchor_right = 1.0
-margin_bottom = 120.0
+anchor_bottom = 1.0
+margin_left = -140.0
+mouse_filter = 1
 custom_constants/margin_right = 20
 custom_constants/margin_top = 20
 custom_constants/margin_left = 20
@@ -154,23 +140,24 @@ __meta__ = {
 "_edit_use_anchors_": false
 }
 
-[node name="HUD" type="HBoxContainer" parent="UI/TopHUD"]
+[node name="HUD" type="VBoxContainer" parent="UI/TopHUD"]
 margin_left = 20.0
 margin_top = 20.0
-margin_right = 1004.0
-margin_bottom = 100.0
-rect_min_size = Vector2( 0, 72 )
+margin_right = 120.0
+margin_bottom = 580.0
+rect_min_size = Vector2( 100, 72 )
 alignment = 1
 
 [node name="MoveInfo" type="HBoxContainer" parent="UI/TopHUD/HUD"]
-margin_left = 339.0
-margin_right = 438.0
-margin_bottom = 80.0
+margin_top = 168.0
+margin_right = 100.0
+margin_bottom = 240.0
 rect_min_size = Vector2( 0, 70 )
 
 [node name="IconContainer" type="MarginContainer" parent="UI/TopHUD/HUD/MoveInfo"]
 margin_right = 70.0
-margin_bottom = 80.0
+margin_bottom = 72.0
+mouse_filter = 1
 custom_constants/margin_right = 10
 custom_constants/margin_top = 10
 custom_constants/margin_left = 10
@@ -180,7 +167,7 @@ custom_constants/margin_bottom = 10
 margin_left = 10.0
 margin_top = 10.0
 margin_right = 60.0
-margin_bottom = 70.0
+margin_bottom = 62.0
 rect_min_size = Vector2( 50, 50 )
 texture = ExtResource( 7 )
 expand = true
@@ -189,13 +176,13 @@ stretch_mode = 5
 [node name="TextContainer" type="CenterContainer" parent="UI/TopHUD/HUD/MoveInfo"]
 margin_left = 74.0
 margin_right = 99.0
-margin_bottom = 80.0
+margin_bottom = 72.0
 rect_min_size = Vector2( 20, 70 )
+mouse_filter = 1
 
 [node name="Label" type="Label" parent="UI/TopHUD/HUD/MoveInfo/TextContainer"]
-margin_top = 4.0
 margin_right = 25.0
-margin_bottom = 76.0
+margin_bottom = 72.0
 rect_min_size = Vector2( 25, 70 )
 custom_fonts/font = ExtResource( 5 )
 custom_colors/font_color = Color( 1, 1, 1, 1 )
@@ -204,14 +191,15 @@ align = 1
 valign = 1
 
 [node name="AttackInfo" type="HBoxContainer" parent="UI/TopHUD/HUD"]
-margin_left = 442.0
-margin_right = 541.0
-margin_bottom = 80.0
+margin_top = 244.0
+margin_right = 100.0
+margin_bottom = 316.0
 rect_min_size = Vector2( 0, 70 )
 
 [node name="IconContainer" type="MarginContainer" parent="UI/TopHUD/HUD/AttackInfo"]
 margin_right = 70.0
-margin_bottom = 80.0
+margin_bottom = 72.0
+mouse_filter = 1
 custom_constants/margin_right = 10
 custom_constants/margin_top = 10
 custom_constants/margin_left = 10
@@ -221,7 +209,7 @@ custom_constants/margin_bottom = 10
 margin_left = 10.0
 margin_top = 10.0
 margin_right = 60.0
-margin_bottom = 70.0
+margin_bottom = 62.0
 rect_min_size = Vector2( 50, 50 )
 texture = ExtResource( 4 )
 expand = true
@@ -230,13 +218,13 @@ stretch_mode = 5
 [node name="TextContainer" type="CenterContainer" parent="UI/TopHUD/HUD/AttackInfo"]
 margin_left = 74.0
 margin_right = 99.0
-margin_bottom = 80.0
+margin_bottom = 72.0
 rect_min_size = Vector2( 20, 70 )
+mouse_filter = 1
 
 [node name="Label" type="Label" parent="UI/TopHUD/HUD/AttackInfo/TextContainer"]
-margin_top = 4.0
 margin_right = 25.0
-margin_bottom = 76.0
+margin_bottom = 72.0
 rect_min_size = Vector2( 25, 70 )
 custom_fonts/font = ExtResource( 5 )
 custom_colors/font_color = Color( 1, 1, 1, 1 )
@@ -245,14 +233,15 @@ align = 1
 valign = 1
 
 [node name="DefenseInfo" type="HBoxContainer" parent="UI/TopHUD/HUD"]
-margin_left = 545.0
-margin_right = 644.0
-margin_bottom = 80.0
+margin_top = 320.0
+margin_right = 100.0
+margin_bottom = 392.0
 rect_min_size = Vector2( 0, 70 )
 
 [node name="IconContainer" type="MarginContainer" parent="UI/TopHUD/HUD/DefenseInfo"]
 margin_right = 70.0
-margin_bottom = 80.0
+margin_bottom = 72.0
+mouse_filter = 1
 custom_constants/margin_right = 10
 custom_constants/margin_top = 10
 custom_constants/margin_left = 10
@@ -262,7 +251,7 @@ custom_constants/margin_bottom = 10
 margin_left = 10.0
 margin_top = 10.0
 margin_right = 60.0
-margin_bottom = 70.0
+margin_bottom = 62.0
 rect_min_size = Vector2( 50, 50 )
 texture = ExtResource( 6 )
 expand = true
@@ -271,19 +260,29 @@ stretch_mode = 5
 [node name="TextContainer" type="CenterContainer" parent="UI/TopHUD/HUD/DefenseInfo"]
 margin_left = 74.0
 margin_right = 99.0
-margin_bottom = 80.0
+margin_bottom = 72.0
 rect_min_size = Vector2( 20, 70 )
 
 [node name="Label" type="Label" parent="UI/TopHUD/HUD/DefenseInfo/TextContainer"]
-margin_top = 4.0
 margin_right = 25.0
-margin_bottom = 76.0
+margin_bottom = 72.0
 rect_min_size = Vector2( 25, 70 )
 custom_fonts/font = ExtResource( 5 )
 custom_colors/font_color = Color( 1, 1, 1, 1 )
 text = "8"
 align = 1
 valign = 1
+
+[node name="DebugLabel" type="Label" parent="UI"]
+margin_right = 40.0
+margin_bottom = 14.0
+rect_min_size = Vector2( 100, 50 )
+custom_fonts/font = SubResource( 3 )
+text = "Debug text here"
+__meta__ = {
+"_edit_use_anchors_": false
+}
+[connection signal="ai_state" from="." to="UI" method="_on_GameMatch_ai_state"]
 [connection signal="choose_card_state" from="." to="UI" method="_on_GameMatch_choose_card_state"]
 [connection signal="draw_state" from="." to="UI" method="_on_GameMatch_draw_state"]
 [connection signal="play_state" from="." to="UI" method="_on_GameMatch_play_state"]

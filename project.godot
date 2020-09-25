@@ -8,9 +8,20 @@
 
 config_version=4
 
-_global_script_classes=[  ]
+_global_script_classes=[ {
+"base": "Resource",
+"class": "CardResource",
+"language": "GDScript",
+"path": "res://scripts/CardResource.gd"
+}, {
+"base": "Node",
+"class": "PlayerController",
+"language": "GDScript",
+"path": "res://scripts/PlayerController.gd"
+} ]
 _global_script_class_icons={
-
+"CardResource": "",
+"PlayerController": ""
 }
 
 [application]

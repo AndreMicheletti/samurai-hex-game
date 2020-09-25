@@ -1,0 +1,11 @@
+[gd_resource type="Resource" load_steps=2 format=2]
+
+[ext_resource path="res://scripts/CardResource.gd" type="Script" id=1]
+
+[resource]
+script = ExtResource( 1 )
+card_id = 3
+card_title = "Golpe Rapido"
+card_mov = 2
+card_atk = 1
+card_def = 1

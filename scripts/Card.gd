@@ -1,9 +1,6 @@
 extends Panel
 
-export(String) var CardTitle = ""
-export(int) var MoveValue = 0
-export(int) var AttackValue = 0
-export(int) var DefenseValue = 0
+export(Resource) var card_resource
 
 onready var title = $Column/Texts/Title/label
 onready var move = $Column/Texts/Move/label
@@ -13,25 +10,20 @@ onready var defense = $Column/Texts/Defense/label
 signal card_selected
 
 func _ready():
-	title.text = CardTitle
+	pass
+
+func set_resource(res):
+	card_resource = res
+	title.text = card_resource.card_title
 	
-	if CardTitle.length() > 15:
+	if title.text.length() > 15:
 		title.get_font("font").size = 10
-	elif CardTitle.length() > 8:
+	elif title.text.length() > 8:
 		title.get_font("font").size = 12
 	
-	move.text = "Move " + str(MoveValue)
-	attack.text = "Attack " + str(AttackValue)
-	defense.text = "Defense " + str(DefenseValue)
-	
-
+	move.text = "Move " + str(card_resource.card_mov)
+	attack.text = "Attack " + str(card_resource.card_atk)
+	defense.text = "Defense " + str(card_resource.card_def)
 
 func _on_Button_pressed():
-	var cardInfo = {
-		"id": randi(),
-		"title": CardTitle,
-		"atk": AttackValue,
-		"def": DefenseValue,
-		"mov": MoveValue
-	}
-	emit_signal("card_selected", cardInfo)
+	emit_signal("card_selected", card_resource)
