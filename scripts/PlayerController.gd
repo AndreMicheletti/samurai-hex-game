@@ -61,15 +61,19 @@ func show_possible_moves():
 	for cell in character.get_cell().get_all_within(character.turn_mov - character.moved):
 		if cell.get_axial_coords() == character.hex_pos:
 			continue
+		var path = character.get_world().find_path(character.hex_pos, cell.get_axial_coords())
+		print(path.size())
+		if path.size() - 1 > character.turn_mov:
+			continue
 		var instance = MoveHint.instance()
 		instance.hex_pos = cell.get_axial_coords()
+		instance.move_cost = path.size() - 1
 		instance.position = character.get_world().get_grid().get_hex_center(cell)
 		instance.connect("move_hint_clicked", self, "move_hint_clicked")
 		game_match.Highlights.add_child(instance)
 
 
-func move_hint_clicked(move_hex_pos):
-	var move_cost = character.get_cell().distance_to(move_hex_pos)
+func move_hint_clicked(move_hex_pos, move_cost):
 	character.move_to(move_hex_pos.x, move_hex_pos.y)
 	character.moved += move_cost
 	clear_highlights()

@@ -20,7 +20,21 @@ func _ready():
 		charact.move_to(charact.hex_pos.x, charact.hex_pos.y)
 
 func get_grid():
+	#HexGrid.remove_all_obstacles()
+	#for charact in get_tree().get_nodes_in_group("Character"):
+	#	HexGrid.add_obstacles(charact.hex_pos)
 	return HexGrid
+
+
+func find_path(start, goal):
+	var exceptions = []
+	for charact in get_tree().get_nodes_in_group("Character"):
+		if charact.hex_pos == start:
+			continue
+		exceptions.append(charact.hex_pos)
+	#print("FIND PATH !! ", start, " to ", goal)
+	return HexGrid.find_path(start, goal, exceptions)
+
 
 func generate_world(size):
 	
@@ -31,6 +45,7 @@ func generate_world(size):
 		var grass_instance = grass.instance()
 		grass_instance.position = HexGrid.get_hex_center(cell.get_axial_coords())
 		tileset.add_child(grass_instance)
+	HexGrid.set_bounds(Vector2(-size, -size), Vector2(size, size))
 
 
 #func _on_Area2D_input_event(viewport, event, shape_idx):

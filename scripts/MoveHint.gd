@@ -3,6 +3,7 @@ extends Area2D
 signal move_hint_clicked
 
 export var hex_pos = Vector2()
+export(int) var move_cost = 1
 var has_mouse = false
 var emitted_once = false
 
@@ -13,7 +14,7 @@ func _ready():
 
 func _process(_delta):
 	if has_mouse and Input.is_mouse_button_pressed(BUTTON_LEFT) and not emitted_once:
-		emit_signal("move_hint_clicked", self.hex_pos)
+		emit_signal("move_hint_clicked", self.hex_pos, self.move_cost)
 		emitted_once = true
 
 func _on_MoveHint_mouse_entered():

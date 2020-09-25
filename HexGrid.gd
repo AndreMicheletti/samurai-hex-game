@@ -253,7 +253,10 @@ func remove_obstacles(vals):
 	for coords in vals:
 		coords = HexCell.new(coords).axial_coords
 		path_obstacles.erase(coords)
-	
+
+func remove_all_obstacles():
+	path_obstacles = {}
+
 func get_barriers():
 	return path_barriers
 	
