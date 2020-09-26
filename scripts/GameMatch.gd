@@ -19,16 +19,11 @@ signal choose_card_state
 signal play_state
 signal ai_state
 
-signal start_turn
-
 export var play_turn = 0
 export var controller_turn = 0
 
 func _ready():
 	set_state_draw()
-	for ctr in get_controllers():
-		print("connecting ", ctr.name)
-		self.connect("start_turn", ctr, "on_start_turn")
 
 
 func get_controllers():
@@ -77,7 +72,7 @@ func set_state_play_turn():
 	controller_turn = 0
 	state = MatchState.PLAY_TURN
 	emit_signal("play_state")
-	emit_signal("start_turn")
+	this_turn_ctr().start_turn()
 
 
 func _process_draw():
@@ -101,10 +96,7 @@ func _process_play(delta):
 				# if everybody played, end turn and go to next
 				controller_turn = 0
 				play_turn += 1
-				emit_signal("start_turn")
-		#else:
-			#if randi() % 2 == 0:
-			#	print(" ///////////// TURN FOR ", this_turn_ctr().name, "")
+			this_turn_ctr().start_turn()
 
 
 func this_turn_ctr():

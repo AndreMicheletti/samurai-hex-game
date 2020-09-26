@@ -42,11 +42,10 @@ func get_target_character():
 	return null
 
 
-func on_start_turn():
-	.on_start_turn()
+func start_turn():
+	.start_turn()
 	clear_highlights()
 	show_possible_moves()
-	game_match.set_ctr_process(false)
 	
 	# select path
 	var moves = character.turn_mov - character.moved
@@ -55,7 +54,7 @@ func on_start_turn():
 	if path.size() > 1:
 		for i in range(1, min(moves+1, path.size())):
 			var to = path[i].get_axial_coords()
-			character.move_to(to.x, to.y)
+			yield(character.move_to(to.x, to.y), "completed")
 			character.moved += 1
 			clear_highlights()
 			show_possible_moves()
@@ -64,13 +63,12 @@ func on_start_turn():
 		print("STUCK IN WHILE ",  character.turn_mov - character.moved)
 		var possible_moves = possible_moves()
 		var random = possible_moves[randi() % possible_moves.size()]
-		character.move_to(random[0].x, random[0].y)
+		yield(character.move_to(random[0].x, random[0].y), "completed")
 		character.moved += random[1]
 		clear_highlights()
 		show_possible_moves()
 
 	process_effects()
-	game_match.set_ctr_process(true)
 	ready = true
 
 

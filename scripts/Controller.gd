@@ -59,19 +59,20 @@ func process_effects():
 		print("TRYIED TO PROCESS EFFECTS WHEN READY")
 		return
 	ready = true
-	game_match.set_ctr_process(false)
 	var atk = character.turn_atk
 	if atk > 0:
 		# has attacks to make
 		var characters = get_tree().get_nodes_in_group("Character")
 		for target in characters:
 			if target != character and character.get_cell().distance_to(target.hex_pos) <= 1:
-				target.hit(atk)
-	game_match.set_ctr_process(true)
+				var result = target.hit(atk)
+				if result is GDScriptFunctionState:
+					yield(result, "completed")
+	return true
 
 
-func on_start_turn():
-	print(self.name, " start turn!!")
+func start_turn():
+	print("\n\n\n\n\n", self.name, " start turn!!")
 	hand = []
 	character.set_turn_stats(cards_selected[0])
 

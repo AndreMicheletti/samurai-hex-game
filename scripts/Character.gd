@@ -50,8 +50,6 @@ func move_to(x, y):
 
 
 func hit(atk):
-	get_game_match().set_ctr_process(false)
-	
 	turn_def -= atk
 	var damage = 0
 	if turn_def <= 0:
@@ -59,9 +57,11 @@ func hit(atk):
 		turn_def = 0
 
 	if damage > 0:
+		get_game_match().set_ctr_process(false)
 		damage_counter += damage
 		$AnimPlayer.play("hit")
 		yield($AnimPlayer, "animation_finished")
+		get_game_match().set_ctr_process(true)
 
 	if damage_counter >= DamageLimit:
 		print("CHARACTER ", self.name, " DIED")
@@ -69,7 +69,7 @@ func hit(atk):
 		emit_signal("character_died")
 
 	print(self.name, " GOT ATTACKED WITH ", atk, "atk. HAS ", turn_def, " DEFENSE // SUFFERED (", damage, ")")
-	get_game_match().set_ctr_process(true)
+
 
 func _process_damage_effect():
 	get_game_match().set_ctr_process(false)
