@@ -8,11 +8,15 @@ var MoveHint = preload("res://scenes/tileset/MoveHint.tscn")
 
 var hand = []
 var ready = false
+var active = false
+var defeated = false
 var game_match
 var character
 var cards_selected = []
 
 signal cards_drawn
+signal turn_ended
+signal defeated
 
 func _ready():
 	add_to_group("Controller")
@@ -38,34 +42,21 @@ func _process(delta):
 func _process_draw():
 	pass
 
+func _process_play(delta):
+	pass
 
 func _process_choose_card():
 	pass
 
 
-func _process_play(delta):
-	if not game_match.this_turn_ctr() == self:
-		return
-	_process_turn(delta)
-
-
-func _process_turn(delta):
-	pass
-
-
-func start_turn(play_turn):
-	print("\n\n\n\n\n", self.name, " start turn!!")
-	ready = false
+func play_turn(turn):
 	hand = []
-	character.set_turn_stats(cards_selected[play_turn])
+	ready = false
+	character.set_turn_stats(cards_selected[turn])
 
 
 func process_effects():
 	print(self.name, " process effects!!")
-	if ready == true:
-		print("TRYIED TO PROCESS EFFECTS WHEN READY")
-		return
-	ready = true
 	var atk = character.turn_atk
 	if atk > 0:
 		# has attacks to make
@@ -73,7 +64,6 @@ func process_effects():
 		for target in characters:
 			if target != character and character.get_cell().distance_to(target.hex_pos) <= 1:
 				target.hit(atk)
-	return true
 
 
 func show_possible_moves():
@@ -123,3 +113,6 @@ func draw_hand():
 
 func on_character_died():
 	print("character died")
+	character.queue_free()
+	defeated = true
+	emit_signal("defeated", self)

@@ -57,25 +57,16 @@ func hit(atk):
 		turn_def = 0
 
 	if damage > 0:
-		get_game_match().set_ctr_process(false)
 		damage_counter += damage
 		$AnimPlayer.play("hit")
-		yield($AnimPlayer, "animation_finished")
-		get_game_match().set_ctr_process(true)
+		#yield($AnimPlayer, "animation_finished")
 
 	if damage_counter >= DamageLimit:
 		print("CHARACTER ", self.name, " DIED")
-		queue_free()
 		emit_signal("character_died")
 
 	print(self.name, " GOT ATTACKED WITH ", atk, "atk. HAS ", turn_def, " DEFENSE // SUFFERED (", damage, ")")
 
-
-func _process_damage_effect():
-	get_game_match().set_ctr_process(false)
-	$AnimPlayer.play("hit")
-	yield($AnimPlayer, "animation_finished")
-	get_game_match().set_ctr_process(true)
 
 
 func teleport_to(x, y):
@@ -85,6 +76,7 @@ func teleport_to(x, y):
 
 func get_cell():
 	return HexCell.new(hex_pos)
+
 
 func set_turn_stats(card : CardResource):
 	print("SET TURN STATS ", card.card_title)

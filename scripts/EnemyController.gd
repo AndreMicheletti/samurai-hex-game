@@ -20,14 +20,16 @@ func _process_choose_card():
 		match behaviour_mode:
 			BehaviourMode.RANDOM:
 				for i in range(game_match.TURNS_BY_HAND):
-					cards_selected.append(hand[i])
+					cards_selected.append(hand[randi() % hand.size()])
 		ready = true
 		print("Enemy Controller chose cards")
 
+func _process_play(delta):
+	if not active:
+		return
 
-func _process_turn(delta):
-	pass
-
+	if character.turn_mov - character.moved <= 0:
+		emit_signal("turn_ended")
 
 func get_target_character():
 	var controllers = get_tree().get_nodes_in_group("Controller")
@@ -37,35 +39,36 @@ func get_target_character():
 	return null
 
 
-func start_turn(play_turn):
-	.start_turn(play_turn)
+func play_turn(turn):
+	.play_turn(turn)
 	clear_highlights()
 	show_possible_moves()
 	
 	# select path
 	var moves = character.turn_mov - character.moved
-	print("ENEMY HAS ", moves, " MOVES LEFT")
 	var target = get_target_character()
-	var path = character.get_world().find_path(character.hex_pos, target.hex_pos)
-	if path.size() > 1:
-		for i in range(1, min(moves+1, path.size())):
-			var to = path[i].get_axial_coords()
-			yield(character.move_to(to.x, to.y), "completed")
-			character.moved += 1
-			clear_highlights()
-			show_possible_moves()
+	if moves > 0:
+		var path = character.get_world().find_path(character.hex_pos, target.hex_pos)
+		if path.size() > 1:
+			for i in range(1, min(moves+1, path.size())):
+				var to = path[i].get_axial_coords()
+				yield(character.move_to(to.x, to.y), "completed")
+				character.moved += 1
+				clear_highlights()
+				show_possible_moves()
 
-	while (character.turn_mov - character.moved) > 0:
-		print("STUCK IN WHILE ",  character.turn_mov - character.moved)
-		var possible_moves = possible_moves()
-		var random = possible_moves[randi() % possible_moves.size()]
-		yield(character.move_to(random[0].x, random[0].y), "completed")
-		character.moved += random[1]
-		clear_highlights()
-		show_possible_moves()
+		while (character.turn_mov - character.moved) > 0:
+			print("STUCK IN WHILE ",  character.turn_mov - character.moved)
+			var possible_moves = possible_moves()
+			var random = possible_moves[randi() % possible_moves.size()]
+			if random[0] != target.hex_pos:
+				yield(character.move_to(random[0].x, random[0].y), "completed")
+				character.moved += random[1]
+				clear_highlights()
+				show_possible_moves()
 
 	process_effects()
-	ready = true
+	emit_signal("turn_ended")
 
 
 func show_possible_moves():
