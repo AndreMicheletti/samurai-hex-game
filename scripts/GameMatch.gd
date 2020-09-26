@@ -96,7 +96,9 @@ func _process_play(delta):
 				# if everybody played, end turn and go to next
 				controller_turn = 0
 				play_turn += 1
-			this_turn_ctr().start_turn()
+			var result = this_turn_ctr().start_turn()
+			if result is GDScriptFunctionState:
+				yield(result, "completed")
 
 
 func this_turn_ctr():
