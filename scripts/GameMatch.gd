@@ -53,13 +53,35 @@ func reset_controllers_ready():
 
 
 func _process(delta):
-	debug_label.text = "Game State: " + str(state)
+	_process_debug()
 	if state == MatchState.DRAW:
 		_process_draw()
 	elif state == MatchState.CHOOSE_CARD:
 		_process_choose_card()
 	elif state == MatchState.PLAY_TURN:
 		_process_play(delta)
+
+
+func _process_debug():
+	debug_label.text = "Game State: " + str(state) + "\n"
+	if controller_turn_order and controller_turn_order.size() > 0:
+		for ctr in controller_turn_order:
+			debug_label.text += ("\n " + ctr.name)
+
+
+func _process_draw():
+	if controllers_ready():
+		set_state_choose_card()
+
+
+func _process_choose_card():
+	if controllers_ready():
+		set_state_play_turn()
+
+
+func _process_play(delta):
+	if controllers_ready():
+		set_state_draw()
 
 
 func set_state_draw():
@@ -90,21 +112,6 @@ func set_state_play_turn():
 	advance_turn()
 
 
-func _process_draw():
-	if controllers_ready():
-		set_state_choose_card()
-
-
-func _process_choose_card():
-	if controllers_ready():
-		set_state_play_turn()
-
-
-func _process_play(delta):
-	if controllers_ready():
-		set_state_draw()
-
-
 func advance_turn():
 	# inactivate this turn controller
 	controller_turn_order[controller_turn].active = false
@@ -127,7 +134,17 @@ func advance_turn():
 
 func set_turn_order():
 	# TODO custom turn order
-	controller_turn_order = get_alive_controllers()
+	var result = get_alive_controllers()
+	result.sort_custom(self, "sort_by_health")
+	controller_turn_order = result
+
+
+func sort_by_health(ctr1 : Controller, ctr2 : Controller):
+	# return LEAST DAMAGE to MOST DAMAGE
+	if ctr1.character.damage_counter < ctr2.character.damage_counter:
+		return true
+	return false
+
 
 func clear_highlights():
 	for node in Highlights.get_children():
@@ -138,9 +155,11 @@ func set_ctr_process(value : bool):
 	for ctr in get_alive_controllers():
 		ctr.set_process(value)
 
+
 func on_controller_defeated(ctr):
 	if ctr.name == "PlayerController":
 		reset_game()
+
 
 func reset_game():
 	get_tree().reload_current_scene()

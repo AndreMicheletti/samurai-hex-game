@@ -27,6 +27,8 @@ script = ExtResource( 1 )
 
 [node name="Tileset" type="Node2D" parent="World"]
 
+[node name="PlayerController" parent="World" instance=ExtResource( 2 )]
+
 [node name="Enemies" type="Node2D" parent="World"]
 
 [node name="EnemyController" parent="World/Enemies" instance=ExtResource( 3 )]
@@ -34,8 +36,6 @@ start_pos = Vector2( 3, 2 )
 
 [node name="EnemyController2" parent="World/Enemies" instance=ExtResource( 3 )]
 start_pos = Vector2( -3, 5 )
-
-[node name="PlayerController" parent="World" instance=ExtResource( 2 )]
 
 [node name="Highlights" type="Node2D" parent="World"]
 
