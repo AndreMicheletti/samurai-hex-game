@@ -5,6 +5,7 @@ var HexCell = preload("res://HexCell.gd")
 export(Vector2) var hex_pos = Vector2()
 
 signal character_moved
+signal character_died
 
 export var DamageLimit = 4
 var damage_counter = 0
@@ -51,24 +52,23 @@ func move_to(x, y):
 func hit(atk):
 	get_game_match().set_ctr_process(false)
 	
-	print(self.name, " GOT ATTACKED WITH ", atk, "atk. HAS ", turn_def, " DEFENSE")
 	turn_def -= atk
 	var damage = 0
 	if turn_def <= 0:
 		damage = abs(turn_def)
 		turn_def = 0
 
-	if damage >= 0:
-		print("SUFFERED ", damage, "dmg")
+	if damage > 0:
 		damage_counter += damage
 		$AnimPlayer.play("hit")
 		yield($AnimPlayer, "animation_finished")
 
-	print(turn_def, " DEFENSE LEFT")
 	if damage_counter >= DamageLimit:
 		print("CHARACTER ", self.name, " DIED")
 		queue_free()
+		emit_signal("character_died")
 
+	print(self.name, " GOT ATTACKED WITH ", atk, "atk. HAS ", turn_def, " DEFENSE // SUFFERED (", damage, ")")
 	get_game_match().set_ctr_process(true)
 
 func _process_damage_effect():

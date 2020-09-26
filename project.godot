@@ -15,13 +15,13 @@ _global_script_classes=[ {
 "path": "res://scripts/CardResource.gd"
 }, {
 "base": "Node",
-"class": "PlayerController",
+"class": "Controller",
 "language": "GDScript",
-"path": "res://scripts/PlayerController.gd"
+"path": "res://scripts/Controller.gd"
 } ]
 _global_script_class_icons={
 "CardResource": "",
-"PlayerController": ""
+"Controller": ""
 }
 
 [application]

@@ -9,11 +9,11 @@
 [ext_resource path="res://scripts/PlayerController.gd" type="Script" id=7]
 [ext_resource path="res://graphics/samurai_player.png" type="Texture" id=8]
 
-[sub_resource type="Gradient" id=2]
+[sub_resource type="Gradient" id=1]
 offsets = PoolRealArray( 0.324503, 0.622517 )
 colors = PoolColorArray( 0.984375, 0.0769043, 0.0769043, 1, 1, 0, 0, 0.247059 )
 
-[sub_resource type="Animation" id=3]
+[sub_resource type="Animation" id=2]
 resource_name = "hit"
 tracks/0/type = "value"
 tracks/0/path = NodePath("HitEffect:emitting")
@@ -60,7 +60,7 @@ gravity = Vector2( 0, 0 )
 initial_velocity = 50.0
 initial_velocity_random = 0.1
 scale_amount = 2.0
-color_ramp = SubResource( 2 )
+color_ramp = SubResource( 1 )
 
 [node name="AnimPlayer" type="AnimationPlayer" parent="."]
-anims/hit = SubResource( 3 )
+anims/hit = SubResource( 2 )

@@ -6,7 +6,7 @@ onready var TopHUD = $TopHUD
 onready var CardsContainer = $BottomUI/CardsContainer
 
 export(NodePath) var playerControllerPath
-onready var PlayerController : PlayerController = get_node(playerControllerPath)
+onready var player_controller = get_node(playerControllerPath)
 
 onready var Card = preload("res://scenes/Card.tscn")
 
@@ -14,7 +14,7 @@ func _ready():
 	TopHUD.visible = false
 	BottomUI.visible = false
 	clear_cards_container()
-	PlayerController.connect("cards_drawn", self, "_on_cards_drawn")
+	player_controller.connect("cards_drawn", self, "_on_cards_drawn")
 
 func _on_GameMatch_draw_state():
 	TopHUD.visible = false
@@ -40,19 +40,19 @@ func _on_GameMatch_ai_state():
 
 func _process(delta):
 	# var GameMatch = get_tree().get_nodes_in_group("GameMatch")[0]
-	if TopHUD.visible == true:
-		var attack = PlayerController.get_character().turn_atk
-		var defense = PlayerController.get_character().turn_def
-		var move = PlayerController.get_character().turn_mov - PlayerController.get_character().moved
+	if player_controller and TopHUD.visible == true:
+		var attack = player_controller.get_character().turn_atk
+		var defense = player_controller.get_character().turn_def
+		var move = player_controller.get_character().turn_mov - player_controller.get_character().moved
 		set_top_hud_values(move, attack, defense)
 
 
 func _on_cards_drawn():
-	for card in PlayerController.hand:
+	for card in player_controller.hand:
 		var instance = Card.instance()
 		CardsContainer.add_child(instance)
 		instance.set_resource(card)
-		instance.connect("card_selected", PlayerController, "on_select_card")
+		instance.connect("card_selected", player_controller, "on_select_card")
 
 
 func clear_cards_container():

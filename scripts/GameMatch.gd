@@ -24,25 +24,26 @@ signal start_turn
 export var play_turn = 0
 export var controller_turn = 0
 
-var controllers = []
-
 func _ready():
 	set_state_draw()
-	for ctr in get_tree().get_nodes_in_group("Controller"):
+	for ctr in get_controllers():
 		print("connecting ", ctr.name)
 		self.connect("start_turn", ctr, "on_start_turn")
-		controllers.append(ctr)
+
+
+func get_controllers():
+	return get_tree().get_nodes_in_group("Controller")
 
 
 func controllers_ready():
-	for ctr in controllers:
+	for ctr in get_controllers():
 		if not ctr.ready:
 			return false
 	return true
 
 
 func reset_controllers_ready():
-	for ctr in controllers:
+	for ctr in get_controllers():
 		ctr.ready = false
 
 
@@ -96,18 +97,24 @@ func _process_play(delta):
 		if this_turn_ctr().ready:
 			# step to next controller
 			controller_turn += 1
-			if controller_turn >= controllers.size():
+			if controller_turn >= get_controllers().size():
 				# if everybody played, end turn and go to next
 				controller_turn = 0
 				play_turn += 1
 				emit_signal("start_turn")
+		#else:
+			#if randi() % 2 == 0:
+			#	print(" ///////////// TURN FOR ", this_turn_ctr().name, "")
+
 
 func this_turn_ctr():
-	return controllers[controller_turn]
+	return get_controllers()[controller_turn]
+
 
 func resolve_turn_effects():
 	# check attack
 	pass
+
 
 func clear_highlights():
 	for node in Highlights.get_children():
@@ -115,5 +122,5 @@ func clear_highlights():
 
 
 func set_ctr_process(value : bool):
-	for ctr in controllers:
+	for ctr in get_controllers():
 		ctr.set_process(value)
