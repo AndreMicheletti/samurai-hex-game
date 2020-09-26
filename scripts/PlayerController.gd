@@ -6,8 +6,6 @@ func _ready():
 
 
 func _process_draw():
-	print("Player process draw")
-	print(hand)
 	cards_selected = []
 	character.moved = 0
 	if hand.size() <= 0:
@@ -15,7 +13,7 @@ func _process_draw():
 
 
 func _process_choose_card():
-	ready = cards_selected.size() >= 1
+	ready = cards_selected.size() >= game_match.TURNS_BY_HAND
 
 
 func _process_turn(delta):
@@ -25,10 +23,12 @@ func _process_turn(delta):
 	if character.turn_mov - character.moved <= 0:
 		if ready == false:
 			process_effects()
-			ready = true
 		return
 	ready = false
 
+func start_turn(play_turn):
+	.start_turn(play_turn)
+	show_possible_moves()
 
 func move_hint_clicked(move_hex_pos, move_cost):
 	character.move_to(move_hex_pos.x, move_hex_pos.y)

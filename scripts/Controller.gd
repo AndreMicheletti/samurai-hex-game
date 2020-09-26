@@ -53,6 +53,13 @@ func _process_turn(delta):
 	pass
 
 
+func start_turn(play_turn):
+	print("\n\n\n\n\n", self.name, " start turn!!")
+	ready = false
+	hand = []
+	character.set_turn_stats(cards_selected[play_turn])
+
+
 func process_effects():
 	print(self.name, " process effects!!")
 	if ready == true:
@@ -65,16 +72,8 @@ func process_effects():
 		var characters = get_tree().get_nodes_in_group("Character")
 		for target in characters:
 			if target != character and character.get_cell().distance_to(target.hex_pos) <= 1:
-				var result = target.hit(atk)
-				if result is GDScriptFunctionState:
-					yield(result, "completed")
+				target.hit(atk)
 	return true
-
-
-func start_turn():
-	print("\n\n\n\n\n", self.name, " start turn!!")
-	hand = []
-	character.set_turn_stats(cards_selected[0])
 
 
 func show_possible_moves():

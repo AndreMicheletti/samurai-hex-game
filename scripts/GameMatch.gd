@@ -1,6 +1,6 @@
 extends Node
 
-const TURNS_BY_HAND = 1
+const TURNS_BY_HAND = 2
 
 export onready var World = $World
 export onready var Player = $World/Player
@@ -12,15 +12,15 @@ onready var debug_label = $UI/DebugLabel
 var MoveHint = preload("res://scenes/tileset/MoveHint.tscn")
 
 enum MatchState {DRAW, CHOOSE_CARD, PLAY_TURN}
-export var state = MatchState.DRAW
+var state = MatchState.DRAW
 
 signal draw_state
 signal choose_card_state
 signal play_state
 signal ai_state
 
-export var play_turn = 0
-export var controller_turn = 0
+var play_turn = 0
+var controller_turn = 0
 
 func _ready():
 	set_state_draw()
@@ -72,7 +72,7 @@ func set_state_play_turn():
 	controller_turn = 0
 	state = MatchState.PLAY_TURN
 	emit_signal("play_state")
-	this_turn_ctr().start_turn()
+	this_turn_ctr().start_turn(play_turn)
 
 
 func _process_draw():
@@ -86,20 +86,33 @@ func _process_choose_card():
 
 
 func _process_play(delta):
-	if play_turn > TURNS_BY_HAND:
+	if play_turn >= TURNS_BY_HAND:
+		print("\n\n ******* CARDS ENDED, NEXT HAND ************* play_turn:: ", play_turn, "\n\n")
 		set_state_draw()
-	else:
-		if this_turn_ctr().ready:
-			# step to next controller
-			controller_turn += 1
-			if controller_turn >= get_controllers().size():
-				# if everybody played, end turn and go to next
-				controller_turn = 0
-				play_turn += 1
-			var result = this_turn_ctr().start_turn()
-			if result is GDScriptFunctionState:
-				yield(result, "completed")
+		return
+	print(play_turn)
+		
+	if this_turn_ctr().ready == true:
+		# step to next controller
+		print(this_turn_ctr().name, " ctr is ready")
+		controller_turn += 1
+		if controller_turn >= get_controllers().size():
+			# if everybody played, end turn and go to next
+			next_play_turn()
+			if play_turn >= TURNS_BY_HAND:
+				return
+		this_turn_ctr().start_turn(play_turn)
 
+
+func next_hand():
+	set_state_draw()
+
+
+func next_play_turn():
+	print("\n\n ******* NEXT CARD ********* \n\n")
+	reset_controllers_ready()
+	controller_turn = 0
+	play_turn += 1
 
 func this_turn_ctr():
 	return get_controllers()[controller_turn]

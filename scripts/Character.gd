@@ -87,7 +87,8 @@ func get_cell():
 	return HexCell.new(hex_pos)
 
 func set_turn_stats(card : CardResource):
-	print("SET TURN STATS ", card)
+	print("SET TURN STATS ", card.card_title)
 	turn_mov = card.card_mov
 	turn_atk = card.card_atk
 	turn_def = card.card_def
+	moved = 0

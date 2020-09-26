@@ -19,13 +19,8 @@ func _process_choose_card():
 	if not ready:
 		match behaviour_mode:
 			BehaviourMode.RANDOM:
-				cards_selected = [hand[0]]
-			BehaviourMode.BALANCED:
-				cards_selected = [hand[0]]
-			BehaviourMode.AGGRESSIVE:
-				cards_selected = [hand[0]]
-			BehaviourMode.DEFENSIVE:
-				cards_selected = [hand[0]]
+				for i in range(game_match.TURNS_BY_HAND):
+					cards_selected.append(hand[i])
 		ready = true
 		print("Enemy Controller chose cards")
 
@@ -42,13 +37,14 @@ func get_target_character():
 	return null
 
 
-func start_turn():
-	.start_turn()
+func start_turn(play_turn):
+	.start_turn(play_turn)
 	clear_highlights()
 	show_possible_moves()
 	
 	# select path
 	var moves = character.turn_mov - character.moved
+	print("ENEMY HAS ", moves, " MOVES LEFT")
 	var target = get_target_character()
 	var path = character.get_world().find_path(character.hex_pos, target.hex_pos)
 	if path.size() > 1:
