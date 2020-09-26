@@ -3,10 +3,6 @@ extends Controller
 enum BehaviourMode {RANDOM, BALANCED, AGGRESSIVE, DEFENSIVE}
 export(BehaviourMode) var behaviour_mode = BehaviourMode.RANDOM
 
-func _ready():
-	._ready()
-	set_character(get_parent())
-
 
 func _process_draw():
 	cards_selected = []

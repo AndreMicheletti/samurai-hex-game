@@ -1,4 +1,4 @@
-[gd_scene load_steps=18 format=2]
+[gd_scene load_steps=12 format=2]
 
 [ext_resource path="res://scripts/World.gd" type="Script" id=1]
 [ext_resource path="res://scenes/Player.tscn" type="PackedScene" id=2]
@@ -7,29 +7,9 @@
 [ext_resource path="res://fonts/DefaultFont.tres" type="DynamicFont" id=5]
 [ext_resource path="res://graphics/defense.png" type="Texture" id=6]
 [ext_resource path="res://graphics/move.png" type="Texture" id=7]
-[ext_resource path="res://resources/cards/card_5.tres" type="Resource" id=8]
-[ext_resource path="res://resources/cards/card_3.tres" type="Resource" id=9]
 [ext_resource path="res://scripts/UI.gd" type="Script" id=10]
-[ext_resource path="res://resources/cards/card_2.tres" type="Resource" id=11]
-[ext_resource path="res://resources/cards/card_4.tres" type="Resource" id=12]
 [ext_resource path="res://scripts/GameMatch.gd" type="Script" id=13]
 [ext_resource path="res://fonts/RockSalt-Regular.ttf" type="DynamicFontData" id=14]
-[ext_resource path="res://resources/cards/card_1.tres" type="Resource" id=15]
-
-[sub_resource type="Animation" id=3]
-resource_name = "hit"
-tracks/0/type = "value"
-tracks/0/path = NodePath("HitEffect:emitting")
-tracks/0/interp = 1
-tracks/0/loop_wrap = true
-tracks/0/imported = false
-tracks/0/enabled = true
-tracks/0/keys = {
-"times": PoolRealArray( 0, 1 ),
-"transitions": PoolRealArray( 1, 1 ),
-"update": 1,
-"values": [ true, false ]
-}
 
 [sub_resource type="DynamicFont" id=2]
 size = 18
@@ -49,22 +29,13 @@ script = ExtResource( 1 )
 
 [node name="Enemies" type="Node2D" parent="World"]
 
-[node name="Enemy" parent="World/Enemies" instance=ExtResource( 3 )]
-hex_pos = Vector2( 3, 3 )
+[node name="EnemyController" parent="World/Enemies" instance=ExtResource( 3 )]
+start_pos = Vector2( 3, 2 )
 
-[node name="EnemyController" parent="World/Enemies/Enemy" index="0"]
-CardDeck = [ ExtResource( 8 ), ExtResource( 15 ), ExtResource( 11 ), ExtResource( 12 ), ExtResource( 9 ) ]
+[node name="EnemyController2" parent="World/Enemies" instance=ExtResource( 3 )]
+start_pos = Vector2( -3, 5 )
 
-[node name="Enemy2" parent="World/Enemies" instance=ExtResource( 3 )]
-hex_pos = Vector2( -2, 4 )
-
-[node name="EnemyController" parent="World/Enemies/Enemy2" index="0"]
-CardDeck = [ ExtResource( 8 ), ExtResource( 15 ), ExtResource( 11 ), ExtResource( 12 ), ExtResource( 9 ) ]
-
-[node name="AnimPlayer" parent="World/Enemies/Enemy2" index="4"]
-anims/hit = SubResource( 3 )
-
-[node name="Player" parent="World" instance=ExtResource( 2 )]
+[node name="PlayerController" parent="World" instance=ExtResource( 2 )]
 
 [node name="Highlights" type="Node2D" parent="World"]
 
@@ -74,7 +45,7 @@ current = true
 [node name="UI" type="CanvasLayer" parent="."]
 layer = 2
 script = ExtResource( 10 )
-playerControllerPath = NodePath("../World/Player/PlayerController")
+playerControllerPath = NodePath("../World/PlayerController")
 
 [node name="BottomUI" type="MarginContainer" parent="UI"]
 anchor_top = 1.0
@@ -257,9 +228,3 @@ __meta__ = {
 [connection signal="choose_card_state" from="." to="UI" method="_on_GameMatch_choose_card_state"]
 [connection signal="draw_state" from="." to="UI" method="_on_GameMatch_draw_state"]
 [connection signal="play_state" from="." to="UI" method="_on_GameMatch_play_state"]
-
-[editable path="World/Enemies/Enemy"]
-
-[editable path="World/Enemies/Enemy2"]
-
-[editable path="World/Player"]

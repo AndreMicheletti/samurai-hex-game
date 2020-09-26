@@ -4,6 +4,8 @@ class_name Controller
 
 export(Array, Resource) var CardDeck
 
+export(Vector2) var start_pos
+
 var MoveHint = preload("res://scenes/tileset/MoveHint.tscn")
 
 var hand = []
@@ -18,9 +20,14 @@ signal cards_drawn
 signal turn_ended
 signal defeated
 
+
 func _ready():
 	add_to_group("Controller")
 	game_match = get_tree().get_nodes_in_group("GameMatch")[0]
+	character = get_child(0)
+	character.teleport_to(start_pos.x, start_pos.y)
+	character.connect("character_died", self, "on_character_died")
+
 
 func get_character():
 	return character
@@ -31,6 +38,8 @@ func set_character(ch):
 
 
 func _process(delta):
+	if defeated:
+		return
 	if game_match.state == game_match.MatchState.DRAW:
 		_process_draw()
 	elif game_match.state == game_match.MatchState.CHOOSE_CARD:

@@ -1,9 +1,5 @@
 extends Controller
 
-func _ready():
-	._ready()
-	set_character(get_parent())
-
 
 func _process_draw():
 	cards_selected = []

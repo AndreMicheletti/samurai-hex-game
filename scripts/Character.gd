@@ -2,7 +2,7 @@ extends Node2D
 
 var HexCell = preload("res://HexCell.gd")
 
-export(Vector2) var hex_pos = Vector2()
+var hex_pos = Vector2()
 
 signal character_moved
 signal character_died
@@ -50,6 +50,7 @@ func move_to(x, y):
 
 
 func hit(atk):
+	print(self.name, " GOT ATTACKED WITH ", atk, "atk. HAS ", turn_def, " DEFENSE ")
 	turn_def -= atk
 	var damage = 0
 	if turn_def <= 0:
@@ -60,13 +61,10 @@ func hit(atk):
 		damage_counter += damage
 		$AnimPlayer.play("hit")
 		#yield($AnimPlayer, "animation_finished")
-
+	print(" // SUFFERED (", damage, ")")
 	if damage_counter >= DamageLimit:
 		print("CHARACTER ", self.name, " DIED")
 		emit_signal("character_died")
-
-	print(self.name, " GOT ATTACKED WITH ", atk, "atk. HAS ", turn_def, " DEFENSE // SUFFERED (", damage, ")")
-
 
 
 func teleport_to(x, y):
