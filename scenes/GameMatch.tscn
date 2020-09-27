@@ -1,15 +1,30 @@
-[gd_scene load_steps=12 format=2]
+[gd_scene load_steps=15 format=2]
 
 [ext_resource path="res://scripts/World.gd" type="Script" id=1]
 [ext_resource path="res://scenes/Player.tscn" type="PackedScene" id=2]
 [ext_resource path="res://scenes/Enemy.tscn" type="PackedScene" id=3]
 [ext_resource path="res://graphics/attack.png" type="Texture" id=4]
-[ext_resource path="res://fonts/DefaultFont.tres" type="DynamicFont" id=5]
 [ext_resource path="res://graphics/defense.png" type="Texture" id=6]
 [ext_resource path="res://graphics/move.png" type="Texture" id=7]
+[ext_resource path="res://scenes/Card.tscn" type="PackedScene" id=9]
 [ext_resource path="res://scripts/UI.gd" type="Script" id=10]
 [ext_resource path="res://scripts/GameMatch.gd" type="Script" id=13]
 [ext_resource path="res://fonts/RockSalt-Regular.ttf" type="DynamicFontData" id=14]
+
+[sub_resource type="StyleBoxFlat" id=3]
+bg_color = Color( 0.788235, 0.752941, 0.568627, 1 )
+border_width_left = 2
+border_width_top = 2
+border_width_right = 2
+border_width_bottom = 2
+border_color = Color( 0, 0, 0, 1 )
+
+[sub_resource type="DynamicFont" id=4]
+size = 22
+font_data = ExtResource( 14 )
+
+[sub_resource type="DynamicFont" id=5]
+font_data = ExtResource( 14 )
 
 [sub_resource type="DynamicFont" id=2]
 size = 18
@@ -28,14 +43,17 @@ script = ExtResource( 1 )
 [node name="Tileset" type="Node2D" parent="World"]
 
 [node name="PlayerController" parent="World" instance=ExtResource( 2 )]
+playerName = "Player"
 
 [node name="Enemies" type="Node2D" parent="World"]
 
 [node name="EnemyController" parent="World/Enemies" instance=ExtResource( 3 )]
 start_pos = Vector2( 3, 2 )
+playerName = "Ricardo"
 
 [node name="EnemyController2" parent="World/Enemies" instance=ExtResource( 3 )]
 start_pos = Vector2( -3, 5 )
+playerName = "Joao"
 
 [node name="Highlights" type="Node2D" parent="World"]
 
@@ -48,11 +66,12 @@ script = ExtResource( 10 )
 playerControllerPath = NodePath("../World/PlayerController")
 
 [node name="BottomUI" type="MarginContainer" parent="UI"]
+visible = false
 anchor_top = 1.0
 anchor_right = 1.0
 anchor_bottom = 1.0
 margin_top = -220.0
-mouse_filter = 1
+mouse_filter = 2
 custom_constants/margin_right = 20
 custom_constants/margin_top = 20
 custom_constants/margin_left = 20
@@ -61,19 +80,67 @@ __meta__ = {
 "_edit_use_anchors_": false
 }
 
-[node name="CardsContainer" type="HBoxContainer" parent="UI/BottomUI"]
+[node name="SplitContainer" type="HSplitContainer" parent="UI/BottomUI"]
 margin_left = 20.0
 margin_top = 20.0
-margin_right = 1004.0
+margin_right = 1260.0
 margin_bottom = 200.0
+
+[node name="CardsContainer" type="HBoxContainer" parent="UI/BottomUI/SplitContainer"]
+margin_right = 1108.0
+margin_bottom = 180.0
+size_flags_horizontal = 3
+size_flags_vertical = 3
 alignment = 1
 
-[node name="TopHUD" type="MarginContainer" parent="UI"]
-anchor_left = 1.0
+[node name="DeckContainer" type="VBoxContainer" parent="UI/BottomUI/SplitContainer"]
+margin_left = 1120.0
+margin_right = 1240.0
+margin_bottom = 180.0
+rect_min_size = Vector2( 120, 180 )
+
+[node name="DeckPanel" type="Panel" parent="UI/BottomUI/SplitContainer/DeckContainer"]
+margin_right = 120.0
+margin_bottom = 180.0
+rect_min_size = Vector2( 120, 180 )
+size_flags_horizontal = 3
+size_flags_vertical = 3
+custom_styles/panel = SubResource( 3 )
+
+[node name="Vertical" type="VBoxContainer" parent="UI/BottomUI/SplitContainer/DeckContainer/DeckPanel"]
 anchor_right = 1.0
 anchor_bottom = 1.0
-margin_left = -140.0
-mouse_filter = 1
+size_flags_horizontal = 3
+size_flags_vertical = 3
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="DeckLabel" type="Label" parent="UI/BottomUI/SplitContainer/DeckContainer/DeckPanel/Vertical"]
+margin_right = 120.0
+margin_bottom = 52.0
+custom_fonts/font = SubResource( 4 )
+custom_colors/font_color = Color( 0, 0, 0, 1 )
+text = "Deck"
+align = 1
+valign = 1
+
+[node name="CardsLeftValue" type="Label" parent="UI/BottomUI/SplitContainer/DeckContainer/DeckPanel/Vertical"]
+margin_top = 56.0
+margin_right = 120.0
+margin_bottom = 180.0
+size_flags_horizontal = 3
+size_flags_vertical = 3
+custom_fonts/font = SubResource( 5 )
+custom_colors/font_color = Color( 0, 0, 0, 1 )
+text = "0
+"
+align = 1
+valign = 1
+
+[node name="LeftUI" type="MarginContainer" parent="UI"]
+anchor_bottom = 1.0
+mouse_filter = 2
 custom_constants/margin_right = 20
 custom_constants/margin_top = 20
 custom_constants/margin_left = 20
@@ -82,149 +149,146 @@ __meta__ = {
 "_edit_use_anchors_": false
 }
 
-[node name="HUD" type="VBoxContainer" parent="UI/TopHUD"]
+[node name="PlayerBarContainer" type="VBoxContainer" parent="UI/LeftUI"]
 margin_left = 20.0
 margin_top = 20.0
+margin_right = 290.0
+margin_bottom = 700.0
+rect_min_size = Vector2( 270, 0 )
+
+[node name="PlayTurnUI" type="MarginContainer" parent="UI"]
+visible = false
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+margin_top = -220.0
+mouse_filter = 2
+custom_constants/margin_right = 20
+custom_constants/margin_top = 20
+custom_constants/margin_left = 20
+custom_constants/margin_bottom = 20
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="SplitContainer" type="HSplitContainer" parent="UI/PlayTurnUI"]
+margin_left = 20.0
+margin_top = 20.0
+margin_right = 1260.0
+margin_bottom = 200.0
+mouse_filter = 2
+
+[node name="TurnCardsContainer" type="HBoxContainer" parent="UI/PlayTurnUI/SplitContainer"]
+margin_right = 614.0
+margin_bottom = 180.0
+mouse_filter = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+
+[node name="Card" parent="UI/PlayTurnUI/SplitContainer/TurnCardsContainer" instance=ExtResource( 9 )]
+margin_left = 0.0
 margin_right = 120.0
-margin_bottom = 580.0
-rect_min_size = Vector2( 100, 72 )
-alignment = 1
+enable_interaction = false
 
-[node name="MoveInfo" type="HBoxContainer" parent="UI/TopHUD/HUD"]
-margin_top = 168.0
-margin_right = 100.0
-margin_bottom = 240.0
-rect_min_size = Vector2( 0, 70 )
+[node name="StatsContainer" type="VBoxContainer" parent="UI/PlayTurnUI/SplitContainer"]
+margin_left = 626.0
+margin_right = 1240.0
+margin_bottom = 180.0
+mouse_filter = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
 
-[node name="IconContainer" type="MarginContainer" parent="UI/TopHUD/HUD/MoveInfo"]
-margin_right = 70.0
-margin_bottom = 72.0
-mouse_filter = 1
-custom_constants/margin_right = 10
-custom_constants/margin_top = 10
-custom_constants/margin_left = 10
-custom_constants/margin_bottom = 10
+[node name="MoveStatContainer" type="HBoxContainer" parent="UI/PlayTurnUI/SplitContainer/StatsContainer"]
+margin_right = 614.0
+margin_bottom = 57.0
+mouse_filter = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+alignment = 2
 
-[node name="Icon" type="TextureRect" parent="UI/TopHUD/HUD/MoveInfo/IconContainer"]
-margin_left = 10.0
-margin_top = 10.0
-margin_right = 60.0
-margin_bottom = 62.0
-rect_min_size = Vector2( 50, 50 )
+[node name="MoveIcon" type="TextureRect" parent="UI/PlayTurnUI/SplitContainer/StatsContainer/MoveStatContainer"]
+margin_left = 435.0
+margin_right = 492.0
+margin_bottom = 57.0
+rect_min_size = Vector2( 57, 57 )
 texture = ExtResource( 7 )
 expand = true
 stretch_mode = 5
 
-[node name="TextContainer" type="CenterContainer" parent="UI/TopHUD/HUD/MoveInfo"]
-margin_left = 74.0
-margin_right = 99.0
-margin_bottom = 72.0
-rect_min_size = Vector2( 20, 70 )
-mouse_filter = 1
+[node name="MoveIcon2" type="TextureRect" parent="UI/PlayTurnUI/SplitContainer/StatsContainer/MoveStatContainer"]
+margin_left = 496.0
+margin_right = 553.0
+margin_bottom = 57.0
+rect_min_size = Vector2( 57, 57 )
+texture = ExtResource( 7 )
+expand = true
+stretch_mode = 5
 
-[node name="Label" type="Label" parent="UI/TopHUD/HUD/MoveInfo/TextContainer"]
-margin_right = 25.0
-margin_bottom = 72.0
-rect_min_size = Vector2( 25, 70 )
-custom_fonts/font = ExtResource( 5 )
-custom_colors/font_color = Color( 1, 1, 1, 1 )
-text = "8"
-align = 1
-valign = 1
+[node name="MoveIcon3" type="TextureRect" parent="UI/PlayTurnUI/SplitContainer/StatsContainer/MoveStatContainer"]
+margin_left = 557.0
+margin_right = 614.0
+margin_bottom = 57.0
+rect_min_size = Vector2( 57, 57 )
+texture = ExtResource( 7 )
+expand = true
+stretch_mode = 5
 
-[node name="AttackInfo" type="HBoxContainer" parent="UI/TopHUD/HUD"]
-margin_top = 244.0
-margin_right = 100.0
-margin_bottom = 316.0
-rect_min_size = Vector2( 0, 70 )
+[node name="AttackStatContainer" type="HBoxContainer" parent="UI/PlayTurnUI/SplitContainer/StatsContainer"]
+margin_top = 61.0
+margin_right = 614.0
+margin_bottom = 118.0
+mouse_filter = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+alignment = 2
 
-[node name="IconContainer" type="MarginContainer" parent="UI/TopHUD/HUD/AttackInfo"]
-margin_right = 70.0
-margin_bottom = 72.0
-mouse_filter = 1
-custom_constants/margin_right = 10
-custom_constants/margin_top = 10
-custom_constants/margin_left = 10
-custom_constants/margin_bottom = 10
-
-[node name="Icon" type="TextureRect" parent="UI/TopHUD/HUD/AttackInfo/IconContainer"]
-margin_left = 10.0
-margin_top = 10.0
-margin_right = 60.0
-margin_bottom = 62.0
-rect_min_size = Vector2( 50, 50 )
+[node name="AttackIcon" type="TextureRect" parent="UI/PlayTurnUI/SplitContainer/StatsContainer/AttackStatContainer"]
+margin_left = 557.0
+margin_right = 614.0
+margin_bottom = 57.0
+rect_min_size = Vector2( 57, 57 )
 texture = ExtResource( 4 )
 expand = true
 stretch_mode = 5
 
-[node name="TextContainer" type="CenterContainer" parent="UI/TopHUD/HUD/AttackInfo"]
-margin_left = 74.0
-margin_right = 99.0
-margin_bottom = 72.0
-rect_min_size = Vector2( 20, 70 )
-mouse_filter = 1
+[node name="DefenseStatContainer" type="HBoxContainer" parent="UI/PlayTurnUI/SplitContainer/StatsContainer"]
+margin_top = 122.0
+margin_right = 614.0
+margin_bottom = 180.0
+mouse_filter = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+alignment = 2
 
-[node name="Label" type="Label" parent="UI/TopHUD/HUD/AttackInfo/TextContainer"]
-margin_right = 25.0
-margin_bottom = 72.0
-rect_min_size = Vector2( 25, 70 )
-custom_fonts/font = ExtResource( 5 )
-custom_colors/font_color = Color( 1, 1, 1, 1 )
-text = "8"
-align = 1
-valign = 1
-
-[node name="DefenseInfo" type="HBoxContainer" parent="UI/TopHUD/HUD"]
-margin_top = 320.0
-margin_right = 100.0
-margin_bottom = 392.0
-rect_min_size = Vector2( 0, 70 )
-
-[node name="IconContainer" type="MarginContainer" parent="UI/TopHUD/HUD/DefenseInfo"]
-margin_right = 70.0
-margin_bottom = 72.0
-mouse_filter = 1
-custom_constants/margin_right = 10
-custom_constants/margin_top = 10
-custom_constants/margin_left = 10
-custom_constants/margin_bottom = 10
-
-[node name="Icon" type="TextureRect" parent="UI/TopHUD/HUD/DefenseInfo/IconContainer"]
-margin_left = 10.0
-margin_top = 10.0
-margin_right = 60.0
-margin_bottom = 62.0
-rect_min_size = Vector2( 50, 50 )
+[node name="DefenseIcon" type="TextureRect" parent="UI/PlayTurnUI/SplitContainer/StatsContainer/DefenseStatContainer"]
+margin_left = 496.0
+margin_right = 553.0
+margin_bottom = 58.0
+rect_min_size = Vector2( 57, 57 )
 texture = ExtResource( 6 )
 expand = true
 stretch_mode = 5
 
-[node name="TextContainer" type="CenterContainer" parent="UI/TopHUD/HUD/DefenseInfo"]
-margin_left = 74.0
-margin_right = 99.0
-margin_bottom = 72.0
-rect_min_size = Vector2( 20, 70 )
-
-[node name="Label" type="Label" parent="UI/TopHUD/HUD/DefenseInfo/TextContainer"]
-margin_right = 25.0
-margin_bottom = 72.0
-rect_min_size = Vector2( 25, 70 )
-custom_fonts/font = ExtResource( 5 )
-custom_colors/font_color = Color( 1, 1, 1, 1 )
-text = "8"
-align = 1
-valign = 1
+[node name="DefenseIcon2" type="TextureRect" parent="UI/PlayTurnUI/SplitContainer/StatsContainer/DefenseStatContainer"]
+margin_left = 557.0
+margin_right = 614.0
+margin_bottom = 58.0
+rect_min_size = Vector2( 57, 57 )
+texture = ExtResource( 6 )
+expand = true
+stretch_mode = 5
 
 [node name="DebugLabel" type="Label" parent="UI"]
-margin_right = 40.0
-margin_bottom = 14.0
+margin_left = 1108.0
+margin_top = 2.0
+margin_right = 1282.0
+margin_bottom = 52.0
 rect_min_size = Vector2( 100, 50 )
 custom_fonts/font = SubResource( 2 )
 text = "Debug text here"
 __meta__ = {
 "_edit_use_anchors_": false
 }
-[connection signal="ai_state" from="." to="UI" method="_on_GameMatch_ai_state"]
 [connection signal="choose_card_state" from="." to="UI" method="_on_GameMatch_choose_card_state"]
 [connection signal="draw_state" from="." to="UI" method="_on_GameMatch_draw_state"]
 [connection signal="play_state" from="." to="UI" method="_on_GameMatch_play_state"]

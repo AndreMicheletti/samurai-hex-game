@@ -9,8 +9,10 @@ onready var defense = $Column/Texts/Defense/label
 
 signal card_selected
 
+export var enable_interaction = true
+
 func _ready():
-	pass
+	$Column/ButtonContainer.visible = self.enable_interaction
 
 func set_resource(res):
 	card_resource = res

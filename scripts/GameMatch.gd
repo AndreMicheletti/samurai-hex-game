@@ -6,7 +6,7 @@ export onready var World = $World
 export onready var Player = $World/Player
 export onready var Highlights = $World/Highlights
 
-onready var Cards = $UI/BottomUI/CardsContainer
+onready var Cards = $UI/BottomUI/SplitContainer/CardsContainer
 onready var debug_label = $UI/DebugLabel
 
 var MoveHint = preload("res://scenes/tileset/MoveHint.tscn")
@@ -20,11 +20,19 @@ var controller_turn = 0
 signal draw_state
 signal choose_card_state
 signal play_state
-signal ai_state
+
+signal advance_turn
 
 func _ready():
+	var bar = preload("res://scenes/PlayerBar.tscn")
 	for ctr in get_controllers():
+		var instance = bar.instance()
+		$UI/LeftUI/PlayerBarContainer.add_child(instance)
+		instance.set_ctr(ctr)
+		connect("draw_state", instance, "on_draw_state")
+		connect("advance_turn", instance, "on_advance_turn")
 		ctr.connect("defeated", self, "on_controller_defeated")
+		
 	set_state_draw()
 
 
@@ -130,6 +138,7 @@ func advance_turn():
 		controller_turn_order[controller_turn].play_turn(play_turn)
 	else:
 		advance_turn()
+	emit_signal("advance_turn", controller_turn_order[controller_turn])
 
 
 func set_turn_order():
