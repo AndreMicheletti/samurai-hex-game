@@ -5,6 +5,7 @@ class_name Controller
 export(Array, Resource) var CardDeck
 
 export(Vector2) var start_pos
+export(String) var playerName
 
 var MoveHint = preload("res://scenes/tileset/MoveHint.tscn")
 

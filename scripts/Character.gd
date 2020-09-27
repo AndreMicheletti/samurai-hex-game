@@ -6,6 +6,7 @@ var hex_pos = Vector2()
 
 signal character_moved
 signal character_died
+signal character_damaged
 
 export var DamageLimit = 4
 var damage_counter = 0
@@ -60,6 +61,7 @@ func hit(atk):
 	if damage > 0:
 		damage_counter += damage
 		$AnimPlayer.play("hit")
+		emit_signal("character_damaged")
 		#yield($AnimPlayer, "animation_finished")
 	print(" // SUFFERED (", damage, ")")
 	if damage_counter >= DamageLimit:
