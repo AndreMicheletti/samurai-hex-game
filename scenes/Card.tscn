@@ -21,6 +21,7 @@ margin_left = 432.0
 margin_right = 552.0
 margin_bottom = 180.0
 rect_min_size = Vector2( 120, 180 )
+size_flags_vertical = 3
 custom_styles/panel = SubResource( 1 )
 script = ExtResource( 1 )
 __meta__ = {

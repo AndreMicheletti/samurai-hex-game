@@ -1,9 +1,10 @@
-[gd_scene load_steps=15 format=2]
+[gd_scene load_steps=16 format=2]
 
 [ext_resource path="res://scripts/World.gd" type="Script" id=1]
 [ext_resource path="res://scenes/Player.tscn" type="PackedScene" id=2]
 [ext_resource path="res://scenes/Enemy.tscn" type="PackedScene" id=3]
 [ext_resource path="res://graphics/attack.png" type="Texture" id=4]
+[ext_resource path="res://scenes/gui/UI.tscn" type="PackedScene" id=5]
 [ext_resource path="res://graphics/defense.png" type="Texture" id=6]
 [ext_resource path="res://graphics/move.png" type="Texture" id=7]
 [ext_resource path="res://scenes/Card.tscn" type="PackedScene" id=9]
@@ -133,6 +134,7 @@ align = 1
 valign = 1
 
 [node name="LeftUI" type="MarginContainer" parent="UI"]
+visible = false
 anchor_bottom = 1.0
 mouse_filter = 2
 custom_constants/margin_right = 20
@@ -151,6 +153,7 @@ margin_bottom = 700.0
 rect_min_size = Vector2( 270, 0 )
 
 [node name="PlayTurnUI" type="MarginContainer" parent="UI"]
+visible = false
 anchor_top = 1.0
 anchor_right = 1.0
 anchor_bottom = 1.0
@@ -272,6 +275,7 @@ expand = true
 stretch_mode = 5
 
 [node name="DebugLabel" type="Label" parent="UI"]
+visible = false
 margin_left = 1108.0
 margin_top = 2.0
 margin_right = 1282.0
@@ -282,6 +286,8 @@ text = "Debug text here"
 __meta__ = {
 "_edit_use_anchors_": false
 }
+
+[node name="UI2" parent="." instance=ExtResource( 5 )]
 [connection signal="choose_card_state" from="." to="UI" method="_on_GameMatch_choose_card_state"]
 [connection signal="draw_state" from="." to="UI" method="_on_GameMatch_draw_state"]
 [connection signal="play_state" from="." to="UI" method="_on_GameMatch_play_state"]
