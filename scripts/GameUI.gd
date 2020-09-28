@@ -8,8 +8,8 @@ onready var Player2 = $Player2
 onready var top_deal = $TopDeal
 onready var bottom_deal = $BottomDeal
 
+onready var player1_play_button = $Player1/Center/Play/Button
 onready var player1_center_cards = $Player1/Center/HBox/Cards/Container
-
 onready var player1_left_cards = $Player1/Left/Split/CardsMargin/CardsContainer
 
 onready var card = preload("res://scenes/gui/Card.tscn")
@@ -19,8 +19,11 @@ export(Array, Resource) var card_list
 signal card_selected
 signal card_deselected
 
+signal accepted_cards
+
 # Called when the node enters the scene tree for the first time.
 func _ready():
+	player1_play_button.visible = false
 	for x in card_list:
 		yield(player1_deal(x), "completed")
 
@@ -40,49 +43,56 @@ func player1_deal(card_res : CardResource):
 	new_card.rect_position = start_pos
 	
 	$Tween.interpolate_property(
-		new_card, "rect_position", start_pos, target_pos, 0.6,
+		new_card, "rect_position", start_pos, target_pos, 0.4,
 		Tween.TRANS_LINEAR, Tween.EASE_IN_OUT, 0.0
 	)
 	$Tween.start()
 	yield($Tween, "tween_completed")
+	new_card.enable_interaction = true
 
 
-func move_card_to_slot(center_index, left_index):
-	var left_slot : ReferenceRect = get_player1_side_slot(left_index)
-	var center_slot = player1_center_cards.get_child(center_index)
-	var card_node = center_slot.get_child(0)
+func move_cards_to_slot():
+	var selected_card_nodes = get_selected_cards()
+	var not_selected_card_nodes = get_not_selected_cards()
 	
-	var offset_pos = left_slot.get_global_transform()[2]
-	var card_pos = card_node.get_parent().get_global_transform()[2]
-	var start_pos = Vector2(
-		card_pos.x,
-		card_pos.y - offset_pos.y
-	)
-	var target_pos = Vector2(0, 0)
+	# Bring down not used cards
+	for node in not_selected_card_nodes:
+		var target_pos = bottom_deal.get_global_transform()[2]
+		var start_pos = Vector2(0, 0)
+		target_pos.x -= node.get_global_transform()[2].x
+		$Tween.interpolate_property(
+			node, "rect_position", start_pos, target_pos, 0.3,
+			Tween.TRANS_LINEAR, Tween.EASE_IN_OUT, 0.0
+		)
+		$Tween.start()
+		yield($Tween, "tween_completed")
+		node.queue_free()
 	
-	center_slot.remove_child(card_node)
-	# card_node.queue_free()
-	left_slot.add_child(card_node)
-	card_node.rect_position = Vector2(0, 0)
-	
-	$Tween.interpolate_property(
-		card_node, "rect_position", start_pos, target_pos, 0.8,
-		Tween.TRANS_LINEAR, Tween.EASE_IN_OUT, 0.0
-	)
-	$Tween.start()
-	yield($Tween, "tween_completed")
-
-
-func return_card_to_slot(center_index, left_index):
-	var left_slot : ReferenceRect = get_player1_side_slot(left_index)
-	var center_slot = player1_center_cards.get_child(center_index)
-	var card_node = left_slot.get_child(0)
-	
-	left_slot.remove_child(card_node)
-	# card_node.queue_free()
-	center_slot.add_child(card_node)
-	card_node.rect_position = Vector2(0,0)
-
+	# Send to left selected cards
+	for i in range(0, 3):
+		var left_slot : ReferenceRect = get_player1_side_slot(i)
+		var card_node = selected_card_nodes[i]
+		card_node.enable_interaction = false
+		
+		var offset_pos = left_slot.get_global_transform()[2]
+		var card_pos = card_node.get_parent().get_global_transform()[2]
+		var start_pos = Vector2(
+			card_pos.x,
+			card_pos.y - offset_pos.y
+		)
+		var target_pos = Vector2(0, 0)
+		
+		card_node.get_parent().remove_child(card_node)
+		# card_node.queue_free()
+		left_slot.add_child(card_node)
+		card_node.rect_position = start_pos
+		
+		$Tween.interpolate_property(
+			card_node, "rect_position", start_pos, target_pos, 0.5,
+			Tween.TRANS_BACK, Tween.EASE_OUT, 0.0
+		)
+		$Tween.start()
+		yield($Tween, "tween_completed")
 
 func get_player1_center_cards_count():
 	var count = 0
@@ -99,17 +109,43 @@ func get_player1_left_cards_count():
 func get_player1_side_slot(index):
 	return player1_left_cards.get_child(index)
 
+func get_selected_cards():
+	var result = []
+	for card_slot in player1_center_cards.get_children():
+		if card_slot.get_child(0) and card_slot.get_child(0).selected:
+			result.append(card_slot.get_child(0))
+	return result
+
+func get_not_selected_cards():
+	var result = []
+	for card_slot in player1_center_cards.get_children():
+		if card_slot.get_child(0) and card_slot.get_child(0).selected == false:
+			result.append(card_slot.get_child(0))
+	return result
+
 func on_card_selected(card_node : Card):
-	var left_count = get_player1_left_cards_count()
+	# var left_count = get_player1_left_cards_count()
 	if card_node.selected:
 		# Remove selection
-		var left_index = int(card_node.get_parent().name)
-		var center_index = 0
-		return_card_to_slot(center_index, left_index)
+		card_node.rect_position.y = 0
 		card_node.selected = false
-	elif left_count < 3:
+		card_node.card_index = null
+		card_node.hide_index()
+		for node in get_selected_cards():
+			node.card_index = node.card_index - 3
+			node.show_index()
+	elif get_selected_cards().size() < 3:
 		# Add selection
-		var center_index = int(card_node.get_parent().name)
-		var left_index = left_count
-		move_card_to_slot(center_index, left_index)
+		card_node.rect_position.y = -30
 		card_node.selected = true
+		card_node.card_index = get_selected_cards().size()
+		card_node.show_index()
+	player1_play_button.visible = get_selected_cards().size() > 2
+
+func _on_Button_pressed():
+	var card_resources = []
+	for card_node in get_selected_cards():
+		card_resources.append(card_node.get_resource())
+	emit_signal("accepted_cards", card_resources)
+	print("ACCEPTED CARDS ", card_resources)
+	move_cards_to_slot()

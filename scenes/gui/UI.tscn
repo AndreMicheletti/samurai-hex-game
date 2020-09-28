@@ -301,6 +301,27 @@ mouse_filter = 2
 size_flags_horizontal = 0
 size_flags_vertical = 0
 
+[node name="Play" type="Control" parent="Player1/Center"]
+anchor_left = 0.5
+anchor_top = 1.0
+anchor_right = 0.5
+anchor_bottom = 1.0
+margin_left = -125.0
+margin_top = 31.0
+margin_right = 125.0
+margin_bottom = 81.0
+rect_min_size = Vector2( 250, 50 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Button" type="Button" parent="Player1/Center/Play"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+size_flags_horizontal = 3
+size_flags_vertical = 3
+text = "Jogar"
+
 [node name="Player2" type="Control" parent="."]
 anchor_right = 1.0
 anchor_bottom = 1.0
@@ -611,3 +632,4 @@ rect_min_size = Vector2( 120, 180 )
 __meta__ = {
 "_edit_use_anchors_": false
 }
+[connection signal="pressed" from="Player1/Center/Play/Button" to="." method="_on_Button_pressed"]

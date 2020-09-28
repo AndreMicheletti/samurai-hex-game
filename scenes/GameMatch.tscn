@@ -182,7 +182,6 @@ size_flags_horizontal = 3
 size_flags_vertical = 3
 
 [node name="Card" parent="UI/PlayTurnUI/SplitContainer/TurnCardsContainer" instance=ExtResource( 9 )]
-enable_interaction = false
 
 [node name="StatsContainer" type="VBoxContainer" parent="UI/PlayTurnUI/SplitContainer"]
 margin_left = 626.0

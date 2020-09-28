@@ -14,14 +14,19 @@ onready var speed = $Column/Texts/Speed/label
 
 signal card_selected
 
-export var enable_interaction = true
+export var enable_interaction = false
 var selected = false
+var card_index = null
 
 var press_delay = 0
 var has_mouse = false
 
 func _ready():
 	add_to_group("UI_CARD")
+	$Index.visible = false
+
+func get_resource():
+	return card_resource
 
 func set_resource(res : CardResource):
 	card_resource = res
@@ -53,6 +58,13 @@ func _on_Card_gui_input(event):
 		if event is InputEventScreenTouch:
 			press_delay = PRESS_DELAY
 			on_pressed()
+
+func show_index():
+	$Index.visible = true
+	$Index/Panel/Label.text = str(card_index)
+	
+func hide_index():
+	$Index.visible = false
 
 func on_pressed():
 	if enable_interaction:
