@@ -1,9 +1,10 @@
-[gd_scene load_steps=7 format=2]
+[gd_scene load_steps=8 format=2]
 
 [ext_resource path="res://scripts/Card.gd" type="Script" id=1]
 [ext_resource path="res://fonts/RockSalt-Regular.ttf" type="DynamicFontData" id=2]
+[ext_resource path="res://graphics/samurai_player.png" type="Texture" id=3]
 
-[sub_resource type="StyleBoxFlat" id=3]
+[sub_resource type="StyleBoxFlat" id=1]
 bg_color = Color( 0.788235, 0.752941, 0.568627, 1 )
 border_width_left = 2
 border_width_top = 2
@@ -11,12 +12,12 @@ border_width_right = 2
 border_width_bottom = 2
 border_color = Color( 0, 0, 0, 1 )
 
-[sub_resource type="DynamicFont" id=4]
+[sub_resource type="DynamicFont" id=2]
 size = 14
 outline_color = Color( 0.411765, 0.411765, 0.411765, 1 )
 font_data = ExtResource( 2 )
 
-[sub_resource type="StyleBoxFlat" id=5]
+[sub_resource type="StyleBoxFlat" id=3]
 bg_color = Color( 0.584314, 0.494118, 0.321569, 1 )
 border_width_left = 2
 border_width_top = 2
@@ -28,7 +29,7 @@ corner_radius_top_right = 20
 corner_radius_bottom_right = 20
 corner_radius_bottom_left = 20
 
-[sub_resource type="DynamicFont" id=6]
+[sub_resource type="DynamicFont" id=4]
 size = 15
 outline_color = Color( 0, 0, 0, 1 )
 font_data = ExtResource( 2 )
@@ -40,7 +41,7 @@ rect_min_size = Vector2( 120, 180 )
 mouse_default_cursor_shape = 2
 size_flags_horizontal = 0
 size_flags_vertical = 0
-custom_styles/panel = SubResource( 3 )
+custom_styles/panel = SubResource( 1 )
 script = ExtResource( 1 )
 __meta__ = {
 "_edit_use_anchors_": false
@@ -82,7 +83,7 @@ rect_min_size = Vector2( 0, 40 )
 mouse_default_cursor_shape = 2
 size_flags_horizontal = 3
 size_flags_vertical = 3
-custom_fonts/font = SubResource( 4 )
+custom_fonts/font = SubResource( 2 )
 custom_colors/font_color = Color( 0, 0, 0, 1 )
 text = "Card Title is Very Big"
 align = 1
@@ -182,6 +183,24 @@ size_flags_vertical = 3
 custom_colors/font_color = Color( 0, 0, 0, 1 )
 text = "Speed 1"
 
+[node name="Down" type="MarginContainer" parent="."]
+visible = false
+anchor_right = 1.0
+anchor_bottom = 1.0
+size_flags_horizontal = 3
+size_flags_vertical = 3
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="TextureRect" type="TextureRect" parent="Down"]
+margin_right = 120.0
+margin_bottom = 180.0
+size_flags_horizontal = 3
+size_flags_vertical = 3
+texture = ExtResource( 3 )
+stretch_mode = 4
+
 [node name="Index" type="Control" parent="."]
 anchor_left = 0.5
 anchor_right = 0.5
@@ -202,7 +221,7 @@ margin_left = -20.0
 margin_top = -20.0
 margin_right = 20.0
 margin_bottom = 20.0
-custom_styles/panel = SubResource( 5 )
+custom_styles/panel = SubResource( 3 )
 __meta__ = {
 "_edit_use_anchors_": false
 }
@@ -212,7 +231,7 @@ anchor_right = 1.0
 anchor_bottom = 1.0
 size_flags_horizontal = 3
 size_flags_vertical = 3
-custom_fonts/font = SubResource( 6 )
+custom_fonts/font = SubResource( 4 )
 custom_colors/font_color = Color( 0, 0, 0, 1 )
 text = "1"
 align = 1

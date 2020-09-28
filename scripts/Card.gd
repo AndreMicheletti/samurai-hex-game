@@ -6,6 +6,8 @@ const PRESS_DELAY = 1
 
 export(Resource) var card_resource
 
+enum Side {UP, DOWN}
+
 onready var title = $Column/Texts/Title/label
 onready var move = $Column/Texts/Move/label
 onready var attack = $Column/Texts/Attack/label
@@ -17,6 +19,7 @@ signal card_selected
 export var enable_interaction = false
 var selected = false
 var card_index = null
+var side = Side.UP
 
 var press_delay = 0
 var has_mouse = false
@@ -24,6 +27,9 @@ var has_mouse = false
 func _ready():
 	add_to_group("UI_CARD")
 	$Index.visible = false
+	$Column.visible = true
+	$Down.visible = false
+	flip()
 
 func get_resource():
 	return card_resource
@@ -69,3 +75,14 @@ func hide_index():
 func on_pressed():
 	if enable_interaction:
 		emit_signal("card_selected", self)
+
+func flip():
+	match side:
+		Side.UP:
+			$Column.visible = false
+			$Down.visible = true
+			side = Side.DOWN
+		Side.DOWN:
+			$Column.visible = true
+			$Down.visible = false
+			side = Side.UP
