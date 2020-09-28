@@ -9,3 +9,4 @@ card_title = "Golpe Preciso"
 card_mov = 1
 card_atk = 2
 card_def = 1
+card_speed = 2

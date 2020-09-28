@@ -9,3 +9,4 @@ card_title = "Golpe Rapido"
 card_mov = 2
 card_atk = 1
 card_def = 1
+card_speed = 3

@@ -21,6 +21,8 @@ margin_left = 432.0
 margin_right = 552.0
 margin_bottom = 180.0
 rect_min_size = Vector2( 120, 180 )
+mouse_default_cursor_shape = 2
+size_flags_vertical = 3
 custom_styles/panel = SubResource( 1 )
 script = ExtResource( 1 )
 __meta__ = {
@@ -30,19 +32,25 @@ __meta__ = {
 [node name="Column" type="VBoxContainer" parent="."]
 anchor_right = 1.0
 anchor_bottom = 1.0
+mouse_filter = 2
+mouse_default_cursor_shape = 2
 __meta__ = {
 "_edit_use_anchors_": false
 }
 
 [node name="Texts" type="VBoxContainer" parent="Column"]
 margin_right = 120.0
-margin_bottom = 136.0
+margin_bottom = 206.0
+mouse_filter = 2
+mouse_default_cursor_shape = 2
 size_flags_horizontal = 3
 size_flags_vertical = 3
 
 [node name="Title" type="MarginContainer" parent="Column/Texts"]
 margin_right = 120.0
 margin_bottom = 50.0
+mouse_filter = 2
+mouse_default_cursor_shape = 2
 custom_constants/margin_right = 10
 custom_constants/margin_top = 5
 custom_constants/margin_left = 10
@@ -54,6 +62,7 @@ margin_top = 5.0
 margin_right = 110.0
 margin_bottom = 45.0
 rect_min_size = Vector2( 0, 40 )
+mouse_default_cursor_shape = 2
 size_flags_horizontal = 3
 size_flags_vertical = 3
 custom_fonts/font = SubResource( 2 )
@@ -68,6 +77,8 @@ clip_text = true
 margin_top = 54.0
 margin_right = 120.0
 margin_bottom = 78.0
+mouse_filter = 2
+mouse_default_cursor_shape = 2
 custom_constants/margin_right = 10
 custom_constants/margin_top = 5
 custom_constants/margin_left = 10
@@ -79,6 +90,7 @@ margin_top = 5.0
 margin_right = 110.0
 margin_bottom = 19.0
 rect_min_size = Vector2( 0, 10 )
+mouse_default_cursor_shape = 2
 size_flags_horizontal = 3
 size_flags_vertical = 3
 custom_colors/font_color = Color( 0, 0, 0, 1 )
@@ -88,6 +100,8 @@ text = "Move 1"
 margin_top = 82.0
 margin_right = 120.0
 margin_bottom = 106.0
+mouse_filter = 2
+mouse_default_cursor_shape = 2
 custom_constants/margin_right = 10
 custom_constants/margin_top = 5
 custom_constants/margin_left = 10
@@ -99,6 +113,7 @@ margin_top = 5.0
 margin_right = 110.0
 margin_bottom = 19.0
 rect_min_size = Vector2( 0, 10 )
+mouse_default_cursor_shape = 2
 size_flags_horizontal = 3
 size_flags_vertical = 3
 custom_colors/font_color = Color( 0, 0, 0, 1 )
@@ -108,6 +123,8 @@ text = "Atk 1"
 margin_top = 110.0
 margin_right = 120.0
 margin_bottom = 134.0
+mouse_filter = 2
+mouse_default_cursor_shape = 2
 custom_constants/margin_right = 10
 custom_constants/margin_top = 5
 custom_constants/margin_left = 10
@@ -119,27 +136,34 @@ margin_top = 5.0
 margin_right = 110.0
 margin_bottom = 19.0
 rect_min_size = Vector2( 0, 10 )
+mouse_default_cursor_shape = 2
 size_flags_horizontal = 3
 size_flags_vertical = 3
 custom_colors/font_color = Color( 0, 0, 0, 1 )
 text = "Def 1"
 
-[node name="ButtonContainer" type="MarginContainer" parent="Column"]
-margin_top = 140.0
+[node name="Speed" type="MarginContainer" parent="Column/Texts"]
+margin_top = 138.0
 margin_right = 120.0
-margin_bottom = 180.0
-custom_constants/margin_right = 20
-custom_constants/margin_top = 10
-custom_constants/margin_left = 20
-custom_constants/margin_bottom = 10
+margin_bottom = 162.0
+mouse_filter = 2
+mouse_default_cursor_shape = 2
+custom_constants/margin_right = 10
+custom_constants/margin_top = 5
+custom_constants/margin_left = 10
+custom_constants/margin_bottom = 5
 
-[node name="Button" type="Button" parent="Column/ButtonContainer"]
-margin_left = 20.0
-margin_top = 10.0
-margin_right = 100.0
-margin_bottom = 30.0
-text = "Use Card"
-__meta__ = {
-"_edit_use_anchors_": false
-}
-[connection signal="pressed" from="Column/ButtonContainer/Button" to="." method="_on_Button_pressed"]
+[node name="label" type="Label" parent="Column/Texts/Speed"]
+margin_left = 10.0
+margin_top = 5.0
+margin_right = 110.0
+margin_bottom = 19.0
+rect_min_size = Vector2( 0, 10 )
+mouse_default_cursor_shape = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+custom_colors/font_color = Color( 0, 0, 0, 1 )
+text = "Speed 1"
+[connection signal="gui_input" from="." to="." method="_on_Card_gui_input"]
+[connection signal="mouse_entered" from="." to="." method="_on_Card_mouse_entered"]
+[connection signal="mouse_exited" from="." to="." method="_on_Card_mouse_exited"]
