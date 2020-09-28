@@ -8,6 +8,7 @@ onready var title = $Column/Texts/Title/label
 onready var move = $Column/Texts/Move/label
 onready var attack = $Column/Texts/Attack/label
 onready var defense = $Column/Texts/Defense/label
+onready var speed = $Column/Texts/Speed/label
 
 signal card_selected
 
@@ -16,7 +17,7 @@ var press_delay = 0
 var has_mouse = false
 
 
-func set_resource(res):
+func set_resource(res : CardResource):
 	card_resource = res
 	title.text = card_resource.card_title
 
@@ -28,6 +29,7 @@ func set_resource(res):
 	move.text = "Move " + str(card_resource.card_mov)
 	attack.text = "Attack " + str(card_resource.card_atk)
 	defense.text = "Defense " + str(card_resource.card_def)
+	speed.text = "Speed " + str(card_resource.card_speed)
 
 func on_pressed():
 	if enable_interaction:

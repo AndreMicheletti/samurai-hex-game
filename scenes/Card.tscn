@@ -40,7 +40,7 @@ __meta__ = {
 
 [node name="Texts" type="VBoxContainer" parent="Column"]
 margin_right = 120.0
-margin_bottom = 206.0
+margin_bottom = 180.0
 mouse_filter = 2
 mouse_default_cursor_shape = 2
 size_flags_horizontal = 3

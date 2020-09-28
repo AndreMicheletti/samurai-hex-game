@@ -62,7 +62,13 @@ func _process_choose_card():
 func play_turn(turn):
 	hand = []
 	ready = false
-	character.set_turn_stats(cards_selected[turn])
+	character.set_turn_stats(get_card(turn))
+
+
+func get_card(turn):
+	if turn >= cards_selected.size():
+		return null
+	return cards_selected[turn]
 
 
 func process_effects():

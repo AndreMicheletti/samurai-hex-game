@@ -142,9 +142,8 @@ func advance_turn():
 
 
 func set_turn_order():
-	# TODO custom turn order
 	var result = get_alive_controllers()
-	result.sort_custom(self, "sort_by_health")
+	result.sort_custom(self, "sort_by_card_speed")
 	controller_turn_order = result
 
 
@@ -152,6 +151,16 @@ func sort_by_health(ctr1 : Controller, ctr2 : Controller):
 	# return LEAST DAMAGE to MOST DAMAGE
 	if ctr1.character.damage_counter < ctr2.character.damage_counter:
 		return true
+	return false
+
+
+func sort_by_card_speed(ctr1 : Controller, ctr2 : Controller):
+	# return MOST SPEED to LEAST SPEED
+	var card1 : CardResource = ctr1.get_card(play_turn)
+	var card2 : CardResource = ctr2.get_card(play_turn)
+	if card1 and card2:
+		if card1.card_speed > card2.card_speed:
+			return true
 	return false
 
 
