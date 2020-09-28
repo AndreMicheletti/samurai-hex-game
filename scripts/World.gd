@@ -9,7 +9,7 @@ onready var tileset = $Tileset
 
 onready var highlights = $Highlights
 
-var world_size = 10
+export var world_size = 10
 
 export(Vector2) var worldZero = Vector2(0, 0)
 
@@ -17,7 +17,7 @@ export(Vector2) var worldZero = Vector2(0, 0)
 # Called when the node enters the scene tree for the first time.
 func _ready():
 	HexGrid.hex_scale = Vector2(HEX_WIDTH, HEX_HEIGHT)
-	generate_world(10)
+	generate_world(world_size)
 	for charact in get_tree().get_nodes_in_group("Character"):
 		charact.teleport_to(charact.hex_pos.x, charact.hex_pos.y)
 
