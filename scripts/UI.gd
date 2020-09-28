@@ -9,7 +9,7 @@ onready var cards_container = $BottomUI/SplitContainer/CardsContainer
 export(NodePath) var playerControllerPath
 onready var player_controller = get_node(playerControllerPath)
 
-onready var Card = preload("res://scenes/Card.tscn")
+onready var Card = preload("res://scenes/gui/Card.tscn")
 
 func _ready():
 	LeftUI.visible = true

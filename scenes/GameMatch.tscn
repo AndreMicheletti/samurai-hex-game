@@ -6,7 +6,7 @@
 [ext_resource path="res://graphics/attack.png" type="Texture" id=4]
 [ext_resource path="res://graphics/defense.png" type="Texture" id=6]
 [ext_resource path="res://graphics/move.png" type="Texture" id=7]
-[ext_resource path="res://scenes/Card.tscn" type="PackedScene" id=9]
+[ext_resource path="res://scenes/gui/Card.tscn" type="PackedScene" id=9]
 [ext_resource path="res://scripts/UI.gd" type="Script" id=10]
 [ext_resource path="res://scripts/GameMatch.gd" type="Script" id=13]
 [ext_resource path="res://fonts/RockSalt-Regular.ttf" type="DynamicFontData" id=14]
@@ -182,8 +182,6 @@ size_flags_horizontal = 3
 size_flags_vertical = 3
 
 [node name="Card" parent="UI/PlayTurnUI/SplitContainer/TurnCardsContainer" instance=ExtResource( 9 )]
-margin_left = 0.0
-margin_right = 120.0
 enable_interaction = false
 
 [node name="StatsContainer" type="VBoxContainer" parent="UI/PlayTurnUI/SplitContainer"]

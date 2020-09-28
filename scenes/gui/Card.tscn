@@ -3,7 +3,7 @@
 [ext_resource path="res://scripts/Card.gd" type="Script" id=1]
 [ext_resource path="res://fonts/RockSalt-Regular.ttf" type="DynamicFontData" id=2]
 
-[sub_resource type="StyleBoxFlat" id=1]
+[sub_resource type="StyleBoxFlat" id=3]
 bg_color = Color( 0.788235, 0.752941, 0.568627, 1 )
 border_width_left = 2
 border_width_top = 2
@@ -11,19 +11,19 @@ border_width_right = 2
 border_width_bottom = 2
 border_color = Color( 0, 0, 0, 1 )
 
-[sub_resource type="DynamicFont" id=2]
+[sub_resource type="DynamicFont" id=4]
 size = 14
 outline_color = Color( 0.411765, 0.411765, 0.411765, 1 )
 font_data = ExtResource( 2 )
 
 [node name="Card" type="Panel"]
-margin_left = 432.0
-margin_right = 552.0
+margin_right = 120.0
 margin_bottom = 180.0
 rect_min_size = Vector2( 120, 180 )
 mouse_default_cursor_shape = 2
-size_flags_vertical = 3
-custom_styles/panel = SubResource( 1 )
+size_flags_horizontal = 0
+size_flags_vertical = 0
+custom_styles/panel = SubResource( 3 )
 script = ExtResource( 1 )
 __meta__ = {
 "_edit_use_anchors_": false
@@ -65,7 +65,7 @@ rect_min_size = Vector2( 0, 40 )
 mouse_default_cursor_shape = 2
 size_flags_horizontal = 3
 size_flags_vertical = 3
-custom_fonts/font = SubResource( 2 )
+custom_fonts/font = SubResource( 4 )
 custom_colors/font_color = Color( 0, 0, 0, 1 )
 text = "Card Title is Very Big"
 align = 1

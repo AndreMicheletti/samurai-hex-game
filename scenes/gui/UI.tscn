@@ -1,9 +1,13 @@
-[gd_scene load_steps=7 format=2]
+[gd_scene load_steps=11 format=2]
 
-[ext_resource path="res://graphics/samurai_player.png" type="Texture" id=1]
+[ext_resource path="res://scripts/GameUI.gd" type="Script" id=1]
 [ext_resource path="res://scenes/gui/DamageDisplay.tscn" type="PackedScene" id=2]
 [ext_resource path="res://fonts/RockSalt-Regular.ttf" type="DynamicFontData" id=3]
-[ext_resource path="res://scenes/Card.tscn" type="PackedScene" id=4]
+[ext_resource path="res://resources/cards/card_1.tres" type="Resource" id=4]
+[ext_resource path="res://resources/cards/card_2.tres" type="Resource" id=5]
+[ext_resource path="res://resources/cards/card_4.tres" type="Resource" id=6]
+[ext_resource path="res://resources/cards/card_3.tres" type="Resource" id=7]
+[ext_resource path="res://resources/cards/card_5.tres" type="Resource" id=8]
 
 [sub_resource type="DynamicFont" id=1]
 size = 28
@@ -14,284 +18,596 @@ size = 18
 font_data = ExtResource( 3 )
 
 [node name="UI" type="CanvasLayer"]
+script = ExtResource( 1 )
+card_list = [ ExtResource( 4 ), ExtResource( 5 ), ExtResource( 7 ), ExtResource( 6 ), ExtResource( 8 ) ]
 
-[node name="PlayerControl" type="Control" parent="."]
+[node name="Player1" type="Control" parent="."]
+anchor_right = 1.0
+anchor_bottom = 1.0
+mouse_filter = 2
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Bottom" type="Control" parent="Player1"]
 anchor_top = 1.0
 anchor_right = 1.0
 anchor_bottom = 1.0
-margin_top = -194.0
+margin_top = -140.0
+mouse_filter = 2
 size_flags_horizontal = 3
 __meta__ = {
 "_edit_use_anchors_": false
 }
 
-[node name="HBox" type="HBoxContainer" parent="PlayerControl"]
+[node name="HBox" type="HBoxContainer" parent="Player1/Bottom"]
 anchor_right = 1.0
 anchor_bottom = 1.0
-margin_top = 14.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
 __meta__ = {
 "_edit_use_anchors_": false
 }
 
-[node name="Panel" type="PanelContainer" parent="PlayerControl/HBox"]
-margin_right = 500.0
-margin_bottom = 164.0
-rect_min_size = Vector2( 500, 150 )
+[node name="VBox" type="VBoxContainer" parent="Player1/Bottom/HBox"]
+margin_right = 304.0
+margin_bottom = 145.0
+mouse_filter = 2
+alignment = 2
+
+[node name="Panel" type="PanelContainer" parent="Player1/Bottom/HBox/VBox"]
+margin_right = 304.0
+margin_bottom = 145.0
+mouse_filter = 2
 size_flags_vertical = 0
 
-[node name="HBox" type="HBoxContainer" parent="PlayerControl/HBox/Panel"]
+[node name="HBox" type="HBoxContainer" parent="Player1/Bottom/HBox/VBox/Panel"]
 margin_left = 7.0
 margin_top = 7.0
-margin_right = 493.0
-margin_bottom = 157.0
+margin_right = 297.0
+margin_bottom = 138.0
+mouse_filter = 2
 
-[node name="PlayerAvatar" type="TextureRect" parent="PlayerControl/HBox/Panel/HBox"]
-margin_right = 150.0
-margin_bottom = 150.0
-rect_min_size = Vector2( 150, 150 )
-size_flags_vertical = 3
-texture = ExtResource( 1 )
-expand = true
-stretch_mode = 1
-
-[node name="PlayerInfo" type="VBoxContainer" parent="PlayerControl/HBox/Panel/HBox"]
-margin_left = 154.0
-margin_right = 486.0
-margin_bottom = 150.0
+[node name="PlayerInfo" type="VBoxContainer" parent="Player1/Bottom/HBox/VBox/Panel/HBox"]
+margin_right = 290.0
+margin_bottom = 131.0
+mouse_filter = 2
 size_flags_horizontal = 3
 size_flags_vertical = 3
 
-[node name="NameContainer" type="HBoxContainer" parent="PlayerControl/HBox/Panel/HBox/PlayerInfo"]
-margin_right = 332.0
-margin_bottom = 86.0
+[node name="NameContainer" type="HBoxContainer" parent="Player1/Bottom/HBox/VBox/Panel/HBox/PlayerInfo"]
+margin_right = 290.0
+margin_bottom = 67.0
+mouse_filter = 2
 size_flags_horizontal = 3
 size_flags_vertical = 3
 custom_constants/separation = 80
 
-[node name="Name" type="Label" parent="PlayerControl/HBox/Panel/HBox/PlayerInfo/NameContainer"]
-margin_top = 9.0
+[node name="Name" type="Label" parent="Player1/Bottom/HBox/VBox/Panel/HBox/PlayerInfo/NameContainer"]
 margin_right = 118.0
-margin_bottom = 76.0
+margin_bottom = 67.0
 custom_fonts/font = SubResource( 1 )
 text = "Player"
 valign = 1
 
-[node name="Class" type="Label" parent="PlayerControl/HBox/Panel/HBox/PlayerInfo/NameContainer"]
+[node name="Class" type="Label" parent="Player1/Bottom/HBox/VBox/Panel/HBox/PlayerInfo/NameContainer"]
 margin_left = 198.0
-margin_top = 21.0
+margin_top = 12.0
 margin_right = 290.0
-margin_bottom = 64.0
+margin_bottom = 55.0
+size_flags_horizontal = 3
 custom_fonts/font = SubResource( 2 )
 text = "Samurai"
+align = 2
 valign = 1
 
-[node name="Margin" type="MarginContainer" parent="PlayerControl/HBox/Panel/HBox/PlayerInfo"]
-margin_top = 90.0
-margin_right = 332.0
-margin_bottom = 150.0
+[node name="Margin" type="MarginContainer" parent="Player1/Bottom/HBox/VBox/Panel/HBox/PlayerInfo"]
+margin_top = 71.0
+margin_right = 290.0
+margin_bottom = 131.0
+mouse_filter = 2
 custom_constants/margin_right = 10
 custom_constants/margin_top = 10
 custom_constants/margin_left = 10
 custom_constants/margin_bottom = 10
 
-[node name="DamageCounter" type="HBoxContainer" parent="PlayerControl/HBox/Panel/HBox/PlayerInfo/Margin"]
+[node name="DamageCounter" type="HBoxContainer" parent="Player1/Bottom/HBox/VBox/Panel/HBox/PlayerInfo/Margin"]
 margin_left = 10.0
 margin_top = 10.0
-margin_right = 322.0
+margin_right = 280.0
 margin_bottom = 50.0
 rect_min_size = Vector2( 0, 40 )
+mouse_filter = 2
 size_flags_horizontal = 3
 alignment = 1
 
-[node name="DamageDisplay" parent="PlayerControl/HBox/Panel/HBox/PlayerInfo/Margin/DamageCounter" instance=ExtResource( 2 )]
-margin_left = 70.0
-margin_right = 110.0
+[node name="DamageDisplay" parent="Player1/Bottom/HBox/VBox/Panel/HBox/PlayerInfo/Margin/DamageCounter" instance=ExtResource( 2 )]
+margin_left = 49.0
+margin_right = 89.0
 margin_bottom = 40.0
 rect_min_size = Vector2( 40, 40 )
 size_flags_vertical = 3
 
-[node name="DamageDisplay2" parent="PlayerControl/HBox/Panel/HBox/PlayerInfo/Margin/DamageCounter" instance=ExtResource( 2 )]
-margin_left = 114.0
-margin_right = 154.0
+[node name="DamageDisplay2" parent="Player1/Bottom/HBox/VBox/Panel/HBox/PlayerInfo/Margin/DamageCounter" instance=ExtResource( 2 )]
+margin_left = 93.0
+margin_right = 133.0
 margin_bottom = 40.0
 rect_min_size = Vector2( 40, 40 )
 size_flags_vertical = 3
 
-[node name="DamageDisplay3" parent="PlayerControl/HBox/Panel/HBox/PlayerInfo/Margin/DamageCounter" instance=ExtResource( 2 )]
-margin_left = 158.0
-margin_right = 198.0
+[node name="DamageDisplay3" parent="Player1/Bottom/HBox/VBox/Panel/HBox/PlayerInfo/Margin/DamageCounter" instance=ExtResource( 2 )]
+margin_left = 137.0
+margin_right = 177.0
 margin_bottom = 40.0
 rect_min_size = Vector2( 40, 40 )
 size_flags_vertical = 3
 
-[node name="DamageDisplay4" parent="PlayerControl/HBox/Panel/HBox/PlayerInfo/Margin/DamageCounter" instance=ExtResource( 2 )]
-margin_left = 202.0
-margin_right = 242.0
+[node name="DamageDisplay4" parent="Player1/Bottom/HBox/VBox/Panel/HBox/PlayerInfo/Margin/DamageCounter" instance=ExtResource( 2 )]
+margin_left = 181.0
+margin_right = 221.0
 margin_bottom = 40.0
 rect_min_size = Vector2( 40, 40 )
 size_flags_vertical = 3
 
-[node name="Cards" type="MarginContainer" parent="PlayerControl/HBox"]
-margin_left = 504.0
-margin_right = 1096.0
-margin_bottom = 180.0
-rect_min_size = Vector2( 0, 100 )
-size_flags_horizontal = 3
-size_flags_vertical = 3
-
-[node name="Container" type="HBoxContainer" parent="PlayerControl/HBox/Cards"]
-margin_right = 592.0
-margin_bottom = 180.0
-size_flags_horizontal = 3
-size_flags_vertical = 3
-alignment = 1
-
-[node name="Card" parent="PlayerControl/HBox/Cards/Container" instance=ExtResource( 4 )]
-margin_left = 236.0
-margin_right = 356.0
-size_flags_vertical = 1
-
-[node name="Deck" type="MarginContainer" parent="PlayerControl/HBox"]
-margin_left = 1100.0
-margin_right = 1280.0
-margin_bottom = 180.0
-rect_min_size = Vector2( 180, 100 )
-
-[node name="Player2Control" type="Control" parent="."]
-anchor_right = 1.0
-size_flags_horizontal = 3
-__meta__ = {
-"_edit_use_anchors_": false
-}
-
-[node name="HBox" type="HBoxContainer" parent="Player2Control"]
-anchor_right = 1.0
+[node name="Left" type="Control" parent="Player1"]
 anchor_bottom = 1.0
-margin_top = 14.0
+margin_right = 216.0
+mouse_filter = 2
 __meta__ = {
 "_edit_use_anchors_": false
 }
 
-[node name="Deck" type="MarginContainer" parent="Player2Control/HBox"]
-margin_right = 180.0
-margin_bottom = 180.0
-rect_min_size = Vector2( 180, 100 )
+[node name="Split" type="VSplitContainer" parent="Player1/Left"]
+anchor_bottom = 1.0
+margin_right = 140.0
+mouse_filter = 2
+__meta__ = {
+"_edit_use_anchors_": false
+}
 
-[node name="Cards" type="MarginContainer" parent="Player2Control/HBox"]
-margin_left = 184.0
-margin_right = 776.0
-margin_bottom = 180.0
-rect_min_size = Vector2( 0, 100 )
+[node name="CardsMargin" type="MarginContainer" parent="Player1/Left/Split"]
+margin_right = 140.0
+margin_bottom = 563.0
+mouse_filter = 2
 size_flags_horizontal = 3
 size_flags_vertical = 3
+custom_constants/margin_right = 10
+custom_constants/margin_left = 10
 
-[node name="Container" type="HBoxContainer" parent="Player2Control/HBox/Cards"]
-margin_right = 592.0
-margin_bottom = 180.0
-size_flags_horizontal = 3
-size_flags_vertical = 3
+[node name="CardsContainer" type="VBoxContainer" parent="Player1/Left/Split/CardsMargin"]
+margin_left = 10.0
+margin_right = 130.0
+margin_bottom = 563.0
+mouse_filter = 2
 alignment = 1
 
-[node name="Card" parent="Player2Control/HBox/Cards/Container" instance=ExtResource( 4 )]
-margin_left = 236.0
-margin_right = 356.0
-size_flags_vertical = 1
-
-[node name="Panel" type="PanelContainer" parent="Player2Control/HBox"]
-margin_left = 780.0
-margin_right = 1280.0
-margin_bottom = 164.0
-rect_min_size = Vector2( 500, 150 )
+[node name="0" type="ReferenceRect" parent="Player1/Left/Split/CardsMargin/CardsContainer"]
+margin_top = 7.0
+margin_right = 120.0
+margin_bottom = 187.0
+rect_min_size = Vector2( 120, 180 )
+mouse_filter = 2
+size_flags_horizontal = 0
 size_flags_vertical = 0
 
-[node name="HBox" type="HBoxContainer" parent="Player2Control/HBox/Panel"]
+[node name="1" type="ReferenceRect" parent="Player1/Left/Split/CardsMargin/CardsContainer"]
+margin_top = 191.0
+margin_right = 120.0
+margin_bottom = 371.0
+rect_min_size = Vector2( 120, 180 )
+mouse_filter = 2
+size_flags_horizontal = 0
+size_flags_vertical = 0
+
+[node name="2" type="ReferenceRect" parent="Player1/Left/Split/CardsMargin/CardsContainer"]
+margin_top = 375.0
+margin_right = 120.0
+margin_bottom = 555.0
+rect_min_size = Vector2( 120, 180 )
+mouse_filter = 2
+size_flags_horizontal = 0
+size_flags_vertical = 0
+
+[node name="BottomMargin" type="MarginContainer" parent="Player1/Left/Split"]
+margin_top = 575.0
+margin_right = 140.0
+margin_bottom = 720.0
+mouse_filter = 2
+custom_constants/margin_bottom = 145
+
+[node name="Center" type="Control" parent="Player1"]
+anchor_top = 0.5
+anchor_right = 1.0
+anchor_bottom = 0.5
+margin_left = 136.0
+margin_top = 21.0
+margin_right = -138.0
+margin_bottom = 206.0
+mouse_filter = 2
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="HBox" type="HBoxContainer" parent="Player1/Center"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+size_flags_horizontal = 3
+size_flags_vertical = 3
+alignment = 1
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Cards" type="MarginContainer" parent="Player1/Center/HBox"]
+margin_right = 1006.0
+margin_bottom = 185.0
+size_flags_horizontal = 3
+size_flags_vertical = 3
+custom_constants/margin_right = 5
+custom_constants/margin_left = 10
+custom_constants/margin_bottom = 5
+
+[node name="Container" type="HBoxContainer" parent="Player1/Center/HBox/Cards"]
+margin_left = 10.0
+margin_right = 1001.0
+margin_bottom = 180.0
+size_flags_horizontal = 3
+size_flags_vertical = 3
+alignment = 1
+
+[node name="0" type="ReferenceRect" parent="Player1/Center/HBox/Cards/Container"]
+margin_left = 187.0
+margin_right = 307.0
+margin_bottom = 180.0
+rect_min_size = Vector2( 120, 180 )
+mouse_filter = 2
+size_flags_horizontal = 0
+size_flags_vertical = 0
+
+[node name="1" type="ReferenceRect" parent="Player1/Center/HBox/Cards/Container"]
+margin_left = 311.0
+margin_right = 431.0
+margin_bottom = 180.0
+rect_min_size = Vector2( 120, 180 )
+mouse_filter = 2
+size_flags_horizontal = 0
+size_flags_vertical = 0
+
+[node name="2" type="ReferenceRect" parent="Player1/Center/HBox/Cards/Container"]
+margin_left = 435.0
+margin_right = 555.0
+margin_bottom = 180.0
+rect_min_size = Vector2( 120, 180 )
+mouse_filter = 2
+size_flags_horizontal = 0
+size_flags_vertical = 0
+
+[node name="3" type="ReferenceRect" parent="Player1/Center/HBox/Cards/Container"]
+margin_left = 559.0
+margin_right = 679.0
+margin_bottom = 180.0
+rect_min_size = Vector2( 120, 180 )
+mouse_filter = 2
+size_flags_horizontal = 0
+size_flags_vertical = 0
+
+[node name="4" type="ReferenceRect" parent="Player1/Center/HBox/Cards/Container"]
+margin_left = 683.0
+margin_right = 803.0
+margin_bottom = 180.0
+rect_min_size = Vector2( 120, 180 )
+mouse_filter = 2
+size_flags_horizontal = 0
+size_flags_vertical = 0
+
+[node name="Player2" type="Control" parent="."]
+anchor_right = 1.0
+anchor_bottom = 1.0
+mouse_filter = 2
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Top" type="Control" parent="Player2"]
+anchor_right = 1.0
+margin_bottom = 142.0
+mouse_filter = 2
+size_flags_horizontal = 3
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="HBox" type="HBoxContainer" parent="Player2/Top"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+alignment = 2
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="VBoxContainer" type="VBoxContainer" parent="Player2/Top/HBox"]
+margin_left = 988.0
+margin_right = 1280.0
+margin_bottom = 145.0
+mouse_filter = 2
+alignment = 2
+
+[node name="Panel" type="PanelContainer" parent="Player2/Top/HBox/VBoxContainer"]
+margin_right = 292.0
+margin_bottom = 145.0
+mouse_filter = 2
+size_flags_vertical = 0
+
+[node name="HBox" type="HBoxContainer" parent="Player2/Top/HBox/VBoxContainer/Panel"]
 margin_left = 7.0
 margin_top = 7.0
-margin_right = 493.0
-margin_bottom = 157.0
+margin_right = 285.0
+margin_bottom = 138.0
+mouse_filter = 2
 
-[node name="PlayerAvatar" type="TextureRect" parent="Player2Control/HBox/Panel/HBox"]
-margin_right = 150.0
-margin_bottom = 150.0
-rect_min_size = Vector2( 150, 150 )
-size_flags_vertical = 3
-texture = ExtResource( 1 )
-expand = true
-stretch_mode = 1
-
-[node name="PlayerInfo" type="VBoxContainer" parent="Player2Control/HBox/Panel/HBox"]
-margin_left = 154.0
-margin_right = 486.0
-margin_bottom = 150.0
+[node name="PlayerInfo" type="VBoxContainer" parent="Player2/Top/HBox/VBoxContainer/Panel/HBox"]
+margin_right = 278.0
+margin_bottom = 131.0
+mouse_filter = 2
 size_flags_horizontal = 3
 size_flags_vertical = 3
 
-[node name="NameContainer" type="HBoxContainer" parent="Player2Control/HBox/Panel/HBox/PlayerInfo"]
-margin_right = 332.0
-margin_bottom = 86.0
+[node name="NameContainer" type="HBoxContainer" parent="Player2/Top/HBox/VBoxContainer/Panel/HBox/PlayerInfo"]
+margin_right = 278.0
+margin_bottom = 67.0
+mouse_filter = 2
 size_flags_horizontal = 3
 size_flags_vertical = 3
 custom_constants/separation = 80
 
-[node name="Name" type="Label" parent="Player2Control/HBox/Panel/HBox/PlayerInfo/NameContainer"]
-margin_top = 9.0
-margin_right = 118.0
-margin_bottom = 76.0
+[node name="Name" type="Label" parent="Player2/Top/HBox/VBoxContainer/Panel/HBox/PlayerInfo/NameContainer"]
+margin_right = 106.0
+margin_bottom = 67.0
+size_flags_horizontal = 3
+size_flags_vertical = 1
 custom_fonts/font = SubResource( 1 )
-text = "Player"
+text = "Enemy"
 valign = 1
 
-[node name="Class" type="Label" parent="Player2Control/HBox/Panel/HBox/PlayerInfo/NameContainer"]
-margin_left = 198.0
-margin_top = 21.0
-margin_right = 290.0
-margin_bottom = 64.0
+[node name="Class" type="Label" parent="Player2/Top/HBox/VBoxContainer/Panel/HBox/PlayerInfo/NameContainer"]
+margin_left = 186.0
+margin_top = 12.0
+margin_right = 278.0
+margin_bottom = 55.0
+size_flags_horizontal = 3
 custom_fonts/font = SubResource( 2 )
 text = "Samurai"
+align = 2
 valign = 1
 
-[node name="Margin" type="MarginContainer" parent="Player2Control/HBox/Panel/HBox/PlayerInfo"]
-margin_top = 90.0
-margin_right = 332.0
-margin_bottom = 150.0
+[node name="Margin" type="MarginContainer" parent="Player2/Top/HBox/VBoxContainer/Panel/HBox/PlayerInfo"]
+margin_top = 71.0
+margin_right = 278.0
+margin_bottom = 131.0
+mouse_filter = 2
 custom_constants/margin_right = 10
 custom_constants/margin_top = 10
 custom_constants/margin_left = 10
 custom_constants/margin_bottom = 10
 
-[node name="DamageCounter" type="HBoxContainer" parent="Player2Control/HBox/Panel/HBox/PlayerInfo/Margin"]
+[node name="DamageCounter" type="HBoxContainer" parent="Player2/Top/HBox/VBoxContainer/Panel/HBox/PlayerInfo/Margin"]
 margin_left = 10.0
 margin_top = 10.0
-margin_right = 322.0
+margin_right = 268.0
 margin_bottom = 50.0
 rect_min_size = Vector2( 0, 40 )
+mouse_filter = 2
 size_flags_horizontal = 3
 alignment = 1
 
-[node name="DamageDisplay" parent="Player2Control/HBox/Panel/HBox/PlayerInfo/Margin/DamageCounter" instance=ExtResource( 2 )]
-margin_left = 70.0
-margin_right = 110.0
+[node name="DamageDisplay" parent="Player2/Top/HBox/VBoxContainer/Panel/HBox/PlayerInfo/Margin/DamageCounter" instance=ExtResource( 2 )]
+margin_left = 43.0
+margin_right = 83.0
 margin_bottom = 40.0
 rect_min_size = Vector2( 40, 40 )
 size_flags_vertical = 3
 
-[node name="DamageDisplay2" parent="Player2Control/HBox/Panel/HBox/PlayerInfo/Margin/DamageCounter" instance=ExtResource( 2 )]
-margin_left = 114.0
-margin_right = 154.0
+[node name="DamageDisplay2" parent="Player2/Top/HBox/VBoxContainer/Panel/HBox/PlayerInfo/Margin/DamageCounter" instance=ExtResource( 2 )]
+margin_left = 87.0
+margin_right = 127.0
 margin_bottom = 40.0
 rect_min_size = Vector2( 40, 40 )
 size_flags_vertical = 3
 
-[node name="DamageDisplay3" parent="Player2Control/HBox/Panel/HBox/PlayerInfo/Margin/DamageCounter" instance=ExtResource( 2 )]
-margin_left = 158.0
-margin_right = 198.0
+[node name="DamageDisplay3" parent="Player2/Top/HBox/VBoxContainer/Panel/HBox/PlayerInfo/Margin/DamageCounter" instance=ExtResource( 2 )]
+margin_left = 131.0
+margin_right = 171.0
 margin_bottom = 40.0
 rect_min_size = Vector2( 40, 40 )
 size_flags_vertical = 3
 
-[node name="DamageDisplay4" parent="Player2Control/HBox/Panel/HBox/PlayerInfo/Margin/DamageCounter" instance=ExtResource( 2 )]
-margin_left = 202.0
-margin_right = 242.0
+[node name="DamageDisplay4" parent="Player2/Top/HBox/VBoxContainer/Panel/HBox/PlayerInfo/Margin/DamageCounter" instance=ExtResource( 2 )]
+margin_left = 175.0
+margin_right = 215.0
 margin_bottom = 40.0
 rect_min_size = Vector2( 40, 40 )
 size_flags_vertical = 3
+
+[node name="Right" type="Control" parent="Player2"]
+anchor_left = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+margin_left = -140.0
+mouse_filter = 2
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Split" type="VSplitContainer" parent="Player2/Right"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+mouse_filter = 2
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="TopMargin" type="MarginContainer" parent="Player2/Right/Split"]
+margin_right = 140.0
+margin_bottom = 145.0
+mouse_filter = 2
+custom_constants/margin_bottom = 145
+
+[node name="CardsMargin" type="MarginContainer" parent="Player2/Right/Split"]
+margin_top = 157.0
+margin_right = 140.0
+margin_bottom = 720.0
+mouse_filter = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+custom_constants/margin_right = 10
+custom_constants/margin_left = 10
+
+[node name="CardsContainer" type="VBoxContainer" parent="Player2/Right/Split/CardsMargin"]
+margin_left = 10.0
+margin_right = 130.0
+margin_bottom = 563.0
+mouse_filter = 2
+alignment = 1
+
+[node name="2" type="ReferenceRect" parent="Player2/Right/Split/CardsMargin/CardsContainer"]
+margin_top = 7.0
+margin_right = 120.0
+margin_bottom = 187.0
+rect_min_size = Vector2( 120, 180 )
+size_flags_horizontal = 0
+size_flags_vertical = 0
+
+[node name="1" type="ReferenceRect" parent="Player2/Right/Split/CardsMargin/CardsContainer"]
+margin_top = 191.0
+margin_right = 120.0
+margin_bottom = 371.0
+rect_min_size = Vector2( 120, 180 )
+size_flags_horizontal = 0
+size_flags_vertical = 0
+
+[node name="0" type="ReferenceRect" parent="Player2/Right/Split/CardsMargin/CardsContainer"]
+margin_top = 375.0
+margin_right = 120.0
+margin_bottom = 555.0
+rect_min_size = Vector2( 120, 180 )
+size_flags_horizontal = 0
+size_flags_vertical = 0
+
+[node name="Center" type="Control" parent="Player2"]
+anchor_top = 0.5
+anchor_right = 1.0
+anchor_bottom = 0.5
+margin_left = 136.0
+margin_top = -216.0
+margin_right = -138.0
+margin_bottom = -31.0
+mouse_filter = 2
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="HBox" type="HBoxContainer" parent="Player2/Center"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+size_flags_horizontal = 3
+size_flags_vertical = 3
+alignment = 1
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Cards" type="MarginContainer" parent="Player2/Center/HBox"]
+margin_right = 1006.0
+margin_bottom = 185.0
+size_flags_horizontal = 3
+size_flags_vertical = 3
+custom_constants/margin_right = 5
+custom_constants/margin_left = 10
+custom_constants/margin_bottom = 5
+
+[node name="Container" type="HBoxContainer" parent="Player2/Center/HBox/Cards"]
+margin_left = 10.0
+margin_right = 1001.0
+margin_bottom = 180.0
+size_flags_horizontal = 3
+size_flags_vertical = 3
+alignment = 1
+
+[node name="4" type="ReferenceRect" parent="Player2/Center/HBox/Cards/Container"]
+margin_left = 187.0
+margin_right = 307.0
+margin_bottom = 180.0
+rect_min_size = Vector2( 120, 180 )
+mouse_filter = 2
+size_flags_horizontal = 0
+size_flags_vertical = 0
+
+[node name="3" type="ReferenceRect" parent="Player2/Center/HBox/Cards/Container"]
+margin_left = 311.0
+margin_right = 431.0
+margin_bottom = 180.0
+rect_min_size = Vector2( 120, 180 )
+mouse_filter = 2
+size_flags_horizontal = 0
+size_flags_vertical = 0
+
+[node name="2" type="ReferenceRect" parent="Player2/Center/HBox/Cards/Container"]
+margin_left = 435.0
+margin_right = 555.0
+margin_bottom = 180.0
+rect_min_size = Vector2( 120, 180 )
+mouse_filter = 2
+size_flags_horizontal = 0
+size_flags_vertical = 0
+
+[node name="1" type="ReferenceRect" parent="Player2/Center/HBox/Cards/Container"]
+margin_left = 559.0
+margin_right = 679.0
+margin_bottom = 180.0
+rect_min_size = Vector2( 120, 180 )
+mouse_filter = 2
+size_flags_horizontal = 0
+size_flags_vertical = 0
+
+[node name="0" type="ReferenceRect" parent="Player2/Center/HBox/Cards/Container"]
+margin_left = 683.0
+margin_right = 803.0
+margin_bottom = 180.0
+rect_min_size = Vector2( 120, 180 )
+mouse_filter = 2
+size_flags_horizontal = 0
+size_flags_vertical = 0
+
+[node name="Tween" type="Tween" parent="."]
+
+[node name="TopDeal" type="ReferenceRect" parent="."]
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+margin_left = -60.0
+margin_top = -560.049
+margin_right = 60.0
+margin_bottom = -380.049
+rect_min_size = Vector2( 120, 180 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="BottomDeal" type="ReferenceRect" parent="."]
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+margin_left = -60.0
+margin_top = 383.825
+margin_right = 60.0
+margin_bottom = 563.825
+rect_min_size = Vector2( 120, 180 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
