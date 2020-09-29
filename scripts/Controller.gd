@@ -53,7 +53,12 @@ func _process_play(delta):
 func play_turn(turn):
 	hand = []
 	ready = false
-	character.set_turn_stats(get_card(turn))
+	set_turn_stats(turn)
+
+func set_turn_stats(turn):
+	var card = get_card(turn)
+	if card:
+		character.set_turn_stats(card)
 
 func get_card(turn):
 	if turn >= cards_selected.size():

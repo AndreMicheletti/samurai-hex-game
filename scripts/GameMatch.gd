@@ -155,6 +155,8 @@ func set_turn_order():
 	var result = get_alive_controllers()
 	result.sort_custom(self, "sort_by_card_speed")
 	controller_turn_order = result
+	for ctr in controller_turn_order:
+		ctr.set_turn_stats(play_turn)
 
 func sort_by_health(ctr1 : Controller, ctr2 : Controller):
 	# return LEAST DAMAGE to MOST DAMAGE
