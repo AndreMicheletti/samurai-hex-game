@@ -30,10 +30,10 @@ func _ready():
 	for x in card_list:
 		yield(player_deal(player1_center_cards, bottom_deal, x), "completed")
 	for x in card_list:
-		yield(player_deal(player2_center_cards, top_deal, x), "completed")
+		yield(player_deal(player2_center_cards, top_deal, x, true), "completed")
 
 
-func player_deal(center_cards, deal_ref, card_res : CardResource):
+func player_deal(center_cards, deal_ref, card_res : CardResource, flip = false):
 	
 	var new_card = card.instance()
 	var target_index = get_player_center_cards_count(center_cards)
@@ -43,6 +43,8 @@ func player_deal(center_cards, deal_ref, card_res : CardResource):
 	var target_pos = Vector2(0, 0)
 
 	center_cards.get_child(target_index).add_child(new_card)
+	if flip:
+		new_card._flip()
 	new_card.set_resource(card_res)
 	new_card.connect("card_selected", self, "on_card_selected")
 	new_card.rect_position = start_pos

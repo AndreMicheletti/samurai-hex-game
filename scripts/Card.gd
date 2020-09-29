@@ -29,7 +29,6 @@ func _ready():
 	$Index.visible = false
 	$Column.visible = true
 	$Down.visible = false
-	flip()
 
 func get_resource():
 	return card_resource
@@ -76,7 +75,7 @@ func on_pressed():
 	if enable_interaction:
 		emit_signal("card_selected", self)
 
-func flip():
+func _flip():
 	match side:
 		Side.UP:
 			$Column.visible = false
@@ -86,3 +85,13 @@ func flip():
 			$Column.visible = true
 			$Down.visible = false
 			side = Side.UP
+
+func flip():
+	match side:
+		Side.UP:
+			$anim.play("flip_back")
+		Side.DOWN:
+			$anim.play("flip_front")
+	yield($anim, "animation_finished")
+	self.rect_position.x = 0
+	self.rect_scale = Vector2(1, 1)
