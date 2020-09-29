@@ -162,6 +162,15 @@ func _on_Button_pressed():
 		move_cards_to_slot(player2_center_cards, top_deal, player2_right_cards), 
 		"completed")
 	emit_signal("accepted_cards", card_resources)
+	hide_centers()
+
+func hide_centers():
+	$Player1/Center.rect_position.y = -1000
+	$Player2/Center.rect_position.y = -1000
+
+func show_centers():
+	$Player1/Center.rect_position.y = 381
+	$Player2/Center.rect_position.y = 144
 
 func get_player1_controller():
 	return game_match.player1_controller
@@ -176,6 +185,7 @@ func sort_by_card_index(node1 : Card, node2 : Card):
 
 func deal_cards():
 	deactivate_all_cards()
+	show_centers()
 	for x in get_player1_controller().hand:
 		yield(player_deal(player1_center_cards, bottom_deal, x), "completed")
 	for x in get_player2_controller().hand:

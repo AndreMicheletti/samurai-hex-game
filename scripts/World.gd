@@ -1,25 +1,32 @@
-extends Node
+extends Node2D
 
 const HEX_WIDTH = 50
 const HEX_HEIGHT = 50
 
 var HexGrid = preload("res://HexGrid.gd").new()
 var HexCell = preload("res://HexCell.gd")
-onready var tileset = $Tileset
 
+onready var tileset = $Tileset
 onready var highlights = $Highlights
 
-export var world_size = 10
+onready var window_size = get_viewport().size
 
 export(Vector2) var worldZero = Vector2(0, 0)
 
+export var world_size = 10
+
+var click_enabled = false
+
+signal pressed_hex
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
+	set_click_enabled(false)
 	HexGrid.hex_scale = Vector2(HEX_WIDTH, HEX_HEIGHT)
 	generate_world(world_size)
 	for charact in get_tree().get_nodes_in_group("Character"):
 		charact.teleport_to(charact.hex_pos.x, charact.hex_pos.y)
+	# $Camera2D.position = get_grid().get_hex_center(worldZero)
 
 func get_grid():
 	#HexGrid.remove_all_obstacles()
@@ -57,14 +64,22 @@ func is_outside_world(hex_pos : Vector2):
 		return true
 	return false
 
-#func _on_Area2D_input_event(viewport, event, shape_idx):
-	#if "position" in event:
-		#var relative_pos = self.transform.affine_inverse() * event.global_position
-		# Display the coords used
-		#if area_coords != null:
-		#	area_coords.text = str(relative_pos)
-		#if hex_coords != null:
-		#	hex_coords.text = str(HexGrid.get_hex_at(relative_pos).axial_coords)
-		# Snap the highlight to the nearest grid cell
-		#if highlight != null:
-		#	highlight.position = HexGrid.get_hex_center(HexGrid.get_hex_at(relative_pos))
+func set_click_enabled(value):
+	$Highlight.visible = value
+	click_enabled = value
+
+func _unhandled_input(event):
+	if click_enabled:
+		if 'position' in event:
+			var relative_pos = self.transform.affine_inverse() * event.position
+			relative_pos.x -= (window_size.x / 2) 
+			relative_pos.y -= (window_size.y / 2)
+			relative_pos.x *= $Camera2D.zoom.x
+			relative_pos.y *= $Camera2D.zoom.y
+			var hex = get_grid().get_hex_at(relative_pos)
+			
+			$Highlight.position = get_grid().get_hex_center(hex)
+			if event is InputEventScreenTouch:
+				print("SCREEN TOUCH")
+				print(event)
+				emit_signal("pressed_hex", hex)

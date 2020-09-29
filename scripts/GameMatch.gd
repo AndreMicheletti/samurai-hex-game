@@ -102,6 +102,7 @@ func _process_debug():
 #		set_state_draw()
 
 func set_state_draw():
+	World.set_click_enabled(false)
 	state = MatchState.DRAW
 	reset_controllers_ready()
 	player1_controller.draw_hand()
@@ -110,15 +111,13 @@ func set_state_draw():
 	set_state_choose_card()
 
 func set_state_choose_card():
+	World.set_click_enabled(false)
 	reset_controllers_ready()
 	state = MatchState.CHOOSE_CARD
 	player2_controller.choose_cards()
 
-func on_player_accept_cards(card_resources):
-	player1_controller.cards_selected = card_resources
-	set_state_play_turn()
-
 func set_state_play_turn():
+	World.set_click_enabled(true)
 	reset_controllers_ready()
 	state = MatchState.PLAY_TURN
 	emit_signal("play_state")
@@ -184,6 +183,10 @@ func set_ctr_process(value : bool):
 func on_controller_defeated(ctr):
 	if ctr.name == "PlayerController":
 		reset_game()
+
+func on_player_accept_cards(card_resources):
+	player1_controller.cards_selected = card_resources
+	set_state_play_turn()
 
 func reset_game():
 	get_tree().reload_current_scene()

@@ -18,6 +18,7 @@ size = 18
 font_data = ExtResource( 7 )
 
 [node name="GameUI" type="CanvasLayer"]
+process_priority = 5
 script = ExtResource( 1 )
 card_list = [ ExtResource( 4 ), ExtResource( 3 ), ExtResource( 5 ), ExtResource( 2 ), ExtResource( 6 ) ]
 
@@ -265,6 +266,7 @@ rect_min_size = Vector2( 120, 180 )
 mouse_filter = 2
 size_flags_horizontal = 0
 size_flags_vertical = 0
+editor_only = false
 
 [node name="3" type="ReferenceRect" parent="Player2/Center/HBox/Cards/Container"]
 margin_left = 311.0
@@ -274,6 +276,7 @@ rect_min_size = Vector2( 120, 180 )
 mouse_filter = 2
 size_flags_horizontal = 0
 size_flags_vertical = 0
+editor_only = false
 
 [node name="2" type="ReferenceRect" parent="Player2/Center/HBox/Cards/Container"]
 margin_left = 435.0
@@ -283,6 +286,7 @@ rect_min_size = Vector2( 120, 180 )
 mouse_filter = 2
 size_flags_horizontal = 0
 size_flags_vertical = 0
+editor_only = false
 
 [node name="1" type="ReferenceRect" parent="Player2/Center/HBox/Cards/Container"]
 margin_left = 559.0
@@ -292,6 +296,7 @@ rect_min_size = Vector2( 120, 180 )
 mouse_filter = 2
 size_flags_horizontal = 0
 size_flags_vertical = 0
+editor_only = false
 
 [node name="0" type="ReferenceRect" parent="Player2/Center/HBox/Cards/Container"]
 margin_left = 683.0
@@ -301,6 +306,7 @@ rect_min_size = Vector2( 120, 180 )
 mouse_filter = 2
 size_flags_horizontal = 0
 size_flags_vertical = 0
+editor_only = false
 
 [node name="Player1" type="Control" parent="."]
 anchor_right = 1.0
@@ -543,8 +549,10 @@ margin_right = 307.0
 margin_bottom = 180.0
 rect_min_size = Vector2( 120, 180 )
 mouse_filter = 2
+mouse_default_cursor_shape = 8
 size_flags_horizontal = 0
 size_flags_vertical = 0
+editor_only = false
 
 [node name="1" type="ReferenceRect" parent="Player1/Center/HBox/Cards/Container"]
 margin_left = 311.0
@@ -552,8 +560,10 @@ margin_right = 431.0
 margin_bottom = 180.0
 rect_min_size = Vector2( 120, 180 )
 mouse_filter = 2
+mouse_default_cursor_shape = 8
 size_flags_horizontal = 0
 size_flags_vertical = 0
+editor_only = false
 
 [node name="2" type="ReferenceRect" parent="Player1/Center/HBox/Cards/Container"]
 margin_left = 435.0
@@ -561,8 +571,10 @@ margin_right = 555.0
 margin_bottom = 180.0
 rect_min_size = Vector2( 120, 180 )
 mouse_filter = 2
+mouse_default_cursor_shape = 8
 size_flags_horizontal = 0
 size_flags_vertical = 0
+editor_only = false
 
 [node name="3" type="ReferenceRect" parent="Player1/Center/HBox/Cards/Container"]
 margin_left = 559.0
@@ -570,8 +582,10 @@ margin_right = 679.0
 margin_bottom = 180.0
 rect_min_size = Vector2( 120, 180 )
 mouse_filter = 2
+mouse_default_cursor_shape = 8
 size_flags_horizontal = 0
 size_flags_vertical = 0
+editor_only = false
 
 [node name="4" type="ReferenceRect" parent="Player1/Center/HBox/Cards/Container"]
 margin_left = 683.0
@@ -579,8 +593,10 @@ margin_right = 803.0
 margin_bottom = 180.0
 rect_min_size = Vector2( 120, 180 )
 mouse_filter = 2
+mouse_default_cursor_shape = 8
 size_flags_horizontal = 0
 size_flags_vertical = 0
+editor_only = false
 
 [node name="Play" type="Control" parent="Player1/Center"]
 anchor_left = 0.5
@@ -615,6 +631,7 @@ margin_top = -560.049
 margin_right = 60.0
 margin_bottom = -380.049
 rect_min_size = Vector2( 120, 180 )
+mouse_filter = 2
 __meta__ = {
 "_edit_use_anchors_": false
 }
@@ -629,6 +646,7 @@ margin_top = 383.825
 margin_right = 60.0
 margin_bottom = 563.825
 rect_min_size = Vector2( 120, 180 )
+mouse_filter = 2
 __meta__ = {
 "_edit_use_anchors_": false
 }
