@@ -14,10 +14,13 @@ onready var attack = $Column/Texts/Attack/label
 onready var defense = $Column/Texts/Defense/label
 onready var speed = $Column/Texts/Speed/label
 
+onready var border_particles = $BorderParticles
+
 signal card_selected
 
 export var enable_interaction = false
 var selected = false
+var active = false
 var card_index = null
 var side = Side.UP
 
@@ -25,10 +28,11 @@ var press_delay = 0
 var has_mouse = false
 
 func _ready():
-	add_to_group("UI_CARD")
+	# add_to_group("UI_CARD")
 	$Index.visible = false
 	$Column.visible = true
 	$Down.visible = false
+	border_particles.emitting = false
 
 func get_resource():
 	return card_resource
@@ -95,3 +99,12 @@ func flip():
 	yield($anim, "animation_finished")
 	self.rect_position.x = 0
 	self.rect_scale = Vector2(1, 1)
+
+func reveal_and_activate():
+	if side == Side.DOWN:
+		yield(flip(), "completed")
+	set_active(true)
+
+func set_active(value):
+	self.active = value
+	border_particles.emitting = value
