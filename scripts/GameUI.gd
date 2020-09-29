@@ -15,6 +15,7 @@ onready var player2_center_cards = $Player2/Center/HBox/Cards/Container
 onready var player2_right_cards = $Player2/Right/Split/CardsMargin/CardsContainer
 
 onready var card = preload("res://scenes/gui/Card.tscn")
+onready var dmg_display = preload("res://scenes/gui/DamageDisplay.tscn")
 
 export(Array, Resource) var card_list
 
@@ -230,3 +231,17 @@ func on_advance_turn(turn_controller):
 		yield(
 			player2_right_cards.get_child(play_turn).get_child(0).reveal_and_activate(),
 		"completed")
+
+func update_damage_counters():
+	var p1_display = $Player1/Bottom/HBox/VBox/Panel/HBox/PlayerInfo/Margin/DamageCounter
+	var p2_display = $Player2/Top/HBox/VBoxContainer/Panel/HBox/PlayerInfo/Margin/DamageCounter
+	for node in p1_display.get_children():
+		node.queue_free()
+	for node in p2_display.get_children():
+		node.queue_free()
+	for i in range(get_player1_controller().character.get_remaining_health()):
+		var dmg = dmg_display.instance()
+		p1_display.add_child(dmg)
+	for i in range(get_player2_controller().character.get_remaining_health()):
+		var dmg = dmg_display.instance()
+		p2_display.add_child(dmg)

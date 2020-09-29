@@ -104,6 +104,9 @@ func clear_highlights():
 	self.game_match.clear_highlights()
 
 func draw_hand():
+	cards_selected = []
+	character.reset_turn_stats()
+	randomize()
 	for i in range(5):
 		hand.append(CardDeck[randi() % CardDeck.size()])
 	print("CARDS DRAWN FOR ", self.name)

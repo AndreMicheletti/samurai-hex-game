@@ -73,10 +73,8 @@ func teleport_to(x, y):
 	hex_pos = Vector2(x, y)
 	self.position = get_world().get_grid().get_hex_center(hex_pos)
 
-
 func get_cell():
 	return HexCell.new(hex_pos)
-
 
 func set_turn_stats(card : CardResource):
 	print("SET TURN STATS ", card.card_title)
@@ -84,3 +82,13 @@ func set_turn_stats(card : CardResource):
 	turn_atk = card.card_atk
 	turn_def = card.card_def
 	moved = 0
+
+func reset_turn_stats():
+	print("SET RESET TURN STATS")
+	turn_mov = 0
+	turn_atk = 0
+	turn_def = 0
+	moved = 0
+
+func get_remaining_health():
+	return DamageLimit - damage_counter

@@ -51,6 +51,9 @@ func init_ui():
 	# connect signals
 	game_ui_node.connect("accepted_cards", self, "on_player_accept_cards")
 	game_ui_node.connect("advance_turn", self, "on_advance_turn")
+	player1_controller.character.connect("character_damaged", game_ui_node, "update_damage_counters")
+	player2_controller.character.connect("character_damaged", game_ui_node, "update_damage_counters")
+	game_ui_node.update_damage_counters()
 
 func get_controllers():
 	return get_tree().get_nodes_in_group("Controller")
@@ -81,7 +84,8 @@ func _process(delta):
 		# _process_choose_card()
 		pass
 	elif state == MatchState.PLAY_TURN:
-		_process_play(delta)
+		# _process_play(delta)
+		pass
 
 func _process_debug():
 	debug_label.text = "Game State: " + str(state) + "\n"
@@ -93,9 +97,9 @@ func _process_debug():
 #	if controllers_ready():
 #		set_state_choose_card()
 
-func _process_play(delta):
-	if controllers_ready():
-		set_state_draw()
+#func _process_play(delta):
+#	if controllers_ready():
+#		set_state_draw()
 
 func set_state_draw():
 	state = MatchState.DRAW
