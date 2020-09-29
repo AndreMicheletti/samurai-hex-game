@@ -3,29 +3,23 @@ extends Controller
 enum BehaviourMode {RANDOM, BALANCED, AGGRESSIVE, DEFENSIVE}
 export(BehaviourMode) var behaviour_mode = BehaviourMode.RANDOM
 
+var cards_selected_indexes = []
 
-func _process_draw():
-	cards_selected = []
-	character.moved = 0
-	if hand.size() <= 0:
-		draw_hand()
-
-
-func _process_choose_card():
-	if not ready:
-		match behaviour_mode:
-			BehaviourMode.RANDOM:
-				for i in range(game_match.TURNS_BY_HAND):
-					cards_selected.append(hand[randi() % hand.size()])
-		ready = true
-		print("Enemy Controller chose cards")
+func choose_cards():
+	cards_selected_indexes = []
+	match behaviour_mode:
+		BehaviourMode.RANDOM:
+			for i in range(game_match.TURNS_BY_HAND):
+				cards_selected.append(hand[i])
+				cards_selected_indexes.append(i)
+	return true
 
 func _process_play(delta):
 	if not active:
 		return
 
-	if character.turn_mov - character.moved <= 0:
-		emit_signal("turn_ended")
+	#if character.turn_mov - character.moved <= 0:
+	#	emit_signal("turn_ended")
 
 func get_target_character():
 	var controllers = get_tree().get_nodes_in_group("Controller")
@@ -39,6 +33,10 @@ func play_turn(turn):
 	.play_turn(turn)
 	clear_highlights()
 	show_possible_moves()
+	if not active:
+		return
+	
+	yield(get_tree().create_timer(0.5), "timeout")
 	
 	# select path
 	var moves = character.turn_mov - character.moved

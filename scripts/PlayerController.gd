@@ -1,17 +1,6 @@
 extends Controller
 
 
-func _process_draw():
-	cards_selected = []
-	character.moved = 0
-	if hand.size() <= 0:
-		draw_hand()
-
-
-func _process_choose_card():
-	ready = cards_selected.size() >= game_match.TURNS_BY_HAND
-
-
 func _process_play(delta):
 	if not active:
 		return
@@ -30,6 +19,7 @@ func play_turn(turn):
 
 
 func move_hint_clicked(move_hex_pos, move_cost):
+	print("MOVE HINT CLICKED FOR PLAYER")
 	character.move_to(move_hex_pos.x, move_hex_pos.y)
 	character.moved += move_cost
 	clear_highlights()

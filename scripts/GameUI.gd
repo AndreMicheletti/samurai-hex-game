@@ -1,6 +1,5 @@
 extends CanvasLayer
 
-
 onready var tween = $Tween
 onready var Player1 = $Player1
 onready var Player2 = $Player2
@@ -19,8 +18,7 @@ onready var card = preload("res://scenes/gui/Card.tscn")
 
 export(Array, Resource) var card_list
 
-var player1_controller
-var player2_controller
+var game_match
 
 signal card_selected
 signal card_deselected
@@ -30,12 +28,6 @@ signal accepted_cards
 # Called when the node enters the scene tree for the first time.
 func _ready():
 	player1_play_button.visible = false
-	for x in card_list:
-		yield(player_deal(player1_center_cards, bottom_deal, x), "completed")
-	for x in card_list:
-		yield(player_deal(player2_center_cards, top_deal, x, true), "completed")
-	for card in get_not_selected_cards(player1_center_cards):
-		card.enable_interaction = true
 
 
 func player_deal(center_cards, deal_node, card_res : CardResource, flip = false):
@@ -150,11 +142,15 @@ func on_card_selected(card_node : Card):
 
 func _on_Button_pressed():
 	player1_play_button.visible = false
+	# get the selected cards CardResource
 	var card_resources = []
-	for card_node in get_selected_cards(player1_center_cards):
+	var player_selected_cards = get_selected_cards(player1_center_cards)
+	player_selected_cards.sort_custom(self, "sort_by_card_index")
+	for card_node in player_selected_cards:
 		card_resources.append(card_node.get_resource())
 	print("ACCEPTED CARDS ", card_resources)
-	for i in range(0, 3):
+	# get from EnemyController which cards the UI selected
+	for i in get_player2_controller().cards_selected_indexes:
 		var enemy_card = player2_center_cards.get_child(i).get_child(0)
 		enemy_card.selected = true
 		enemy_card.card_index = i
@@ -165,10 +161,72 @@ func _on_Button_pressed():
 		move_cards_to_slot(player2_center_cards, top_deal, player2_right_cards), 
 		"completed")
 	emit_signal("accepted_cards", card_resources)
-	
+
+func get_player1_controller():
+	return game_match.player1_controller
+
+func get_player2_controller():
+	return game_match.player2_controller
 
 func sort_by_card_index(node1 : Card, node2 : Card):
 	if node1.card_index < node2.card_index:
 		return true
 	return false
 
+func deal_cards():
+	deactivate_all_cards()
+	for x in get_player1_controller().hand:
+		yield(player_deal(player1_center_cards, bottom_deal, x), "completed")
+	for x in get_player2_controller().hand:
+		yield(player_deal(player2_center_cards, top_deal, x, true), "completed")
+	for card in get_not_selected_cards(player1_center_cards):
+		card.enable_interaction = true
+
+func clear_side_cards():
+	deactivate_all_cards()
+	for card_ref in player1_left_cards.get_children():
+		var card_node = card_ref.get_child(0)
+		if card_node:
+			var start_pos = card_node.rect_position
+			var target_pos = Vector2(-300, start_pos.y)
+			$Tween.interpolate_property(
+				card_node, "rect_position", start_pos, target_pos, 0.5,
+				Tween.TRANS_BACK, Tween.EASE_OUT, 0.0
+			)
+			$Tween.start()
+			yield($Tween, "tween_completed")
+			card_node.queue_free()
+
+	for card_ref in player2_right_cards.get_children():
+		var card_node = card_ref.get_child(0)
+		if card_node:
+			var start_pos = card_node.rect_position
+			var target_pos = Vector2(start_pos.x + 300, start_pos.y)
+			$Tween.interpolate_property(
+				card_node, "rect_position", start_pos, target_pos, 0.5,
+				Tween.TRANS_BACK, Tween.EASE_OUT, 0.0
+			)
+			$Tween.start()
+			yield($Tween, "tween_completed")
+			card_node.queue_free()
+
+func deactivate_all_cards():
+	for card_slot in player1_left_cards.get_children():
+		if card_slot.get_child(0):
+			card_slot.get_child(0).set_active(false)
+	for card_slot in player2_right_cards.get_children():
+		if card_slot.get_child(0):
+			card_slot.get_child(0).set_active(false)
+
+func on_advance_turn(turn_controller):
+	print("ON ADVANCE TURN!! ", turn_controller.name)
+	deactivate_all_cards()
+	var play_turn = game_match.play_turn
+	if turn_controller == get_player1_controller():
+		yield(
+			player1_left_cards.get_child(play_turn).get_child(0).reveal_and_activate(),
+		"completed")
+	else:
+		yield(
+			player2_right_cards.get_child(play_turn).get_child(0).reveal_and_activate(),
+		"completed")

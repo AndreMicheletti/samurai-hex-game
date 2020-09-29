@@ -14,7 +14,12 @@ onready var attack = $Column/Texts/Attack/label
 onready var defense = $Column/Texts/Defense/label
 onready var speed = $Column/Texts/Speed/label
 
-onready var border_particles = $BorderParticles
+# onready var border_particles = $BorderParticles
+
+onready var left_particles = $Particles/Left
+onready var top_particles = $Particles/Top
+onready var bottom_particles = $Particles/Bottom
+onready var right_particles = $Particles/Right
 
 signal card_selected
 
@@ -32,7 +37,7 @@ func _ready():
 	$Index.visible = false
 	$Column.visible = true
 	$Down.visible = false
-	border_particles.emitting = false
+	set_particles(false)
 
 func get_resource():
 	return card_resource
@@ -104,7 +109,14 @@ func reveal_and_activate():
 	if side == Side.DOWN:
 		yield(flip(), "completed")
 	set_active(true)
+	yield(get_tree().create_timer(0.3), "timeout")
 
 func set_active(value):
 	self.active = value
-	border_particles.emitting = value
+	set_particles(value)
+
+func set_particles(value):
+	top_particles.emitting = value
+	left_particles.emitting = value
+	bottom_particles.emitting = value
+	right_particles.emitting = value

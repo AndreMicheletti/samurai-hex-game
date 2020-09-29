@@ -23,11 +23,17 @@ _global_script_classes=[ {
 "class": "Controller",
 "language": "GDScript",
 "path": "res://scripts/Controller.gd"
+}, {
+"base": "Node",
+"class": "GameMatch",
+"language": "GDScript",
+"path": "res://scripts/GameMatch.gd"
 } ]
 _global_script_class_icons={
 "Card": "",
 "CardResource": "",
-"Controller": ""
+"Controller": "",
+"GameMatch": ""
 }
 
 [application]
