@@ -57,7 +57,7 @@ func play_turn(turn):
 
 func set_turn_stats(turn):
 	var card = get_card(turn)
-	if card:
+	if card and character:
 		character.set_turn_stats(card)
 
 func get_card(turn):
@@ -97,7 +97,7 @@ func possible_moves():
 		if character.get_world().is_outside_world(cell_coords):
 			continue
 		var path = character.get_world().find_path(character.hex_pos, cell_coords)
-		if path.size() - 1 > moves:
+		if path.size() - 1 > moves or path.size() == 0:
 			continue
 		result.append([cell_coords, path.size() - 1])
 	return result
@@ -118,6 +118,6 @@ func draw_hand():
 
 func on_character_died():
 	print("character died")
-	character.queue_free()
+	character.visible = false
 	defeated = true
 	emit_signal("defeated", self)

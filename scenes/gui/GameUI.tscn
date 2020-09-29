@@ -266,7 +266,6 @@ rect_min_size = Vector2( 120, 180 )
 mouse_filter = 2
 size_flags_horizontal = 0
 size_flags_vertical = 0
-editor_only = false
 
 [node name="3" type="ReferenceRect" parent="Player2/Center/HBox/Cards/Container"]
 margin_left = 311.0
@@ -276,7 +275,6 @@ rect_min_size = Vector2( 120, 180 )
 mouse_filter = 2
 size_flags_horizontal = 0
 size_flags_vertical = 0
-editor_only = false
 
 [node name="2" type="ReferenceRect" parent="Player2/Center/HBox/Cards/Container"]
 margin_left = 435.0
@@ -286,7 +284,6 @@ rect_min_size = Vector2( 120, 180 )
 mouse_filter = 2
 size_flags_horizontal = 0
 size_flags_vertical = 0
-editor_only = false
 
 [node name="1" type="ReferenceRect" parent="Player2/Center/HBox/Cards/Container"]
 margin_left = 559.0
@@ -296,7 +293,6 @@ rect_min_size = Vector2( 120, 180 )
 mouse_filter = 2
 size_flags_horizontal = 0
 size_flags_vertical = 0
-editor_only = false
 
 [node name="0" type="ReferenceRect" parent="Player2/Center/HBox/Cards/Container"]
 margin_left = 683.0
@@ -306,7 +302,6 @@ rect_min_size = Vector2( 120, 180 )
 mouse_filter = 2
 size_flags_horizontal = 0
 size_flags_vertical = 0
-editor_only = false
 
 [node name="Player1" type="Control" parent="."]
 anchor_right = 1.0
@@ -552,7 +547,6 @@ mouse_filter = 2
 mouse_default_cursor_shape = 8
 size_flags_horizontal = 0
 size_flags_vertical = 0
-editor_only = false
 
 [node name="1" type="ReferenceRect" parent="Player1/Center/HBox/Cards/Container"]
 margin_left = 311.0
@@ -563,7 +557,6 @@ mouse_filter = 2
 mouse_default_cursor_shape = 8
 size_flags_horizontal = 0
 size_flags_vertical = 0
-editor_only = false
 
 [node name="2" type="ReferenceRect" parent="Player1/Center/HBox/Cards/Container"]
 margin_left = 435.0
@@ -574,7 +567,6 @@ mouse_filter = 2
 mouse_default_cursor_shape = 8
 size_flags_horizontal = 0
 size_flags_vertical = 0
-editor_only = false
 
 [node name="3" type="ReferenceRect" parent="Player1/Center/HBox/Cards/Container"]
 margin_left = 559.0
@@ -585,7 +577,6 @@ mouse_filter = 2
 mouse_default_cursor_shape = 8
 size_flags_horizontal = 0
 size_flags_vertical = 0
-editor_only = false
 
 [node name="4" type="ReferenceRect" parent="Player1/Center/HBox/Cards/Container"]
 margin_left = 683.0
@@ -596,7 +587,6 @@ mouse_filter = 2
 mouse_default_cursor_shape = 8
 size_flags_horizontal = 0
 size_flags_vertical = 0
-editor_only = false
 
 [node name="Play" type="Control" parent="Player1/Center"]
 anchor_left = 0.5

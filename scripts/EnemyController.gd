@@ -74,7 +74,7 @@ func show_possible_moves():
 		if character.get_world().is_outside_world(cell_coords):
 			continue
 		var path = character.get_world().find_path(character.hex_pos, cell_coords)
-		if path.size() - 1 > moves:
+		if path.size() - 1 > moves or path.size() == 0:
 			continue
 		var instance = MoveHint.instance()
 		instance.hex_pos = cell_coords
