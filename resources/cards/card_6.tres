@@ -4,9 +4,9 @@
 
 [resource]
 script = ExtResource( 1 )
-card_id = 5
-card_title = "Finta"
+card_id = 6
+card_title = "Guarda"
 card_mov = 0
-card_atk = 1
-card_def = 3
-card_speed = 3
+card_atk = 0
+card_def = 4
+card_speed = 1

@@ -1,0 +1,15 @@
+[gd_resource type="Resource" load_steps=8 format=2]
+
+[ext_resource path="res://scripts/DeckResource.gd" type="Script" id=1]
+[ext_resource path="res://resources/cards/card_5.tres" type="Resource" id=2]
+[ext_resource path="res://resources/cards/card_3.tres" type="Resource" id=3]
+[ext_resource path="res://resources/cards/card_1.tres" type="Resource" id=4]
+[ext_resource path="res://resources/cards/card_2.tres" type="Resource" id=5]
+[ext_resource path="res://resources/cards/card_4.tres" type="Resource" id=6]
+[ext_resource path="res://resources/cards/card_6.tres" type="Resource" id=7]
+
+[resource]
+script = ExtResource( 1 )
+id = 0
+name = "Básico"
+cards = [ ExtResource( 4 ), ExtResource( 5 ), ExtResource( 3 ), ExtResource( 6 ), ExtResource( 2 ), ExtResource( 7 ) ]
