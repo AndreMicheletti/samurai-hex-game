@@ -267,8 +267,12 @@ func hide_game_over():
 	$GameOver.visible = false
 
 func show_game_over(win):
+	$Player1.queue_free()
+	$Player2.queue_free()
 	if win:
 		$GameOver/Panel/VBox/Message.text = "You Win"
 	else:
 		$GameOver/Panel/VBox/Message.text = "You Lose"
 	$GameOver.visible = true
+	yield(get_tree().create_timer(5), "timeout")
+	get_tree().reload_current_scene()

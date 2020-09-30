@@ -14,7 +14,7 @@ onready var debug_label = $Debug/Label
 var MoveHint = preload("res://scenes/tileset/MoveHint.tscn")
 var GameUI = preload("res://scenes/gui/GameUI.tscn")
 
-enum MatchState {DRAW, CHOOSE_CARD, PLAY_TURN}
+enum MatchState {DRAW, CHOOSE_CARD, PLAY_TURN, GAME_OVER}
 var state = MatchState.DRAW
 var play_turn = 0
 var controller_turn_order = []
@@ -22,6 +22,7 @@ var controller_turn = 0
 var game_ui_node
 
 signal play_state
+signal game_over
 
 signal advance_turn
 
@@ -108,6 +109,8 @@ func _process_debug():
 #		set_state_draw()
 
 func set_state_draw():
+	if state == MatchState.GAME_OVER:
+		return
 	World.set_click_enabled(false)
 	state = MatchState.DRAW
 	reset_controllers_ready()
@@ -117,12 +120,16 @@ func set_state_draw():
 	set_state_choose_card()
 
 func set_state_choose_card():
+	if state == MatchState.GAME_OVER:
+		return
 	World.set_click_enabled(false)
 	reset_controllers_ready()
 	state = MatchState.CHOOSE_CARD
 	player2_controller.choose_cards()
 
 func set_state_play_turn():
+	if state == MatchState.GAME_OVER:
+		return
 	World.set_click_enabled(true)
 	reset_controllers_ready()
 	state = MatchState.PLAY_TURN
@@ -135,6 +142,8 @@ func set_state_play_turn():
 	advance_turn()
 
 func advance_turn():
+	if state == MatchState.GAME_OVER:
+		return
 	# inactivate this turn controller
 	controller_turn_order[controller_turn].active = false
 	controller_turn += 1
@@ -182,17 +191,20 @@ func clear_highlights():
 	for node in Highlights.get_children():
 		node.queue_free()
 
-func set_ctr_process(value : bool):
-	for ctr in get_alive_controllers():
-		ctr.set_process(value)
-
-func on_controller_defeated(ctr):
-	if ctr.name == "PlayerController":
-		reset_game()
-
 func on_player_accept_cards(card_resources):
 	player1_controller.cards_selected = card_resources
 	set_state_play_turn()
 
 func reset_game():
 	get_tree().reload_current_scene()
+
+func on_controller_defeated(ctr):
+	World.set_click_enabled(false)
+	if ctr.name == "PlayerController":
+		# reset_game()
+		# LOSE
+		game_ui_node.show_game_over(false)
+	else:
+		# WIN
+		game_ui_node.show_game_over(true)
+	state = MatchState.GAME_OVER

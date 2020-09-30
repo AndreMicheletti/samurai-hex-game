@@ -11,7 +11,7 @@
 [ext_resource path="res://scenes/gui/CardStyleBox.tres" type="StyleBox" id=9]
 [ext_resource path="res://fonts/Roboto-Regular.ttf" type="DynamicFontData" id=10]
 
-[sub_resource type="DynamicFont" id=6]
+[sub_resource type="DynamicFont" id=1]
 size = 32
 font_data = ExtResource( 10 )
 
@@ -19,15 +19,15 @@ font_data = ExtResource( 10 )
 size = 18
 font_data = ExtResource( 7 )
 
-[sub_resource type="DynamicFont" id=5]
+[sub_resource type="DynamicFont" id=3]
 size = 32
 font_data = ExtResource( 10 )
 
-[sub_resource type="DynamicFont" id=3]
+[sub_resource type="DynamicFont" id=4]
 size = 50
 font_data = ExtResource( 7 )
 
-[sub_resource type="DynamicFont" id=4]
+[sub_resource type="DynamicFont" id=5]
 size = 30
 font_data = ExtResource( 10 )
 
@@ -105,7 +105,7 @@ margin_right = 96.0
 margin_bottom = 43.0
 size_flags_horizontal = 3
 size_flags_vertical = 1
-custom_fonts/font = SubResource( 6 )
+custom_fonts/font = SubResource( 1 )
 text = "Enemy"
 valign = 1
 
@@ -385,7 +385,7 @@ custom_constants/separation = 80
 margin_top = 2.0
 margin_right = 88.0
 margin_bottom = 40.0
-custom_fonts/font = SubResource( 5 )
+custom_fonts/font = SubResource( 3 )
 text = "Player"
 valign = 1
 
@@ -696,7 +696,7 @@ __meta__ = {
 [node name="Message" type="Label" parent="GameOver/Panel/VBox"]
 margin_right = 700.0
 margin_bottom = 119.0
-custom_fonts/font = SubResource( 3 )
+custom_fonts/font = SubResource( 4 )
 custom_colors/font_color = Color( 0, 0, 0, 1 )
 text = "You Win"
 align = 1
@@ -708,7 +708,7 @@ __meta__ = {
 margin_top = 123.0
 margin_right = 700.0
 margin_bottom = 159.0
-custom_fonts/font = SubResource( 4 )
+custom_fonts/font = SubResource( 5 )
 custom_colors/font_color = Color( 0, 0, 0, 1 )
 text = "You Win"
 align = 1
