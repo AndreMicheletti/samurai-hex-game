@@ -9,7 +9,7 @@ export onready var Player = $World/Player
 export onready var Highlights = $Highlights
 
 onready var Cards = $UI/BottomUI/SplitContainer/CardsContainer
-onready var debug_label = $Debug/Label
+onready var debug_label = $DebugLayer/Debug/Label
 
 var MoveHint = preload("res://scenes/tileset/MoveHint.tscn")
 var GameUI = preload("res://scenes/gui/GameUI.tscn")
