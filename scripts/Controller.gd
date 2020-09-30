@@ -4,7 +4,7 @@ class_name Controller
 
 enum CharacterClass {Samurai, Lancer, Wanderer}
 
-export(Array, Resource) var CardDeck
+export(Resource) var CardDeck
 
 export(Vector2) var start_pos
 export(String) var playerName
@@ -119,7 +119,7 @@ func draw_hand():
 	character.reset_turn_stats()
 	randomize()
 	for i in range(5):
-		hand.append(CardDeck[randi() % CardDeck.size()])
+		hand.append(CardDeck.deal())
 	print("CARDS DRAWN FOR ", self.name)
 
 func on_character_died():
