@@ -1,0 +1,99 @@
+[gd_scene load_steps=4 format=2]
+
+[ext_resource path="res://fonts/RockSalt-Regular.ttf" type="DynamicFontData" id=1]
+
+[sub_resource type="StyleBoxFlat" id=3]
+bg_color = Color( 0.788235, 0.752941, 0.568627, 1 )
+border_width_left = 2
+border_width_top = 2
+border_width_right = 2
+border_width_bottom = 2
+border_color = Color( 0, 0, 0, 1 )
+
+[sub_resource type="DynamicFont" id=4]
+size = 14
+outline_color = Color( 0.411765, 0.411765, 0.411765, 1 )
+font_data = ExtResource( 1 )
+
+[node name="Deck" type="Panel"]
+margin_left = 10.0
+margin_right = 130.0
+margin_bottom = 180.0
+rect_min_size = Vector2( 120, 180 )
+mouse_default_cursor_shape = 2
+size_flags_horizontal = 0
+size_flags_vertical = 0
+custom_styles/panel = SubResource( 3 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Column" type="VBoxContainer" parent="."]
+anchor_right = 1.0
+anchor_bottom = 1.0
+mouse_filter = 2
+mouse_default_cursor_shape = 2
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Texts" type="VBoxContainer" parent="Column"]
+margin_right = 120.0
+margin_bottom = 180.0
+mouse_filter = 2
+mouse_default_cursor_shape = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+
+[node name="Deck" type="MarginContainer" parent="Column/Texts"]
+margin_right = 120.0
+margin_bottom = 50.0
+mouse_filter = 2
+mouse_default_cursor_shape = 2
+custom_constants/margin_right = 10
+custom_constants/margin_top = 5
+custom_constants/margin_left = 10
+custom_constants/margin_bottom = 5
+
+[node name="label" type="Label" parent="Column/Texts/Deck"]
+margin_left = 10.0
+margin_top = 5.0
+margin_right = 110.0
+margin_bottom = 45.0
+rect_min_size = Vector2( 0, 40 )
+mouse_default_cursor_shape = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+custom_fonts/font = SubResource( 4 )
+custom_colors/font_color = Color( 0, 0, 0, 1 )
+text = "Deck"
+align = 1
+valign = 1
+autowrap = true
+clip_text = true
+
+[node name="Move" type="MarginContainer" parent="Column/Texts"]
+margin_top = 54.0
+margin_right = 120.0
+margin_bottom = 180.0
+mouse_filter = 2
+mouse_default_cursor_shape = 2
+size_flags_vertical = 3
+custom_constants/margin_right = 10
+custom_constants/margin_top = 5
+custom_constants/margin_left = 10
+custom_constants/margin_bottom = 35
+
+[node name="label" type="Label" parent="Column/Texts/Move"]
+margin_left = 10.0
+margin_top = 5.0
+margin_right = 110.0
+margin_bottom = 91.0
+rect_min_size = Vector2( 0, 10 )
+mouse_default_cursor_shape = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+custom_colors/font_color = Color( 0, 0, 0, 1 )
+text = "0"
+align = 1
+valign = 1

@@ -1,128 +1,210 @@
 extends Node
 
-onready var World = $World
-onready var Player = $World/Player
-onready var Highlights = $World/Highlights
+class_name GameMatch
 
-onready var Cards = $UI/BottomUI/CardsContainer
+const TURNS_BY_HAND = 3
+
+export onready var World = $World
+export onready var Player = $World/Player
+export onready var Highlights = $Highlights
+
+onready var Cards = $UI/BottomUI/SplitContainer/CardsContainer
+onready var debug_label = $DebugLayer/Debug/Label
 
 var MoveHint = preload("res://scenes/tileset/MoveHint.tscn")
+var GameUI = preload("res://scenes/gui/GameUI.tscn")
 
-enum MatchState {DRAW, CHOOSE_CARD, PLAY_TURN}
-export var state = MatchState.DRAW
+enum MatchState {DRAW, CHOOSE_CARD, PLAY_TURN, GAME_OVER}
+var state = MatchState.DRAW
+var play_turn = 0
+var controller_turn_order = []
+var controller_turn = 0
+var game_ui_node
 
-var assalt_cards = []
-var assalt_turn = 0
-
-var turn_atk = 0
-var turn_def = 0
-var turn_mov = 0
-
-signal draw_state
-signal choose_card_state
 signal play_state
+signal game_over
+
+signal advance_turn
+
+var player1_controller : Controller
+var player2_controller : Controller
 
 func _ready():
+	var bar = preload("res://scenes/PlayerBar.tscn")
+	init_controllers()
+	init_ui()
 	set_state_draw()
-	for card in Cards.get_children():
-		card.connect("card_selected", self, "on_card_selected")
-	
+
+func init_controllers():
+	player1_controller = $Controllers/PlayerController
+	player2_controller = $Controllers/EnemyController
+	for ctr in $Controllers.get_children():
+		ctr.connect("defeated", self, "on_controller_defeated")
+		ctr.connect("turn_ended", self, "advance_turn")
+
+func init_ui():
+	# add GameUI instance
+	game_ui_node = GameUI.instance()
+	add_child(game_ui_node)
+	game_ui_node.game_match = self
+	game_ui_node.set_player1_name(
+		player1_controller.playerName,
+		Controller.CharacterClass.keys()[player1_controller.playerClass])
+	game_ui_node.set_player2_name(
+		player2_controller.playerName,
+		Controller.CharacterClass.keys()[player2_controller.playerClass])
+	# set enemy and player controllers
+	# instance.set_ctr(ctr)
+	# connect signals
+	game_ui_node.connect("accepted_cards", self, "on_player_accept_cards")
+	game_ui_node.connect("advance_turn", self, "on_advance_turn")
+	player1_controller.character.connect("character_damaged", game_ui_node, "update_damage_counters")
+	player2_controller.character.connect("character_damaged", game_ui_node, "update_damage_counters")
+	game_ui_node.update_damage_counters()
+
+func get_controllers():
+	return get_tree().get_nodes_in_group("Controller")
+
+func get_alive_controllers():
+	var result = []
+	for ctr in get_controllers():
+		if not ctr.defeated:
+			result.append(ctr)
+	return result
+
+func controllers_ready():
+	for ctr in get_alive_controllers():
+		if not ctr.ready:
+			return false
+	return true
+
+func reset_controllers_ready():
+	for ctr in get_alive_controllers():
+		ctr.ready = false
 
 func _process(delta):
+	_process_debug()
 	if state == MatchState.DRAW:
-		_process_draw()
+		# _process_draw()
+		pass
 	elif state == MatchState.CHOOSE_CARD:
-		_process_choose_card()
+		# _process_choose_card()
+		pass
 	elif state == MatchState.PLAY_TURN:
-		_process_play(delta)
+		# _process_play(delta)
+		pass
 
+func _process_debug():
+	debug_label.text = "Game State: " + str(state) + "\n"
+	if controller_turn_order and controller_turn_order.size() > 0:
+		for ctr in controller_turn_order:
+			debug_label.text += ("\n " + ctr.name)
+
+#func _process_draw():
+#	if controllers_ready():
+#		set_state_choose_card()
+
+#func _process_play(delta):
+#	if controllers_ready():
+#		set_state_draw()
 
 func set_state_draw():
-	reset_assalt()
+	if state == MatchState.GAME_OVER:
+		return
+	World.set_click_enabled(false)
 	state = MatchState.DRAW
-	emit_signal("draw_state")
-
-
-func set_state_choose_card():
-	state = MatchState.CHOOSE_CARD
-	emit_signal("choose_card_state")
-
-
-func set_state_play_turn():
-	state = MatchState.PLAY_TURN
-	var card = assalt_cards[assalt_turn]
-	emit_signal("play_state", card)
-	self.turn_mov = card["mov"]
-	self.turn_atk = card["atk"]
-	self.turn_def = card["def"]
-	clear_highlights()
-
-
-func _process_draw():
+	reset_controllers_ready()
+	player1_controller.draw_hand()
+	player2_controller.draw_hand()
+	yield(game_ui_node.deal_cards(), "completed")
 	set_state_choose_card()
 
-
-func _process_choose_card():
-	pass
-
-
-func _process_play(delta):
-	if turn_mov <= 0:
-		assalt_turn += 1
-		resolve_turn_effects()
-		if assalt_turn >= assalt_cards.size():
-			set_state_draw()
-		else:
-			set_state_play_turn()
+func set_state_choose_card():
+	if state == MatchState.GAME_OVER:
 		return
-	
-	if Highlights.get_child_count() <= 0:
-		show_moves()
+	World.set_click_enabled(false)
+	reset_controllers_ready()
+	state = MatchState.CHOOSE_CARD
+	player2_controller.choose_cards()
 
+func set_state_play_turn():
+	if state == MatchState.GAME_OVER:
+		return
+	World.set_click_enabled(true)
+	reset_controllers_ready()
+	state = MatchState.PLAY_TURN
+	emit_signal("play_state")
+	play_turn = 0
+	controller_turn = -1
+	set_turn_order()
+	for ctr in controller_turn_order:
+		ctr.active = false
+	advance_turn()
 
-func show_moves():
-	for cell in Player.get_cell().get_all_within(turn_mov):
-		if cell.get_axial_coords() == Player.hex_pos:
-			continue
-		var instance = MoveHint.instance()
-		instance.hex_pos = cell.get_axial_coords()
-		instance.position = World.get_grid().get_hex_center(cell)
-		instance.connect("move_hint_clicked", self, "move_hint_clicked")
-		Highlights.add_child(instance)
+func advance_turn():
+	if state == MatchState.GAME_OVER:
+		return
+	# inactivate this turn controller
+	controller_turn_order[controller_turn].active = false
+	controller_turn += 1
+	if controller_turn >= controller_turn_order.size():
+		# change CARD
+		controller_turn = 0
+		play_turn += 1
+		set_turn_order()
+	if play_turn >= TURNS_BY_HAND:
+		yield(game_ui_node.clear_side_cards(), "completed")
+		set_state_draw()
+	else:
+	# activate and play next controller
+#	if not controller_turn_order[controller_turn].defeated:
+		yield(game_ui_node.on_advance_turn(controller_turn_order[controller_turn]), "completed")
+		controller_turn_order[controller_turn].active = true
+		controller_turn_order[controller_turn].play_turn(play_turn)
+#	else:
+#		advance_turn()
+	# emit_signal("advance_turn", )
 
+func set_turn_order():
+	var result = get_alive_controllers()
+	result.sort_custom(self, "sort_by_card_speed")
+	controller_turn_order = result
+	for ctr in controller_turn_order:
+		ctr.set_turn_stats(play_turn)
 
-func resolve_turn_effects():
-	# check attack
-	var attack_range = 1
-	if turn_atk > 0:
-		var targets = get_tree().get_nodes_in_group("Character")
-		for target in targets:
-			if target == Player:
-				continue
-			if Player.get_cell().distance_to(target.hex_pos) <= attack_range:
-				target.queue_free()
+func sort_by_health(ctr1 : Controller, ctr2 : Controller):
+	# return LEAST DAMAGE to MOST DAMAGE
+	if ctr1.character.damage_counter < ctr2.character.damage_counter:
+		return true
+	return false
 
-
-func move_hint_clicked(move_hex_pos):
-	var move_cost = Player.get_cell().distance_to(move_hex_pos)
-	Player.move_to(move_hex_pos.x, move_hex_pos.y)
-	turn_mov -= move_cost
-	clear_highlights()
-
-
-func on_card_selected(card_info):
-	print("SELECTED CARD")
-	print(card_info)
-	assalt_cards = [card_info]
-	set_state_play_turn()
-
-
-func reset_assalt():
-	assalt_cards = []
-	assalt_turn = 0
-
+func sort_by_card_speed(ctr1 : Controller, ctr2 : Controller):
+	# return MOST SPEED to LEAST SPEED
+	var card1 : CardResource = ctr1.get_card(play_turn)
+	var card2 : CardResource = ctr2.get_card(play_turn)
+	if card1 and card2:
+		if card1.card_speed > card2.card_speed:
+			return true
+	return false
 
 func clear_highlights():
 	for node in Highlights.get_children():
 		node.queue_free()
 
+func on_player_accept_cards(card_resources):
+	player1_controller.cards_selected = card_resources
+	set_state_play_turn()
+
+func reset_game():
+	get_tree().reload_current_scene()
+
+func on_controller_defeated(ctr):
+	World.set_click_enabled(false)
+	if ctr.name == "PlayerController":
+		# reset_game()
+		# LOSE
+		game_ui_node.show_game_over(false)
+	else:
+		# WIN
+		game_ui_node.show_game_over(true)
+	state = MatchState.GAME_OVER

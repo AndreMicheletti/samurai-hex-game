@@ -1,0 +1,118 @@
+[gd_scene load_steps=7 format=2]
+
+[ext_resource path="res://fonts/RockSalt-Regular.ttf" type="DynamicFontData" id=1]
+[ext_resource path="res://graphics/gui/hearts.svg" type="Texture" id=2]
+[ext_resource path="res://scripts/PlayerBar.gd" type="Script" id=3]
+[ext_resource path="res://graphics/gui/plain-arrow.svg" type="Texture" id=4]
+
+[sub_resource type="DynamicFont" id=1]
+size = 12
+font_data = ExtResource( 1 )
+
+[sub_resource type="Animation" id=2]
+resource_name = "turn_display"
+loop = true
+tracks/0/type = "value"
+tracks/0/path = NodePath("MarginContainer/HSplitContainer/MarginContainer/TurnDisplay:anchor_right")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0, 0.5, 1 ),
+"transitions": PoolRealArray( 1, 1, 1 ),
+"update": 0,
+"values": [ 0.0, 0.3, 0.0 ]
+}
+tracks/1/type = "value"
+tracks/1/path = NodePath("MarginContainer/HSplitContainer/MarginContainer/TurnDisplay:anchor_left")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/keys = {
+"times": PoolRealArray( 0, 0.5, 1 ),
+"transitions": PoolRealArray( 1, 1, 1 ),
+"update": 0,
+"values": [ 0.0, 0.3, 0.0 ]
+}
+tracks/2/type = "value"
+tracks/2/path = NodePath("MarginContainer/HSplitContainer/MarginContainer/TurnDisplay:rect_rotation")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/keys = {
+"times": PoolRealArray( 0, 1 ),
+"transitions": PoolRealArray( 1, 1 ),
+"update": 0,
+"values": [ -90.0, -90.0 ]
+}
+
+[node name="PlayerBar" type="Panel"]
+margin_right = 370.0
+margin_bottom = 80.0
+rect_min_size = Vector2( 250, 80 )
+script = ExtResource( 3 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+healthTexture = ExtResource( 2 )
+
+[node name="MarginContainer" type="MarginContainer" parent="."]
+anchor_right = 1.0
+anchor_bottom = 1.0
+custom_constants/margin_right = 10
+custom_constants/margin_top = 10
+custom_constants/margin_left = 10
+custom_constants/margin_bottom = 10
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="HSplitContainer" type="HSplitContainer" parent="MarginContainer"]
+margin_left = 10.0
+margin_top = 10.0
+margin_right = 360.0
+margin_bottom = 70.0
+
+[node name="MarginContainer" type="VBoxContainer" parent="MarginContainer/HSplitContainer"]
+margin_right = 30.0
+margin_bottom = 30.0
+rect_min_size = Vector2( 30, 30 )
+size_flags_vertical = 0
+
+[node name="TurnDisplay" type="TextureRect" parent="MarginContainer/HSplitContainer/MarginContainer"]
+margin_right = 30.0
+margin_bottom = 20.0
+rect_min_size = Vector2( 20, 20 )
+rect_pivot_offset = Vector2( 12.5, 12.5 )
+rect_clip_content = true
+texture = ExtResource( 4 )
+expand = true
+
+[node name="VerticalContainer" type="VBoxContainer" parent="MarginContainer/HSplitContainer"]
+margin_left = 42.0
+margin_right = 350.0
+margin_bottom = 60.0
+size_flags_horizontal = 3
+size_flags_vertical = 3
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="PlayerName" type="Label" parent="MarginContainer/HSplitContainer/VerticalContainer"]
+margin_right = 308.0
+margin_bottom = 30.0
+custom_fonts/font = SubResource( 1 )
+text = "Player 1"
+valign = 1
+
+[node name="DamageContainer" type="HBoxContainer" parent="MarginContainer/HSplitContainer/VerticalContainer"]
+margin_top = 34.0
+margin_right = 308.0
+margin_bottom = 34.0
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
+autoplay = "turn_display"
+anims/turn_display = SubResource( 2 )

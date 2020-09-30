@@ -1,25 +1,23 @@
-[gd_scene load_steps=4 format=2]
+[gd_scene load_steps=3 format=2]
 
-[ext_resource path="res://graphics/obstacle.png" type="Texture" id=1]
 [ext_resource path="res://scripts/MoveHint.gd" type="Script" id=2]
 
 [sub_resource type="RectangleShape2D" id=1]
-extents = Vector2( 19.6479, 18.212 )
+extents = Vector2( 19.3295, 20.1698 )
 
 [node name="MoveHint" type="Area2D"]
+z_index = 1
+collision_layer = 7
+collision_mask = 7
 script = ExtResource( 2 )
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 shape = SubResource( 1 )
 
-[node name="Sprite" type="Sprite" parent="."]
-visible = false
-scale = Vector2( 0.609792, 0.609792 )
-texture = ExtResource( 1 )
-
 [node name="Highlight" type="Polygon2D" parent="."]
 color = Color( 0.168627, 0.419608, 0.94902, 0.560784 )
 antialiased = true
 polygon = PoolVector2Array( -12.5, 21.6506, 12.5, 21.6506, 25, 0, 12.5, -21.6506, -12.5, -21.6506, -25, 0 )
+[connection signal="input_event" from="." to="." method="_on_MoveHint_input_event"]
 [connection signal="mouse_entered" from="." to="." method="_on_MoveHint_mouse_entered"]
 [connection signal="mouse_exited" from="." to="." method="_on_MoveHint_mouse_exited"]

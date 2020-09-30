@@ -8,9 +8,32 @@
 
 config_version=4
 
-_global_script_classes=[  ]
+_global_script_classes=[ {
+"base": "Panel",
+"class": "Card",
+"language": "GDScript",
+"path": "res://scripts/Card.gd"
+}, {
+"base": "Resource",
+"class": "CardResource",
+"language": "GDScript",
+"path": "res://scripts/CardResource.gd"
+}, {
+"base": "Node",
+"class": "Controller",
+"language": "GDScript",
+"path": "res://scripts/Controller.gd"
+}, {
+"base": "Node",
+"class": "GameMatch",
+"language": "GDScript",
+"path": "res://scripts/GameMatch.gd"
+} ]
 _global_script_class_icons={
-
+"Card": "",
+"CardResource": "",
+"Controller": "",
+"GameMatch": ""
 }
 
 [application]
@@ -18,6 +41,16 @@ _global_script_class_icons={
 config/name="HexGrid"
 run/main_scene="res://scenes/GameMatch.tscn"
 config/icon="res://graphics/samurai_player.png"
+
+[display]
+
+window/size/width=1280
+window/size/height=720
+window/size/resizable=false
+window/size/test_width=1280
+window/size/test_height=720
+window/stretch/mode="2d"
+window/stretch/aspect="keep"
 
 [editor_plugins]
 
