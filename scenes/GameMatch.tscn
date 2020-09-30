@@ -24,7 +24,6 @@ z_index = 10
 [node name="PlayerController" parent="Controllers" instance=ExtResource( 2 )]
 CardDeck = ExtResource( 4 )
 playerName = "Player"
-playerClass = 1
 DamageLimit = 5
 
 [node name="EnemyController" parent="Controllers" instance=ExtResource( 3 )]
