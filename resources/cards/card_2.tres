@@ -8,5 +8,5 @@ card_id = 2
 card_title = "Posicionar"
 card_mov = 3
 card_atk = 0
-card_def = 1
+card_def = 0
 card_speed = 2

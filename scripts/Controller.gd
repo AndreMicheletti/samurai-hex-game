@@ -2,10 +2,15 @@ extends Node
 
 class_name Controller
 
+enum CharacterClass {Samurai, Lancer, Wanderer}
+
 export(Array, Resource) var CardDeck
 
 export(Vector2) var start_pos
 export(String) var playerName
+export(CharacterClass) var playerClass
+
+export(int) var DamageLimit = 4
 
 var MoveHint = preload("res://scenes/tileset/MoveHint.tscn")
 
@@ -27,6 +32,7 @@ func _ready():
 	character = get_child(0)
 	character.teleport_to(start_pos.x, start_pos.y)
 	character.connect("character_died", self, "on_character_died")
+	character.damage_limit = DamageLimit
 
 func get_character():
 	return character

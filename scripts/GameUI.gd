@@ -29,7 +29,7 @@ signal accepted_cards
 # Called when the node enters the scene tree for the first time.
 func _ready():
 	player1_play_button.visible = false
-
+	hide_game_over()
 
 func player_deal(center_cards, deal_node, card_res : CardResource, flip = false):
 	
@@ -55,6 +55,13 @@ func player_deal(center_cards, deal_node, card_res : CardResource, flip = false)
 	$Tween.start()
 	yield($Tween, "tween_completed")
 
+func set_player2_name(name, class_n):
+	$Player2/Top/HBox/VBoxContainer/Panel/HBox/PlayerInfo/NameContainer/Name.text = name
+	$Player2/Top/HBox/VBoxContainer/Panel/HBox/PlayerInfo/NameContainer/Class.text = str(class_n)
+
+func set_player1_name(name, class_n):
+	$Player1/Bottom/HBox/VBox/Panel/HBox/PlayerInfo/NameContainer/Name.text = name
+	$Player1/Bottom/HBox/VBox/Panel/HBox/PlayerInfo/NameContainer/Class.text = str(class_n)
 
 func move_cards_to_slot(center_cards, deal_node, side_cards):
 	var selected_card_nodes = get_selected_cards(center_cards)
@@ -255,3 +262,13 @@ func update_damage_counters():
 	for i in range(get_player2_controller().character.get_remaining_health()):
 		var dmg = dmg_display.instance()
 		p2_display.add_child(dmg)
+
+func hide_game_over():
+	$GameOver.visible = false
+
+func show_game_over(win):
+	if win:
+		$GameOver/Panel/VBox/Message.text = "You Win"
+	else:
+		$GameOver/Panel/VBox/Message.text = "You Lose"
+	$GameOver.visible = true

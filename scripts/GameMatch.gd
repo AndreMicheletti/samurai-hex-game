@@ -46,6 +46,12 @@ func init_ui():
 	game_ui_node = GameUI.instance()
 	add_child(game_ui_node)
 	game_ui_node.game_match = self
+	game_ui_node.set_player1_name(
+		player1_controller.playerName,
+		Controller.CharacterClass.keys()[player1_controller.playerClass])
+	game_ui_node.set_player2_name(
+		player2_controller.playerName,
+		Controller.CharacterClass.keys()[player2_controller.playerClass])
 	# set enemy and player controllers
 	# instance.set_ctr(ctr)
 	# connect signals

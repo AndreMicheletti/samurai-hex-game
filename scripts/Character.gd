@@ -8,7 +8,7 @@ signal character_moved
 signal character_died
 signal character_damaged
 
-export var DamageLimit = 4
+var damage_limit = 4
 var damage_counter = 0
 
 var turn_atk = 0
@@ -61,7 +61,7 @@ func hit(atk):
 		emit_signal("character_damaged")
 		#yield($AnimPlayer, "animation_finished")
 	print(" // SUFFERED (", damage, ")")
-	if damage_counter >= DamageLimit:
+	if damage_counter >= damage_limit:
 		print("CHARACTER ", self.name, " DIED")
 		emit_signal("character_died")
 
@@ -87,4 +87,4 @@ func reset_turn_stats():
 	moved = 0
 
 func get_remaining_health():
-	return DamageLimit - damage_counter
+	return damage_limit - damage_counter
