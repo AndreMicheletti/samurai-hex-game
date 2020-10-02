@@ -8,10 +8,18 @@ export(String) var PlayerName = "Player"
 export(int) var Health = 4
 export(CharacterClass) var character_class
 
-var hex_pos
-var moving = false
+export(Resource) var deck
+
 onready var world = get_parent()
 onready var game = world.get_parent()
+
+var hex_pos = Vector2()
+var moving = false
+var damage = 0
+var hand = []
+
+# attack animations emit this to play the defense animation on target character
+signal anim_hit
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
@@ -51,6 +59,11 @@ func move_to(target : Vector2):
 	play_idle()
 	self.moving = false
 
+func deal_cards(n):
+	for i in range(n):
+		var card = deck.deal()
+		hand.append(card)
+
 func play(anim_name):
 	$anim.stop(true)
 	$anim.play(anim_name)
@@ -69,3 +82,6 @@ func play_defend():
 
 func play_dodge():
 	play("dodge")
+
+func emit_anim_hit():
+	emit_signal("anim_hit", self)

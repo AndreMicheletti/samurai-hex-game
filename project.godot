@@ -9,13 +9,25 @@
 config_version=4
 
 _global_script_classes=[ {
+"base": "Resource",
+"class": "CardResource",
+"language": "GDScript",
+"path": "res://scripts/resources/CardResource.gd"
+}, {
 "base": "Node2D",
 "class": "Character",
 "language": "GDScript",
 "path": "res://scripts/Character.gd"
+}, {
+"base": "Resource",
+"class": "DeckResource",
+"language": "GDScript",
+"path": "res://scripts/resources/DeckResource.gd"
 } ]
 _global_script_class_icons={
-"Character": ""
+"CardResource": "",
+"Character": "",
+"DeckResource": ""
 }
 
 [application]

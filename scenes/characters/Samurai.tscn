@@ -1,8 +1,9 @@
-[gd_scene load_steps=13 format=2]
+[gd_scene load_steps=14 format=2]
 
 [ext_resource path="res://scripts/Character.gd" type="Script" id=1]
 [ext_resource path="res://graphics/characters/monk.png" type="Texture" id=2]
 [ext_resource path="res://graphics/characters/sabre_hand.png" type="Texture" id=3]
+[ext_resource path="res://resources/decks/samurai_deck.tres" type="Resource" id=4]
 
 [sub_resource type="Animation" id=1]
 resource_name = "attack_pierce"
@@ -530,6 +531,7 @@ tracks/6/keys = {
 
 [node name="Samurai" type="Node2D"]
 script = ExtResource( 1 )
+deck = ExtResource( 4 )
 
 [node name="anim" type="AnimationPlayer" parent="."]
 autoplay = "idle"
