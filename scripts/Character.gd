@@ -46,15 +46,26 @@ func move_to(target : Vector2):
 			$Tween.interpolate_property(self, "position", start_pos, goto_pos, 0.2)
 			$Tween.start()
 			yield($Tween, "tween_completed")
-		play_idle()
 		self.hex_pos = target
 	# finally
+	play_idle()
 	self.moving = false
 
-func play_dash():
+func play(anim_name):
 	$anim.stop(true)
-	$anim.play("dash2")
+	$anim.play(anim_name)
+
+func play_dash():
+	play("dash2")
 
 func play_idle():
-	$anim.stop(true)
-	$anim.play("idle")
+	play("idle")
+
+func play_hit():
+	play("hit")
+
+func play_defend():
+	play("defend")
+
+func play_dodge():
+	play("dodge")
