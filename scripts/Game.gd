@@ -1,16 +1,21 @@
 extends Node2D
 
+var world_scene = preload("res://scenes/world/World.tscn")
+var player_scene = preload("res://scenes/characters/Samurai.tscn")
+var enemy_scene = preload("res://scenes/characters/EnemySamurai.tscn")
 
-# Declare member variables here. Examples:
-# var a = 2
-# var b = "text"
+var world
 
+var player
+var enemy
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
-	pass # Replace with function body.
+	player = player_scene.instance()
+	enemy = enemy_scene.instance()
+	create_world()
 
-
-# Called every frame. 'delta' is the elapsed time since the previous frame.
-#func _process(delta):
-#	pass
+func create_world():
+	world = world_scene.instance()
+	add_child(world)
+	world.spawn_players(player, enemy)

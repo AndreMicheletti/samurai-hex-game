@@ -20,6 +20,7 @@ func _ready():
 
 func teleport_to(pos : Vector2):
 	position = world.get_grid().get_hex_center(pos)
+	hex_pos = pos
 
 func look_to_hex(target: Vector2):
 	var hex_center = world.get_grid().get_hex_center(target)
@@ -32,19 +33,22 @@ func move_to(target : Vector2):
 	self.moving = true
 	var path = world.find_path(self.hex_pos, target)
 	
-	play_dash()
-	for hex in path:
-		var hex_coords = hex.get_axial_coords()
-		if hex_coords == self.hex_pos:
-			continue
-		look_to_hex(hex_coords)
-		var start_pos = self.position
-		var goto_pos = world.get_grid().get_hex_center(hex)
-		$Tween.interpolate_property(self, "position", start_pos, goto_pos, 0.2)
-		$Tween.start()
-		yield($Tween, "tween_completed")
-	play_idle()
-	self.hex_pos = target
+	if path.size() > 1:
+		# if has path
+		play_dash()
+		for hex in path:
+			var hex_coords = hex.get_axial_coords()
+			if hex_coords == self.hex_pos:
+				continue
+			look_to_hex(hex_coords)
+			var start_pos = self.position
+			var goto_pos = world.get_grid().get_hex_center(hex)
+			$Tween.interpolate_property(self, "position", start_pos, goto_pos, 0.2)
+			$Tween.start()
+			yield($Tween, "tween_completed")
+		play_idle()
+		self.hex_pos = target
+	# finally
 	self.moving = false
 
 func play_dash():

@@ -10,12 +10,12 @@ var HexGrid = preload("res://scripts/HexGrid.gd").new()
 var HexCell = preload("res://scripts/HexCell.gd")
 
 onready var tileset = $Tileset
-
 onready var window_size = get_viewport().size
 
 export(Vector2) var worldZero = Vector2(0, 0)
-
-export var world_size = 10
+export(int) var world_size = 10
+export(Vector2) var playerStart = Vector2(0, 0)
+export(Vector2) var enemyStart = Vector2(0, 0)
 
 var click_enabled = false
 var world_walls_pos = []
@@ -27,15 +27,22 @@ func _ready():
 	set_click_enabled(true)
 	HexGrid.hex_scale = Vector2(HEX_WIDTH, HEX_HEIGHT)
 	generate_world(world_size)
-	spawn_players()
 
 func generate_world(size):
 	world_size = size
 	var zeroCell = HexCell.new(worldZero)
 	get_grid().set_bounds(Vector2(-size, -size), Vector2(size, size))
 
-func spawn_players():
-	pass
+func spawn_players(player, enemy):
+	# add instances
+	add_child(player)
+	add_child(enemy)
+	# teleport them
+	player.teleport_to(playerStart)
+	enemy.teleport_to(enemyStart)
+	# make them look to each other
+	player.look_to_hex(enemy.hex_pos)
+	enemy.look_to_hex(player.hex_pos)
 
 func find_path(start, goal):
 	var exceptions = []
