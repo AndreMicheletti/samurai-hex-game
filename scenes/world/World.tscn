@@ -6,8 +6,8 @@
 [node name="World" type="Node2D"]
 script = ExtResource( 2 )
 world_size = 4
-playerStart = Vector2( 0, 3 )
-enemyStart = Vector2( 0, -3 )
+playerStart = Vector2( 0, -3 )
+enemyStart = Vector2( 0, 3 )
 
 [node name="Backgrounds" type="Node2D" parent="."]
 

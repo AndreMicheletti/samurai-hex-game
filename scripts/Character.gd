@@ -20,11 +20,13 @@ var hand = []
 
 # attack animations emit this to play the defense animation on target character
 signal anim_hit
+signal card_dealed
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
 	add_to_group("Character")
 	hex_pos = Vector2(0, 0)
+	shuffle_deck()
 
 func teleport_to(pos : Vector2):
 	position = world.get_grid().get_hex_center(pos)
@@ -59,10 +61,17 @@ func move_to(target : Vector2):
 	play_idle()
 	self.moving = false
 
+func shuffle_deck():
+	deck.shuffle()
+
 func deal_cards(n):
 	for i in range(n):
 		var card = deck.deal()
+		emit_signal("card_dealed", card)
 		hand.append(card)
+
+func get_remaining_health():
+	return Health - damage
 
 func play(anim_name):
 	$anim.stop(true)
