@@ -1,7 +1,7 @@
 extends Node2D
 
-const HEX_WIDTH = 50
-const HEX_HEIGHT = 50
+const HEX_WIDTH = 34
+const HEX_HEIGHT = 34
 
 const BLUE = "#932959ff"
 const RED = "#93ff2942"
@@ -17,6 +17,9 @@ export(int) var world_size = 10
 export(Vector2) var playerStart = Vector2(0, 0)
 export(Vector2) var enemyStart = Vector2(0, 0)
 
+var tile_scene = preload("res://scenes/world/Tile.tscn")
+var back_scene = preload("res://scenes/world/background.tscn")
+
 var click_enabled = false
 var world_walls_pos = []
 
@@ -26,12 +29,42 @@ signal pressed_hex
 func _ready():
 	set_click_enabled(true)
 	HexGrid.hex_scale = Vector2(HEX_WIDTH, HEX_HEIGHT)
+	build_background()
 	generate_world(world_size)
+
+func build_background():
+	var block_size = 64
+	var width = (window_size.x / block_size) + 1
+	var height = (window_size.y / block_size) + 1
+	for x in range(width):
+		for y in range(height):
+			var node = back_scene.instance()
+			var pos = Vector2()
+			pos.x = (x * block_size) - (window_size.x / 2)
+			pos.y = (y * block_size) - (window_size.y / 2)
+			$Backgrounds.add_child(node)
+			node.position = pos
 
 func generate_world(size):
 	world_size = size
 	var zeroCell = HexCell.new(worldZero)
 	get_grid().set_bounds(Vector2(-size, -size), Vector2(size, size))
+	
+	# build walls
+	var outer_walls = zeroCell.get_ring(size+1)
+	get_grid().add_obstacles(outer_walls)
+	for cell in outer_walls:
+		var block = tile_scene.instance()
+		block.tile_type = Tile.TileType.WALL
+		block.position = HexGrid.get_hex_center(cell.get_axial_coords())
+		$Tileset.add_child(block)
+	
+	# build grass
+	for cell in zeroCell.get_all_within(size):
+		var block = tile_scene.instance()
+		block.tile_type = Tile.TileType.GRASS
+		block.position = get_grid().get_hex_center(cell.get_axial_coords())
+		$Tileset.add_child(block)
 
 func spawn_players(player, enemy):
 	# add instances

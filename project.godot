@@ -23,11 +23,17 @@ _global_script_classes=[ {
 "class": "DeckResource",
 "language": "GDScript",
 "path": "res://scripts/resources/DeckResource.gd"
+}, {
+"base": "Node2D",
+"class": "Tile",
+"language": "GDScript",
+"path": "res://scripts/Tile.gd"
 } ]
 _global_script_class_icons={
 "CardResource": "",
 "Character": "",
-"DeckResource": ""
+"DeckResource": "",
+"Tile": ""
 }
 
 [application]
