@@ -113,7 +113,7 @@ func _unhandled_input(event):
 #				$Samurai.look_to_hex(hex.get_axial_coords())
 			
 			$Highlight.position = get_grid().get_hex_center(hex)
-			print("hex x/y ", $Highlight.position)
+#			print("hex x/y ", $Highlight.position)
 			# var path = get_grid().find_path(Vector2(0, 0), hex)
 			# print(path.size())
 			if is_outside_world(hex.get_axial_coords()):
@@ -121,8 +121,8 @@ func _unhandled_input(event):
 			else:
 				$Highlight.color = BLUE
 			if event is InputEventScreenTouch:
-				print("SCREEN TOUCH")
-				print(event)
+#				print("SCREEN TOUCH")
+#				print(event)
 				emit_signal("pressed_hex", hex)
 				$Samurai.move_to(hex.get_axial_coords())
 

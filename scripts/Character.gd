@@ -17,10 +17,15 @@ var hex_pos = Vector2()
 var moving = false
 var damage = 0
 var hand = []
+var active = false
+
+var selected_card = null
 
 # attack animations emit this to play the defense animation on target character
 signal anim_hit
 signal card_dealed
+signal card_selected
+signal turn_ended
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
@@ -61,6 +66,14 @@ func move_to(target : Vector2):
 	play_idle()
 	self.moving = false
 
+func on_select_card(card_res : CardResource):
+	var index = hand.find(card_res)
+	if index >= 0:
+		print("FOUND CARD IN HAND! INDEX ", index)
+		select_card(index)
+	else:
+		print("NOT FOUND CARD ", card_res.title, " IN HAND ", hand)
+
 func shuffle_deck():
 	deck.shuffle()
 
@@ -69,6 +82,16 @@ func deal_cards(n):
 		var card = deck.deal()
 		emit_signal("card_dealed", card)
 		hand.append(card)
+
+func select_card(index):
+	selected_card = hand[index]
+	hand.remove(index)
+	emit_signal("card_selected")
+
+func play_turn():
+	print("PLAYER PLAY TURN!! ")
+	yield(get_tree().create_timer(0.5), "timeout")
+	emit_signal("turn_ended")
 
 func get_remaining_health():
 	return Health - damage

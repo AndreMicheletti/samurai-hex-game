@@ -10,6 +10,8 @@ var enemy
 
 onready var player_cards = $Screen/Player1/Cards
 
+signal card_pressed
+
 # Called when the node enters the scene tree for the first time.
 func _ready():
 	pass
@@ -39,6 +41,7 @@ func add_card(card_res : CardResource):
 	player_cards.add_child(node)
 
 func on_card_pressed(node):
+	emit_signal("card_pressed", node.card_resource)
 	player_cards.remove_child(node)
 
 func show_cards():
