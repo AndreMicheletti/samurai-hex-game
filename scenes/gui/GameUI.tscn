@@ -1,0 +1,130 @@
+[gd_scene load_steps=4 format=2]
+
+[ext_resource path="res://scenes/gui/Card.tscn" type="PackedScene" id=1]
+[ext_resource path="res://scripts/GameUI.gd" type="Script" id=2]
+[ext_resource path="res://scenes/gui/Deck.tscn" type="PackedScene" id=3]
+
+[node name="GameUI" type="CanvasLayer"]
+script = ExtResource( 2 )
+
+[node name="Screen" type="Control" parent="."]
+anchor_right = 1.0
+anchor_bottom = 1.0
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Player1" type="HBoxContainer" parent="Screen"]
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+margin_top = -140.0
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Box" type="MarginContainer" parent="Screen/Player1"]
+margin_right = 200.0
+margin_bottom = 140.0
+rect_min_size = Vector2( 200, 140 )
+size_flags_vertical = 3
+custom_constants/margin_right = 5
+custom_constants/margin_top = 5
+custom_constants/margin_left = 5
+custom_constants/margin_bottom = 20
+
+[node name="Panel" type="Panel" parent="Screen/Player1/Box"]
+margin_left = 5.0
+margin_top = 5.0
+margin_right = 195.0
+margin_bottom = 120.0
+size_flags_horizontal = 3
+size_flags_vertical = 3
+
+[node name="Content" type="VBoxContainer" parent="Screen/Player1/Box/Panel"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+size_flags_horizontal = 3
+size_flags_vertical = 3
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Title" type="MarginContainer" parent="Screen/Player1/Box/Panel/Content"]
+margin_right = 190.0
+margin_bottom = 34.0
+size_flags_horizontal = 3
+custom_constants/margin_right = 5
+custom_constants/margin_top = 10
+custom_constants/margin_left = 5
+custom_constants/margin_bottom = 10
+
+[node name="Label" type="Label" parent="Screen/Player1/Box/Panel/Content/Title"]
+margin_left = 5.0
+margin_top = 10.0
+margin_right = 185.0
+margin_bottom = 24.0
+size_flags_horizontal = 3
+text = "Player"
+align = 1
+valign = 1
+
+[node name="Health" type="MarginContainer" parent="Screen/Player1/Box/Panel/Content"]
+margin_top = 38.0
+margin_right = 190.0
+margin_bottom = 38.0
+size_flags_horizontal = 3
+custom_constants/margin_right = 10
+custom_constants/margin_left = 10
+
+[node name="Counter" type="HBoxContainer" parent="Screen/Player1/Box/Panel/Content/Health"]
+margin_left = 10.0
+margin_right = 180.0
+size_flags_horizontal = 3
+size_flags_vertical = 3
+alignment = 1
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Cards" type="HBoxContainer" parent="Screen/Player1"]
+margin_left = 204.0
+margin_right = 696.0
+margin_bottom = 140.0
+size_flags_horizontal = 3
+size_flags_vertical = 3
+custom_constants/separation = 15
+alignment = 1
+
+[node name="Card" parent="Screen/Player1/Cards" instance=ExtResource( 1 )]
+margin_left = 63.0
+margin_right = 143.0
+
+[node name="Card2" parent="Screen/Player1/Cards" instance=ExtResource( 1 )]
+margin_left = 158.0
+margin_right = 238.0
+
+[node name="Card3" parent="Screen/Player1/Cards" instance=ExtResource( 1 )]
+margin_left = 253.0
+margin_right = 333.0
+
+[node name="Card4" parent="Screen/Player1/Cards" instance=ExtResource( 1 )]
+margin_left = 348.0
+margin_right = 428.0
+
+[node name="Deck" type="MarginContainer" parent="Screen/Player1"]
+margin_left = 700.0
+margin_right = 800.0
+margin_bottom = 140.0
+rect_min_size = Vector2( 100, 140 )
+size_flags_vertical = 3
+custom_constants/margin_right = 5
+custom_constants/margin_top = 5
+custom_constants/margin_left = 5
+custom_constants/margin_bottom = 5
+
+[node name="Deck" parent="Screen/Player1/Deck" instance=ExtResource( 3 )]
+margin_left = 5.0
+margin_top = 5.0
+margin_right = 85.0
+margin_bottom = 125.0

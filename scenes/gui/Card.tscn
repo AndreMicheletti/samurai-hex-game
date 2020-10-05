@@ -1,0 +1,108 @@
+[gd_scene load_steps=3 format=2]
+
+[ext_resource path="res://scripts/Card.gd" type="Script" id=1]
+
+[sub_resource type="StyleBoxFlat" id=1]
+bg_color = Color( 0.776471, 0.678431, 0.411765, 1 )
+border_width_left = 2
+border_width_top = 2
+border_width_right = 2
+border_width_bottom = 2
+border_color = Color( 0, 0, 0, 1 )
+corner_radius_top_left = 4
+corner_radius_top_right = 4
+corner_radius_bottom_right = 4
+corner_radius_bottom_left = 4
+
+[node name="Card" type="Panel"]
+margin_right = 80.0
+margin_bottom = 120.0
+rect_min_size = Vector2( 80, 120 )
+mouse_default_cursor_shape = 2
+size_flags_horizontal = 0
+size_flags_vertical = 0
+custom_styles/panel = SubResource( 1 )
+script = ExtResource( 1 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Margin" type="MarginContainer" parent="."]
+anchor_right = 1.0
+anchor_bottom = 1.0
+mouse_filter = 1
+size_flags_horizontal = 3
+size_flags_vertical = 3
+custom_constants/margin_right = 8
+custom_constants/margin_top = 8
+custom_constants/margin_left = 8
+custom_constants/margin_bottom = 8
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="VBox" type="VBoxContainer" parent="Margin"]
+margin_left = 8.0
+margin_top = 8.0
+margin_right = 72.0
+margin_bottom = 112.0
+size_flags_horizontal = 3
+size_flags_vertical = 3
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Title" type="MarginContainer" parent="Margin/VBox"]
+margin_right = 64.0
+margin_bottom = 20.0
+mouse_filter = 1
+custom_constants/margin_bottom = 6
+
+[node name="Label" type="Label" parent="Margin/VBox/Title"]
+margin_right = 64.0
+margin_bottom = 14.0
+size_flags_horizontal = 3
+text = "Card Title"
+align = 1
+valign = 1
+
+[node name="Atk" type="Label" parent="Margin/VBox"]
+margin_top = 24.0
+margin_right = 64.0
+margin_bottom = 38.0
+mouse_filter = 1
+size_flags_horizontal = 3
+text = "Atk 2"
+align = 1
+valign = 1
+
+[node name="Def" type="Label" parent="Margin/VBox"]
+margin_top = 42.0
+margin_right = 64.0
+margin_bottom = 56.0
+mouse_filter = 1
+size_flags_horizontal = 3
+text = "Def 2"
+align = 1
+valign = 1
+
+[node name="Mov" type="Label" parent="Margin/VBox"]
+margin_top = 60.0
+margin_right = 64.0
+margin_bottom = 74.0
+mouse_filter = 1
+size_flags_horizontal = 3
+text = "Mov 2"
+align = 1
+valign = 1
+
+[node name="Speed" type="Label" parent="Margin/VBox"]
+margin_top = 78.0
+margin_right = 64.0
+margin_bottom = 92.0
+mouse_filter = 1
+size_flags_horizontal = 3
+text = "Speed 2"
+align = 1
+valign = 1
+[connection signal="gui_input" from="." to="." method="_on_Card_gui_input"]
