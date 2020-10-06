@@ -36,7 +36,7 @@ func update_visible(character : Character):
 		return
 	if character.active:
 		var path = world.find_path(hex_pos, character.hex_pos)
-		if (path.size()) <= character.get_remaining_moves():
+		if path.size() <= character.get_remaining_moves() and path.size() != 0:
 			visible = true
 		else:
 			visible = false

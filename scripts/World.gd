@@ -17,7 +17,7 @@ export(int) var world_size = 10
 export(Vector2) var playerStart = Vector2(0, 0)
 export(Vector2) var enemyStart = Vector2(0, 0)
 
-export(int) var boxCount = 20
+export(int) var boxCount = 14
 
 var tile_scene = preload("res://scenes/world/Tile.tscn")
 var back_scene = preload("res://scenes/world/background.tscn")
