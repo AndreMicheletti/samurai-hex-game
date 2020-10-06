@@ -94,7 +94,7 @@ func find_path(start, goal):
 		exceptions.append(charact.hex_pos)
 	return HexGrid.find_path(start, goal, exceptions)
 
-func is_outside_world(hex_pos : Vector2):
+func is_obstacle(hex_pos : Vector2):
 	if hex_pos.x > world_size or hex_pos.x < -world_size:
 		return true
 	if hex_pos.y > world_size or hex_pos.y < -world_size:
@@ -126,7 +126,7 @@ func _unhandled_input(event):
 #			print("hex x/y ", $Highlight.position)
 			# var path = get_grid().find_path(Vector2(0, 0), hex)
 			# print(path.size())
-			if is_outside_world(hex.get_axial_coords()):
+			if is_obstacle(hex.get_axial_coords()):
 				$Highlight.color = RED
 			else:
 				$Highlight.color = BLUE

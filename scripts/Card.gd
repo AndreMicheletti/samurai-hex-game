@@ -33,8 +33,13 @@ func flip():
 		yield($anim, "animation_finished")
 		back = true
 
-func set_back():
+func set_flipped_back():
 	back = true
 	$backside.visible = true
 	$Margin.visible = false
 	rect_scale = Vector2(-1, 1)
+
+func destroy():
+	$anim.play("destroy")
+	yield($anim, "animation_finished")
+	queue_free()

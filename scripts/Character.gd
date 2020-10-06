@@ -101,7 +101,7 @@ func deal_cards(n):
 func select_card(index):
 	selected_card = hand[index]
 	hand.remove(index)
-	emit_signal("card_selected")
+	emit_signal("card_selected", selected_card)
 
 func play_turn():
 	print("PLAYER PLAY TURN!! ")

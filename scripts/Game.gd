@@ -28,7 +28,7 @@ func _ready():
 func create_players():
 	player = player_scene.instance()
 	enemy = enemy_scene.instance()
-	player.connect("card_selected", self, "play_phase")
+	player.connect("card_selected", self, "on_player_selected_card")
 	player.connect("character_defeated", self, "win_game")
 	enemy.connect("character_defeated", self, "lose_game")
 
@@ -52,6 +52,7 @@ func init_game():
 
 func draw_phase():
 	print("\n*********************** DRAW PHASE")
+	yield(game_ui.reset_center(), "completed")
 	player.selected_card = null
 	enemy.selected_card = null
 	state = Phase.DRAW
@@ -108,6 +109,7 @@ func play_phase():
 		# SKIP SECOND ON TURN
 		turn_order[1].end_turn()
 	
+	yield(get_tree().create_timer(0.8), "timeout")
 	# BACK TO DRAW PHASE
 	draw_phase()
 
@@ -128,7 +130,7 @@ func check_attack(turn_order, index):
 
 	if not is_adjacent:
 		return false
-		
+
 	print("AN ATTACK IS HAPPENNING !!!")
 	var damage = attacker.selected_card.atk - defensor.selected_card.def
 	attacker.look_to_hex(defensor.hex_pos)
@@ -137,10 +139,9 @@ func check_attack(turn_order, index):
 		# play animation
 		attacker.play_attack(attacker.selected_card)
 		yield(attacker, "anim_hit")
-		# defensor lose its turn
+		yield(defensor.play_hit(), "completed")
 		attacker.attacked()
 		defensor.hit(damage)
-		yield(defensor.play_hit(), "completed")
 		return true
 	else:
 		# play animation
@@ -155,7 +156,7 @@ func check_attack(turn_order, index):
 
 func compare_cards():
 	# Compare the cards speed and return the turn order
-	return [player, enemy]
+	# return [player, enemy]
 	if player.selected_card.speed != enemy.selected_card.speed:
 		if player.selected_card.speed > enemy.selected_card.speed:
 			return [player, enemy]
@@ -173,6 +174,9 @@ func compare_cards():
 				return [player, enemy]
 			else:
 				return [enemy, player]
+
+func on_player_selected_card(_card):
+	play_phase()
 
 func win_game(_character):
 	reset_scene()

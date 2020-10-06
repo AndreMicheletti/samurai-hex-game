@@ -258,26 +258,27 @@ anchor_left = 0.5
 anchor_top = 0.5
 anchor_right = 0.5
 anchor_bottom = 0.5
-margin_left = -126.935
+margin_left = -130.0
 margin_top = -60.0
-margin_right = -46.9346
+margin_right = -49.9996
 margin_bottom = 60.0
 rect_min_size = Vector2( 80, 120 )
 mouse_filter = 2
-editor_only = false
+__meta__ = {
+"_edit_use_anchors_": false
+}
 
 [node name="CenterRight" type="ReferenceRect" parent="Screen"]
 anchor_left = 0.5
 anchor_top = 0.5
 anchor_right = 0.5
 anchor_bottom = 0.5
-margin_left = 48.1945
+margin_left = 50.0
 margin_top = -60.0
-margin_right = 128.194
+margin_right = 130.0
 margin_bottom = 60.0
 rect_min_size = Vector2( 80, 120 )
 mouse_filter = 2
-editor_only = false
 __meta__ = {
 "_edit_use_anchors_": false
 }
