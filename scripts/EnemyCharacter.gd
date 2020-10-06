@@ -24,12 +24,15 @@ func play_turn():
 	print("ENEMY PLAY TURN!! ")
 	emit_signal("turn_started", self)
 	moved = 0
-	yield(game.game_ui.reveal_enemy_card(), "completed")
-	yield(get_tree().create_timer(0.5), "timeout")
+	yield(reveal_card(), "completed")
 	var res = select_movement()
 	if res is GDScriptFunctionState:
 		yield(res, "completed")
 	end_turn()
+
+func reveal_card():
+	yield(game.game_ui.reveal_enemy_card(), "completed")
+	yield(get_tree().create_timer(0.5), "timeout")
 
 func select_movement():
 	# FIND PATH TO PLAYER

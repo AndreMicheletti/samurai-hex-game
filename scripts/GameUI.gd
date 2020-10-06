@@ -62,8 +62,9 @@ func add_card(card_res : CardResource):
 	player_cards.add_child(node)
 
 func on_card_pressed(node):
-	emit_signal("card_pressed", node.card_resource)
-	player_cards.remove_child(node)
+	if game.state == game.Phase.CHOOSE:
+		emit_signal("card_pressed", node.card_resource)
+		player_cards.remove_child(node)
 
 func show_cards():
 	$Tween.interpolate_property(
@@ -122,4 +123,6 @@ func on_enemy_select_card(card_res : CardResource):
 	enemy_center_card.add_child(card)
 
 func reveal_enemy_card():
-	yield(enemy_center_card.get_child(0).flip(), "completed")
+	if enemy_center_card.get_child(0).back:
+		yield(enemy_center_card.get_child(0).flip(), "completed")
+	yield(get_tree().create_timer(0.1), "timeout")

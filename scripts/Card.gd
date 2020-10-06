@@ -32,8 +32,10 @@ func flip():
 		$anim.play("flip_back")
 		yield($anim, "animation_finished")
 		back = true
+		enabled = false
 
 func set_flipped_back():
+	enabled = false
 	back = true
 	$backside.visible = true
 	$Margin.visible = false

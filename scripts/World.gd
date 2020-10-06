@@ -17,12 +17,14 @@ export(int) var world_size = 10
 export(Vector2) var playerStart = Vector2(0, 0)
 export(Vector2) var enemyStart = Vector2(0, 0)
 
+export(int) var boxCount = 20
+
 var tile_scene = preload("res://scenes/world/Tile.tscn")
 var back_scene = preload("res://scenes/world/background.tscn")
 var highlight_scene = preload("res://scenes/world/Highlight.tscn")
 
 var click_enabled = false
-var world_walls_pos = []
+var obstacles_coords = []
 
 onready var game = get_parent()
 
@@ -74,6 +76,27 @@ func generate_world(size):
 		block_2.hex_pos = cell.get_axial_coords()
 		$Highlights.add_child(block_2)
 		block_2.init(self)
+	
+	# build boxes
+	var available = []
+	for hex in zeroCell.get_all_within(size):
+		var coords = hex.get_axial_coords()
+		if coords != playerStart and coords != enemyStart:
+			available.append(coords)
+	available.shuffle()
+	
+	for n in range(boxCount):
+		randomize()
+		var idx = randi() % available.size()
+		var selected = available[idx]
+		available.remove(idx)
+		var block = tile_scene.instance()
+		block.tile_type = Tile.TileType.BOX
+		block.position = get_grid().get_hex_center(selected)
+		$Tileset.add_child(block)
+		obstacles_coords.append(selected)
+		get_grid().add_obstacles(selected)
+		
 
 func spawn_players(player, enemy):
 	# add instances
@@ -99,7 +122,7 @@ func is_obstacle(hex_pos : Vector2):
 		return true
 	if hex_pos.y > world_size or hex_pos.y < -world_size:
 		return true
-	if hex_pos in world_walls_pos:
+	if hex_pos in obstacles_coords:
 		return true
 	return false
 

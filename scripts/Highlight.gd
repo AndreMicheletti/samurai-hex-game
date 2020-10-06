@@ -27,10 +27,11 @@ func on_game_state_changed(state):
 		visible = false
 
 func update_visible(character : Character):
-	if game.state != game.Phase.PLAY:
-		visible = false
-		return
-	if hex_pos == game.player.hex_pos or hex_pos == game.enemy.hex_pos:
+	if (game.state != game.Phase.PLAY or
+		hex_pos == game.player.hex_pos or
+		hex_pos == game.enemy.hex_pos or
+		world.is_obstacle(hex_pos)
+		):
 		visible = false
 		return
 	if character.active:

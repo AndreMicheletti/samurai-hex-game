@@ -135,6 +135,10 @@ func check_attack(turn_order, index):
 	var damage = attacker.selected_card.atk - defensor.selected_card.def
 	attacker.look_to_hex(defensor.hex_pos)
 	defensor.look_to_hex(attacker.hex_pos)
+	
+	if defensor == self.enemy:
+		yield(defensor.reveal_card(), "completed")
+	
 	if damage > 0:
 		# play animation
 		attacker.play_attack(attacker.selected_card)

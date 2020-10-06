@@ -2,7 +2,7 @@ extends Node2D
 
 class_name Tile
 
-enum TileType {GRASS, SAND, WALL}
+enum TileType {GRASS, SAND, WALL, BOX}
 
 export(TileType) var tile_type
 
@@ -11,6 +11,7 @@ func _ready():
 	var grass_tiles = ["grass1.png", "grass2.png", "grass3.png"]
 	var sand_tiles = ["sand1.png", "sand2.png"]
 	var wall_tiles = ["wall1.png"]
+	var box_tiles = ["box1.png"]
 	match tile_type:
 		TileType.GRASS:
 			select_texture(grass_tiles)
@@ -18,6 +19,9 @@ func _ready():
 			select_texture(sand_tiles)
 		TileType.WALL:
 			select_texture(wall_tiles)
+		TileType.BOX:
+			select_texture(box_tiles)
+			scale = Vector2(.85, .85)
 
 func select_texture(list):
 	var file_path = list[0]
