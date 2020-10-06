@@ -16,6 +16,8 @@ var state = Phase.DRAW
 
 var first_draw = true
 
+signal changed_state
+
 # Called when the node enters the scene tree for the first time.
 func _ready():
 	create_players()
@@ -48,6 +50,7 @@ func draw_phase():
 	player.selected_card = null
 	enemy.selected_card = null
 	state = Phase.DRAW
+	emit_signal("changed_state", Phase.DRAW)
 	if first_draw:
 		first_draw = false
 		player.deal_cards(4)
@@ -63,6 +66,7 @@ func choose_phase():
 		return
 	print("\n*********************** CHOOSE PHASE")
 	state = Phase.CHOOSE
+	emit_signal("changed_state", Phase.CHOOSE)
 	enemy.choose_card()
 
 func play_phase():
@@ -70,6 +74,7 @@ func play_phase():
 		return
 	print("\n*********************** PLAY PHASE")
 	state = Phase.PLAY
+	emit_signal("changed_state", Phase.PLAY)
 	yield(game_ui.hide_cards(), "completed")
 	var turn_order = compare_cards()
 	print("TURN ORDER ", turn_order)
@@ -90,6 +95,7 @@ func play_phase():
 
 func compare_cards():
 	# Compare the cards speed and return the turn order
+	return [player, enemy]
 	if player.selected_card.speed != enemy.selected_card.speed:
 		if player.selected_card.speed > enemy.selected_card.speed:
 			return [player, enemy]

@@ -23,4 +23,12 @@ func choose_card():
 func play_turn():
 	print("ENEMY PLAY TURN!! ")
 	yield(get_tree().create_timer(0.5), "timeout")
-	emit_signal("turn_ended")
+	end_turn()
+	
+func end_turn():	
+	if not active:
+		return
+	active = false
+	moved = 0
+	look_to_hex(game.player.hex_pos)
+	emit_signal("turn_ended", self)

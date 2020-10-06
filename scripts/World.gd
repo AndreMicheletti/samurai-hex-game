@@ -19,9 +19,12 @@ export(Vector2) var enemyStart = Vector2(0, 0)
 
 var tile_scene = preload("res://scenes/world/Tile.tscn")
 var back_scene = preload("res://scenes/world/background.tscn")
+var highlight_scene = preload("res://scenes/world/Highlight.tscn")
 
 var click_enabled = false
 var world_walls_pos = []
+
+onready var game = get_parent()
 
 signal pressed_hex
 
@@ -65,6 +68,12 @@ func generate_world(size):
 		block.tile_type = Tile.TileType.GRASS
 		block.position = get_grid().get_hex_center(cell.get_axial_coords())
 		$Tileset.add_child(block)
+		
+		# also add highlight
+		var block_2 = highlight_scene.instance()
+		block_2.hex_pos = cell.get_axial_coords()
+		$Highlights.add_child(block_2)
+		block_2.init(self)
 
 func spawn_players(player, enemy):
 	# add instances

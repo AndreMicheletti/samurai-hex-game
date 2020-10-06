@@ -16,6 +16,7 @@ onready var game = world.get_parent()
 var hex_pos = Vector2()
 var moving = false
 var damage = 0
+var moved = 0
 var hand = []
 var active = false
 
@@ -25,6 +26,9 @@ var selected_card = null
 signal anim_hit
 signal card_dealed
 signal card_selected
+
+signal move_ended
+signal turn_started
 signal turn_ended
 
 # Called when the node enters the scene tree for the first time.
@@ -42,8 +46,14 @@ func look_to_hex(target: Vector2):
 	var result = hex_center - global_position
 	global_rotation = atan2(result.y, result.x) - 30
 
+func _process(delta):
+	if not active:
+		return
+	if moved >= selected_card.mov:
+		end_turn()
+
 func move_to(target : Vector2):
-	if moving:
+	if moving or not active:
 		return
 	self.moving = true
 	var path = world.find_path(self.hex_pos, target)
@@ -62,9 +72,11 @@ func move_to(target : Vector2):
 			$Tween.start()
 			yield($Tween, "tween_completed")
 		self.hex_pos = target
+		moved += path.size() - 1
 	# finally
 	play_idle()
 	self.moving = false
+	emit_signal("move_ended", self)
 
 func on_select_card(card_res : CardResource):
 	var index = hand.find(card_res)
@@ -90,11 +102,24 @@ func select_card(index):
 
 func play_turn():
 	print("PLAYER PLAY TURN!! ")
-	yield(get_tree().create_timer(0.5), "timeout")
-	emit_signal("turn_ended")
+	moved = 0
+	emit_signal("turn_started", self)
+	# yield(get_tree().create_timer(0.5), "timeout")
+	# emit_signal("turn_ended")
+
+func end_turn():
+	if not active:
+		return
+	active = false
+	moved = 0
+	look_to_hex(game.enemy.hex_pos)
+	emit_signal("turn_ended", self)
 
 func get_remaining_health():
 	return Health - damage
+
+func get_remaining_moves():
+	return selected_card.mov - moved
 
 func play(anim_name):
 	$anim.stop(true)

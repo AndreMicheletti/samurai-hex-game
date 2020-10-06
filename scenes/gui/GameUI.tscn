@@ -278,3 +278,6 @@ margin_bottom = 60.0
 rect_min_size = Vector2( 80, 120 )
 mouse_filter = 2
 editor_only = false
+__meta__ = {
+"_edit_use_anchors_": false
+}
