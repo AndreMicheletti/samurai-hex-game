@@ -32,6 +32,7 @@ signal move_ended
 signal turn_started
 signal turn_ended
 
+signal character_hit
 signal character_defeated
 
 # Called when the node enters the scene tree for the first time.
@@ -137,7 +138,8 @@ func defended():
 	pass
 
 func hit(atk_damage):
-	damage += atk_damage
+	emit_signal("character_hit", self, atk_damage)
+	self.damage += atk_damage
 	if get_remaining_health() <= 0:
 		defeated = true
 		emit_signal("character_defeated", self)
@@ -163,12 +165,15 @@ func play_idle():
 
 func play_hit():
 	play("hit")
+	yield($anim, "animation_finished")
 
 func play_defend():
 	play("defend")
+	yield($anim, "animation_finished")
 
 func play_dodge():
 	play("dodge")
+	yield($anim, "animation_finished")
 
 func emit_anim_hit():
 	emit_signal("anim_hit", self)

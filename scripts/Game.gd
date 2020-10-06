@@ -29,6 +29,8 @@ func create_players():
 	player = player_scene.instance()
 	enemy = enemy_scene.instance()
 	player.connect("card_selected", self, "play_phase")
+	player.connect("character_defeated", self, "win_game")
+	enemy.connect("character_defeated", self, "lose_game")
 
 func create_world():
 	world = world_scene.instance()
@@ -42,6 +44,8 @@ func init_ui():
 	game_ui.init()
 	game_ui.connect("card_pressed", player, "on_select_card")
 	game_ui.connect("card_pressed", self, "play_phase")
+	player.connect("character_hit", game_ui, "update_health_counter")
+	enemy.connect("character_hit", game_ui, "update_health_counter")
 
 func init_game():
 	draw_phase()
@@ -108,7 +112,7 @@ func play_phase():
 	draw_phase()
 
 func check_attack(turn_order, index):
-	var attacker = turn_order[0]
+	var attacker = turn_order[index]
 	var defensor = turn_order[1 - index]
 	
 	if attacker.selected_card.atk <= 0:
@@ -133,18 +137,17 @@ func check_attack(turn_order, index):
 		# play animation
 		attacker.play_attack(attacker.selected_card)
 		yield(attacker, "anim_hit")
-		defensor.play_hit()
 		# defensor lose its turn
 		attacker.attacked()
 		defensor.hit(damage)
+		yield(defensor.play_hit(), "completed")
 		return true
 	else:
 		# play animation
 		attacker.play("attack_slash")
 		yield(attacker, "anim_hit")
-		defensor.play_defend()
-		# defensor
 		defensor.defended()
+		yield(defensor.play_defend(), "completed")
 	
 	attacker.look_to_hex(defensor.hex_pos)
 	defensor.look_to_hex(attacker.hex_pos)
@@ -171,3 +174,11 @@ func compare_cards():
 			else:
 				return [enemy, player]
 
+func win_game(_character):
+	reset_scene()
+
+func lose_game(_character):
+	reset_scene()
+
+func reset_scene():
+	get_tree().reload_current_scene()

@@ -5,6 +5,7 @@ var card_resource
 signal card_pressed
 
 var enabled = true
+var back = false
 
 func _ready():
 	pass
@@ -21,3 +22,19 @@ func _on_Card_gui_input(event):
 	if enabled and event is InputEventScreenTouch:
 		if event.pressed == false:
 			emit_signal("card_pressed", self)
+
+func flip():
+	if back:
+		$anim.play("flip_front")
+		yield($anim, "animation_finished")
+		back = false
+	else:
+		$anim.play("flip_back")
+		yield($anim, "animation_finished")
+		back = true
+
+func set_back():
+	back = true
+	$backside.visible = true
+	$Margin.visible = false
+	rect_scale = Vector2(-1, 1)

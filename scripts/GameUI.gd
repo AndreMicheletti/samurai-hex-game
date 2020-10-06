@@ -20,19 +20,34 @@ func init():
 	player = game.player
 	enemy = game.enemy
 	init_player_gui()
-	update_health_counter()
+	init_health_counter()
 	player.connect("card_dealed", self, "add_card")
 
 func init_player_gui():
 	$Screen/Player1/Box/Panel/Content/Name/Label.text = player.PlayerName
 
-func update_health_counter():
+func init_health_counter():
+	# PLAYER HEALTH COUNTER
 	var player_node = $Screen/Player1/Box/Panel/Content/Health/Counter
-	for n in player_node.get_children():
-		n.queue_free()
 	for i in range(player.get_remaining_health()):
 		var node = damage_scene.instance()
 		player_node.add_child(node)
+	
+	# ENEMY HEALTH COUNTER
+	var enemy_node = $Screen/Player2/Box/Panel/Content/Health/Counter
+	for i in range(enemy.get_remaining_health()):
+		var node = damage_scene.instance()
+		enemy_node.add_child(node)
+
+func update_health_counter(character, damage):
+	if character == player:
+		var player_node = $Screen/Player1/Box/Panel/Content/Health/Counter
+		for i in range(damage):
+			player_node.remove_child(player_node.get_child(0))
+	else:
+		var enemy_node = $Screen/Player2/Box/Panel/Content/Health/Counter
+		for i in range(damage):
+			enemy_node.remove_child(enemy_node.get_child(0))
 
 func add_card(card_res : CardResource):
 	var node = card_scene.instance()
