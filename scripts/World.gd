@@ -104,6 +104,7 @@ func is_outside_world(hex_pos : Vector2):
 	return false
 
 func set_click_enabled(value):
+	print("SET WORLD CLICK ENABLED TO ", value)
 	set_process_input(value)
 	$Highlight.visible = value
 	click_enabled = value
@@ -133,7 +134,7 @@ func _unhandled_input(event):
 #				print("SCREEN TOUCH")
 #				print(event)
 				emit_signal("pressed_hex", hex)
-				$Samurai.move_to(hex.get_axial_coords())
+				# $Samurai.move_to(hex.get_axial_coords())
 
 func get_grid():
 	return HexGrid

@@ -19,6 +19,7 @@ var damage = 0
 var moved = 0
 var hand = []
 var active = false
+var defeated = false
 
 var selected_card = null
 
@@ -30,6 +31,8 @@ signal card_selected
 signal move_ended
 signal turn_started
 signal turn_ended
+
+signal character_defeated
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
@@ -55,10 +58,9 @@ func _process(delta):
 func move_to(target : Vector2):
 	if moving or not active:
 		return
-	self.moving = true
-	var path = world.find_path(self.hex_pos, target)
-	
-	if path.size() > 1:
+	var path = world.find_path(self.hex_pos, target)	
+	if path.size() > 1 and (path.size() - 1) <= get_remaining_moves():
+		self.moving = true
 		# if has path
 		play_dash()
 		for hex in path:
@@ -71,11 +73,11 @@ func move_to(target : Vector2):
 			$Tween.interpolate_property(self, "position", start_pos, goto_pos, 0.2)
 			$Tween.start()
 			yield($Tween, "tween_completed")
-		self.hex_pos = target
+		# finally
 		moved += path.size() - 1
-	# finally
-	play_idle()
-	self.moving = false
+		self.hex_pos = target
+		self.moving = false
+		play_idle()
 	emit_signal("move_ended", self)
 
 func on_select_card(card_res : CardResource):
@@ -115,15 +117,43 @@ func end_turn():
 	look_to_hex(game.enemy.hex_pos)
 	emit_signal("turn_ended", self)
 
+func on_pressed_hex(hex):
+	if active and not moving:
+		move_to(hex.get_axial_coords())
+
 func get_remaining_health():
 	return Health - damage
 
 func get_remaining_moves():
 	return selected_card.mov - moved
 
+func get_cell():
+	return world.HexCell.new(hex_pos)
+
+func attacked():
+	pass
+
+func defended():
+	pass
+
+func hit(atk_damage):
+	damage += atk_damage
+	if get_remaining_health() <= 0:
+		defeated = true
+		emit_signal("character_defeated", self)
+
 func play(anim_name):
 	$anim.stop(true)
 	$anim.play(anim_name)
+
+func play_attack(card_res : CardResource):
+	match card_res.anim:
+		CardResource.AttackAnim.SLASH:
+			play("attack_slash")			
+		CardResource.AttackAnim.PIERCE:
+			play("attack_pierce")
+		CardResource.AttackAnim.UPPER:
+			play("attack_upper")
 
 func play_dash():
 	play("dash2")

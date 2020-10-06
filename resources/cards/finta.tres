@@ -10,3 +10,4 @@ mov = 0
 atk = 1
 def = 3
 speed = 3
+anim = 0

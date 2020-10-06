@@ -34,6 +34,7 @@ func create_world():
 	world = world_scene.instance()
 	add_child(world)
 	world.spawn_players(player, enemy)
+	world.connect("pressed_hex", player, "on_pressed_hex")
 
 func init_ui():
 	game_ui = ui_scene.instance()
@@ -76,22 +77,78 @@ func play_phase():
 	state = Phase.PLAY
 	emit_signal("changed_state", Phase.PLAY)
 	yield(game_ui.hide_cards(), "completed")
+
+	# DETERMINE TURN ORDER
 	var turn_order = compare_cards()
 	print("TURN ORDER ", turn_order)
+	
 	# FIRST ON TURN
 	turn_order[0].active = true
 	turn_order[0].play_turn()
 	yield(turn_order[0], "turn_ended")
 	turn_order[0].active = false
 	
-	# SECOND ON TURN
-	turn_order[0].active = true
-	turn_order[1].play_turn()
-	yield(turn_order[1], "turn_ended")
-	turn_order[0].active = false
+	var attacked = check_attack(turn_order, 0)
+	if attacked is GDScriptFunctionState:
+		attacked = yield(attacked, "completed")
+	
+	if attacked == false:
+		# SECOND ON TURN
+		turn_order[1].active = true
+		turn_order[1].play_turn()
+		yield(turn_order[1], "turn_ended")
+		turn_order[1].active = false
+		
+		check_attack(turn_order, 1)
+	else:
+		# SKIP SECOND ON TURN
+		turn_order[1].end_turn()
 	
 	# BACK TO DRAW PHASE
 	draw_phase()
+
+func check_attack(turn_order, index):
+	var attacker = turn_order[0]
+	var defensor = turn_order[1 - index]
+	
+	if attacker.selected_card.atk <= 0:
+		return false
+	
+	var is_adjacent = false
+	var adjacent_hexes = attacker.get_cell().get_all_adjacent()
+	for hex in adjacent_hexes:
+		var pos = hex.get_axial_coords()
+		if pos == defensor.hex_pos:
+			is_adjacent = true
+			break
+
+	if not is_adjacent:
+		return false
+		
+	print("AN ATTACK IS HAPPENNING !!!")
+	var damage = attacker.selected_card.atk - defensor.selected_card.def
+	attacker.look_to_hex(defensor.hex_pos)
+	defensor.look_to_hex(attacker.hex_pos)
+	if damage > 0:
+		# play animation
+		attacker.play_attack(attacker.selected_card)
+		yield(attacker, "anim_hit")
+		defensor.play_hit()
+		# defensor lose its turn
+		attacker.attacked()
+		defensor.hit(damage)
+		return true
+	else:
+		# play animation
+		attacker.play("attack_slash")
+		yield(attacker, "anim_hit")
+		defensor.play_defend()
+		# defensor
+		defensor.defended()
+	
+	attacker.look_to_hex(defensor.hex_pos)
+	defensor.look_to_hex(attacker.hex_pos)
+	return false
 
 func compare_cards():
 	# Compare the cards speed and return the turn order

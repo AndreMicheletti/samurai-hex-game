@@ -25,7 +25,7 @@ func play_turn():
 	yield(get_tree().create_timer(0.5), "timeout")
 	end_turn()
 	
-func end_turn():	
+func end_turn():
 	if not active:
 		return
 	active = false

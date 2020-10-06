@@ -30,11 +30,10 @@ func update_visible(character : Character):
 	if game.state != game.Phase.PLAY:
 		visible = false
 		return
+	if hex_pos == game.player.hex_pos or hex_pos == game.enemy.hex_pos:
+		visible = false
+		return
 	if character.active:
-		if hex_pos == character.hex_pos:
-			visible = false
-			return
-
 		var path = world.find_path(hex_pos, character.hex_pos)
 		if (path.size()) <= character.get_remaining_moves():
 			visible = true
