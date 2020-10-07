@@ -147,7 +147,7 @@ func check_attack(turn_order, index):
 	if defensor == self.enemy:
 		yield(defensor.reveal_card(), "completed")
 	
-	if damage == 0 and player.characterClass.passiveHability == ClassResource.Passive.IGNORE_DEF:
+	if damage == 0 and attacker.characterClass.passiveHability == ClassResource.Passive.IGNORE_DEF:
 		attacker.set_attack_advantage(true)
 		damage = 1
 	
@@ -155,16 +155,16 @@ func check_attack(turn_order, index):
 		# play animation
 		attacker.play_attack(attacker.selected_card)
 		yield(attacker, "anim_hit")
+		attacker.attacked(defensor)
 		yield(defensor.play_hit(), "completed")
-		attacker.attacked()
 		defensor.hit(damage)
 		return true
 	else:
 		# play animation
 		attacker.play("attack_slash")
 		yield(attacker, "anim_hit")
-		defensor.defended()
 		yield(defensor.play_defend(), "completed")
+		yield(defensor.defended(attacker), "completed")
 	
 	attacker.look_to_hex(defensor.hex_pos)
 	defensor.look_to_hex(attacker.hex_pos)

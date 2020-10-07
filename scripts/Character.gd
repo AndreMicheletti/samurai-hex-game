@@ -59,8 +59,8 @@ func _process(delta):
 	if moved >= selected_card.mov:
 		end_turn()
 
-func move_to(target : Vector2):
-	if moving or not active:
+func move_to(target : Vector2, turn = true, ignore_flags = false):
+	if not ignore_flags and (moving or not active):
 		return
 	var path = world.find_path(self.hex_pos, target)	
 	if path.size() > 1 and (path.size() - 1) <= get_remaining_moves():
@@ -71,7 +71,8 @@ func move_to(target : Vector2):
 			var hex_coords = hex.get_axial_coords()
 			if hex_coords == self.hex_pos:
 				continue
-			look_to_hex(hex_coords)
+			if turn:
+				look_to_hex(hex_coords)
 			var start_pos = self.position
 			var goto_pos = world.get_grid().get_hex_center(hex)
 			$Tween.interpolate_property(self, "position", start_pos, goto_pos, 0.2)
@@ -83,6 +84,29 @@ func move_to(target : Vector2):
 		self.moving = false
 		play_idle()
 	emit_signal("move_ended", self)
+
+func get_pushed_from(attacker_hex_pos : Vector2):
+	var dir = attacker_hex_pos - hex_pos
+	print(hex_pos, " ATTACKED FROM ", attacker_hex_pos, "  // DIR IS ", dir)	
+	var aux	
+	if abs(dir.x) == 0 and abs(dir.y) != 0:
+		aux = Vector2(0, dir.y * 1)
+	elif abs(dir.y) == 0 and abs(dir.x) != 0:
+		aux = Vector2(dir.x * 1, 0)
+	elif abs(dir.x) != 0 and abs(dir.y) != 0:
+		aux = Vector2(dir.x * 1, dir.y * 1)
+
+	var dest = Vector2(hex_pos.x - aux.x, hex_pos.y - aux.y)
+	var goto_pos = world.get_grid().get_hex_center(dest)
+	print("BEING PUSHED TO ", dest)	
+	$Tween.interpolate_property(self, "position", position, goto_pos, 0.2)
+	$Tween.start()
+	yield($Tween, "tween_completed")
+	self.hex_pos = dest
+	if world.is_obstacle(dest):
+		# got pushed to an obstacle
+		print(name, " PUSHED TO OBSTACLE")
+		defeat()
 
 func on_select_card(card_res : CardResource):
 	var index = hand.find(card_res)
@@ -134,12 +158,16 @@ func get_remaining_moves():
 func get_cell():
 	return world.HexCell.new(hex_pos)
 
-func attacked():
+func attacked(defensor):
 	set_attack_advantage(false)
+	if characterClass.passiveHability == ClassResource.Passive.ATK_PUSH:
+		yield(defensor.get_pushed_from(hex_pos), "completed")
+	yield(get_tree().create_timer(0.1), "timeout")
 
-func defended():
+func defended(attacked):
 	if characterClass.passiveHability == ClassResource.Passive.DEF_COUNTER:
 		set_speed_advantage(true)
+	yield(get_tree().create_timer(0.1), "timeout")
 
 func set_speed_advantage(value):
 	advantage = value
@@ -152,8 +180,7 @@ func hit(atk_damage):
 	emit_signal("character_hit", self, atk_damage)
 	self.damage += atk_damage
 	if get_remaining_health() <= 0:
-		defeated = true
-		emit_signal("character_defeated", self)
+		defeat()
 
 func play(anim_name):
 	$anim.stop(true)
@@ -188,3 +215,7 @@ func play_dodge():
 
 func emit_anim_hit():
 	emit_signal("anim_hit", self)
+
+func defeat():
+	defeated = true
+	emit_signal("character_defeated", self)
