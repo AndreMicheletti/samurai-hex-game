@@ -81,11 +81,19 @@ func play_phase():
 	print("\n*********************** PLAY PHASE")
 	state = Phase.PLAY
 	emit_signal("changed_state", Phase.PLAY)
-	yield(game_ui.hide_cards(), "completed")
 
 	# DETERMINE TURN ORDER
 	var turn_order = compare_cards()
 	print("TURN ORDER ", turn_order)
+	
+	var first_char
+	if turn_order[0] == player:
+		first_char = "player"
+	else:
+		first_char = "enemy"
+
+	yield(game_ui.reveal_faster_card(first_char), 'completed')		
+	yield(game_ui.hide_cards(), "completed")
 	
 	# FIRST ON TURN
 	turn_order[0].active = true

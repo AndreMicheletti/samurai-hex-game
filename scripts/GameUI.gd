@@ -122,6 +122,16 @@ func on_enemy_select_card(card_res : CardResource):
 	card.set_flipped_back()
 	enemy_center_card.add_child(card)
 
+func reveal_faster_card(character):
+	yield(get_tree().create_timer(0.5), "timeout")
+	var card_node
+	if character == "player":
+		card_node = player_center_card.get_child(0)
+	else:
+		card_node = enemy_center_card.get_child(0)
+	yield(card_node.play_choose(), "completed")
+	yield(get_tree().create_timer(0.5), "timeout")
+
 func reveal_enemy_card():
 	if enemy_center_card.get_child(0).back:
 		yield(enemy_center_card.get_child(0).flip(), "completed")

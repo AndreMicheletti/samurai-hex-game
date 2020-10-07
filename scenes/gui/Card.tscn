@@ -1,4 +1,4 @@
-[gd_scene load_steps=9 format=2]
+[gd_scene load_steps=10 format=2]
 
 [ext_resource path="res://scripts/Card.gd" type="Script" id=1]
 [ext_resource path="res://samurai_icon.png" type="Texture" id=2]
@@ -16,7 +16,22 @@ corner_radius_top_right = 4
 corner_radius_bottom_right = 4
 corner_radius_bottom_left = 4
 
-[sub_resource type="Animation" id=5]
+[sub_resource type="Animation" id=2]
+resource_name = "choose"
+tracks/0/type = "value"
+tracks/0/path = NodePath(".:rect_scale")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0, 0.2, 0.8, 1 ),
+"transitions": PoolRealArray( 1, 1, 1, 1 ),
+"update": 0,
+"values": [ Vector2( 1, 1 ), Vector2( 1.4, 1.4 ), Vector2( 1.4, 1.4 ), Vector2( 1, 1 ) ]
+}
+
+[sub_resource type="Animation" id=3]
 resource_name = "destroy"
 length = 1.4
 tracks/0/type = "value"
@@ -68,8 +83,7 @@ tracks/3/keys = {
 "values": [ Vector2( 40, 110 ), Vector2( 40, 0 ) ]
 }
 
-[sub_resource type="Animation" id=2]
-resource_name = "flip_back"
+[sub_resource type="Animation" id=4]
 tracks/0/type = "value"
 tracks/0/path = NodePath(".:rect_scale")
 tracks/0/interp = 1
@@ -107,8 +121,7 @@ tracks/2/keys = {
 "values": [ true, false, false ]
 }
 
-[sub_resource type="Animation" id=3]
-resource_name = "flip_front"
+[sub_resource type="Animation" id=5]
 tracks/0/type = "value"
 tracks/0/path = NodePath("Margin:visible")
 tracks/0/interp = 1
@@ -146,7 +159,7 @@ tracks/2/keys = {
 "values": [ Vector2( -1, 1 ), Vector2( 1, 1 ) ]
 }
 
-[sub_resource type="CanvasItemMaterial" id=4]
+[sub_resource type="CanvasItemMaterial" id=6]
 blend_mode = 1
 
 [node name="Card" type="Panel"]
@@ -258,12 +271,13 @@ __meta__ = {
 
 [node name="anim" type="AnimationPlayer" parent="."]
 playback_speed = 1.5
-anims/destroy = SubResource( 5 )
-anims/flip_back = SubResource( 2 )
-anims/flip_front = SubResource( 3 )
+anims/choose = SubResource( 2 )
+anims/destroy = SubResource( 3 )
+anims/flip_back = SubResource( 4 )
+anims/flip_front = SubResource( 5 )
 
 [node name="Flames" type="CPUParticles2D" parent="."]
-material = SubResource( 4 )
+material = SubResource( 6 )
 position = Vector2( 40, 110 )
 z_index = 50
 emitting = false

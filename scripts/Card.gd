@@ -41,6 +41,10 @@ func set_flipped_back():
 	$Margin.visible = false
 	rect_scale = Vector2(-1, 1)
 
+func play_choose():
+	$anim.play("choose")
+	yield($anim, "animation_finished")
+	
 func destroy():
 	$anim.play("destroy")
 	yield($anim, "animation_finished")
