@@ -1,9 +1,10 @@
-[gd_scene load_steps=14 format=2]
+[gd_scene load_steps=15 format=2]
 
-[ext_resource path="res://scripts/EnemyCharacter.gd" type="Script" id=1]
-[ext_resource path="res://graphics/characters/monk.png" type="Texture" id=2]
+[ext_resource path="res://scripts/Character.gd" type="Script" id=1]
+[ext_resource path="res://resources/decks/samurai_deck.tres" type="Resource" id=2]
 [ext_resource path="res://graphics/characters/sabre_hand.png" type="Texture" id=3]
-[ext_resource path="res://resources/decks/samurai_deck.tres" type="Resource" id=4]
+[ext_resource path="res://graphics/characters/samurai.png" type="Texture" id=4]
+[ext_resource path="res://resources/classes/samurai.tres" type="Resource" id=5]
 
 [sub_resource type="Animation" id=1]
 resource_name = "attack_pierce"
@@ -174,7 +175,7 @@ tracks/3/keys = {
 "values": [ Vector2( 0, -7 ), Vector2( -0.635574, -0.501694 ), Vector2( -0.635574, -0.501694 ), Vector2( -0.306128, -10.689 ), Vector2( -0.306128, -10.689 ), Vector2( 0, -7 ) ]
 }
 tracks/4/type = "value"
-tracks/4/path = NodePath("Pivot/character/Position2D/sabre:z_index")
+tracks/4/path = NodePath("Pivot/character/Position2D/hand:z_index")
 tracks/4/interp = 0
 tracks/4/loop_wrap = true
 tracks/4/imported = false
@@ -529,9 +530,10 @@ tracks/6/keys = {
 "values": [ Vector2( 0, 0 ), Vector2( 0, 0 ) ]
 }
 
-[node name="EnemySamurai" type="Node2D"]
+[node name="Player" type="Node2D"]
 script = ExtResource( 1 )
-deck = ExtResource( 4 )
+characterClass = ExtResource( 5 )
+deck = ExtResource( 2 )
 
 [node name="anim" type="AnimationPlayer" parent="."]
 autoplay = "idle"
@@ -554,14 +556,15 @@ __meta__ = {
 
 [node name="character" type="Sprite" parent="Pivot"]
 z_index = 11
-texture = ExtResource( 2 )
+texture = ExtResource( 4 )
 
 [node name="Position2D" type="Position2D" parent="Pivot/character"]
 position = Vector2( 0, -7 )
 z_as_relative = false
 
-[node name="sabre" type="Sprite" parent="Pivot/character/Position2D"]
+[node name="hand" type="Sprite" parent="Pivot/character/Position2D"]
 rotation = 1.58123
 z_index = 10
 texture = ExtResource( 3 )
 offset = Vector2( -12, 0 )
+flip_v = true

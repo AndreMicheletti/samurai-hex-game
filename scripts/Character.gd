@@ -2,11 +2,9 @@ extends Node2D
 
 class_name Character
 
-enum CharacterClass {Samurai, Lancer, Wanderer}
-
 export(String) var PlayerName = "Player"
 export(int) var Health = 4
-export(CharacterClass) var character_class
+export(Resource) var characterClass
 
 export(Resource) var deck
 
@@ -40,6 +38,10 @@ func _ready():
 	add_to_group("Character")
 	hex_pos = Vector2(0, 0)
 	shuffle_deck()
+	$Pivot/character.texture = characterClass.characterTexture
+	$Pivot/character/Position2D/hand.texture = characterClass.handTexture
+	if characterClass.name == "Elite":
+		$Pivot/character/Position2D/hand.offset = Vector2(-17, 0)
 
 func teleport_to(pos : Vector2):
 	position = world.get_grid().get_hex_center(pos)

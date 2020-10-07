@@ -3,8 +3,8 @@ extends Node2D
 enum Phase {DRAW, CHOOSE, PLAY}
 
 var world_scene = preload("res://scenes/world/World.tscn")
-var player_scene = preload("res://scenes/characters/Samurai.tscn")
-var enemy_scene = preload("res://scenes/characters/EnemySamurai.tscn")
+var player_scene = preload("res://scenes/characters/Player.tscn")
+var enemy_scene = preload("res://scenes/characters/Enemy.tscn")
 
 var ui_scene = preload("res://scenes/gui/GameUI.tscn")
 
