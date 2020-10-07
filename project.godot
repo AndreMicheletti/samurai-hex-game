@@ -45,8 +45,12 @@ _global_script_class_icons={
 [application]
 
 config/name="Samurai Hex"
-run/main_scene="res://scenes/Game.tscn"
+run/main_scene="res://scenes/TitleScreen.tscn"
 config/icon="res://graphics/characters/monk.png"
+
+[autoload]
+
+global="*res://scripts/global.gd"
 
 [display]
 

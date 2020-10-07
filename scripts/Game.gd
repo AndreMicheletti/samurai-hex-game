@@ -28,6 +28,8 @@ func _ready():
 func create_players():
 	player = player_scene.instance()
 	enemy = enemy_scene.instance()
+	player.characterClass = global.selectedPlayerClass
+	enemy.characterClass = global.selectedEnemyClass
 	player.connect("card_selected", self, "on_player_selected_card")
 	player.connect("character_defeated", self, "win_game")
 	enemy.connect("character_defeated", self, "lose_game")

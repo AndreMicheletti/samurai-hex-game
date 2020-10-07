@@ -1,0 +1,62 @@
+[gd_scene load_steps=3 format=2]
+
+[ext_resource path="res://graphics/gui/title_screen.jpg" type="Texture" id=1]
+[ext_resource path="res://scripts/TitleScreen.gd" type="Script" id=2]
+
+[node name="TitleScreen" type="Control"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+script = ExtResource( 2 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="background" type="TextureRect" parent="."]
+anchor_right = 1.0
+anchor_bottom = 1.0
+texture = ExtResource( 1 )
+expand = true
+stretch_mode = 7
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="PlayerClass" type="OptionButton" parent="."]
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+margin_left = -113.5
+margin_top = -20.0
+margin_right = 113.5
+margin_bottom = 20.0
+text = "Player Class"
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="EnemyClass" type="OptionButton" parent="."]
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+margin_left = -113.5
+margin_top = 36.0
+margin_right = 113.5
+margin_bottom = 76.0
+text = "Enemy Class"
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="PlayButton" type="Button" parent="."]
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+margin_left = -113.5
+margin_top = 124.0
+margin_right = 113.5
+margin_bottom = 164.0
+text = "Play"
+[connection signal="pressed" from="PlayButton" to="." method="_on_PlayButton_pressed"]
