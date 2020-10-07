@@ -1,10 +1,10 @@
-[gd_scene load_steps=21 format=2]
+[gd_scene load_steps=22 format=2]
 
 [ext_resource path="res://scripts/Character.gd" type="Script" id=1]
 [ext_resource path="res://resources/decks/samurai_deck.tres" type="Resource" id=2]
 [ext_resource path="res://graphics/characters/sabre_hand.png" type="Texture" id=3]
 [ext_resource path="res://graphics/characters/samurai.png" type="Texture" id=4]
-[ext_resource path="res://resources/classes/samurai.tres" type="Resource" id=5]
+[ext_resource path="res://resources/classes/elite.tres" type="Resource" id=5]
 [ext_resource path="res://graphics/particles/twirl_01.png" type="Texture" id=6]
 [ext_resource path="res://graphics/particles/flame_01.png" type="Texture" id=7]
 
@@ -394,6 +394,45 @@ tracks/3/keys = {
 "values": [ 0.0, -65.4082, -65.4082, 0.0 ]
 }
 
+[sub_resource type="Animation" id=14]
+resource_name = "fall"
+tracks/0/type = "value"
+tracks/0/path = NodePath("Pivot/character:scale")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0, 1 ),
+"transitions": PoolRealArray( 1, 1 ),
+"update": 0,
+"values": [ Vector2( 1, 1 ), Vector2( 0.1, 0.1 ) ]
+}
+tracks/1/type = "value"
+tracks/1/path = NodePath("Pivot/character/Position2D:position")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/keys = {
+"times": PoolRealArray( 0, 0.7, 1 ),
+"transitions": PoolRealArray( 1, 1, 1 ),
+"update": 0,
+"values": [ Vector2( 0, -7 ), Vector2( -13.247, 1.06338 ), Vector2( -13.247, 1.06338 ) ]
+}
+tracks/2/type = "value"
+tracks/2/path = NodePath("Pivot/character/Position2D:rotation_degrees")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/keys = {
+"times": PoolRealArray( 0, 0.7, 1 ),
+"transitions": PoolRealArray( 1, 1, 1 ),
+"update": 0,
+"values": [ 0.0, -48.8899, -48.8899 ]
+}
+
 [sub_resource type="Animation" id=8]
 tracks/0/type = "value"
 tracks/0/path = NodePath("Pivot/character:position")
@@ -532,17 +571,17 @@ tracks/6/keys = {
 "values": [ Vector2( 0, 0 ), Vector2( 0, 0 ) ]
 }
 
-[sub_resource type="CanvasItemMaterial" id=12]
-blend_mode = 1
-
-[sub_resource type="Gradient" id=13]
-offsets = PoolRealArray( 0, 0.84106, 1 )
-colors = PoolColorArray( 1, 0.238281, 0.238281, 1, 1, 0.658824, 0.00392157, 1, 0, 0, 0, 1 )
-
 [sub_resource type="CanvasItemMaterial" id=10]
 blend_mode = 1
 
 [sub_resource type="Gradient" id=11]
+offsets = PoolRealArray( 0, 0.84106, 1 )
+colors = PoolColorArray( 1, 0.238281, 0.238281, 1, 1, 0.658824, 0.00392157, 1, 0, 0, 0, 1 )
+
+[sub_resource type="CanvasItemMaterial" id=12]
+blend_mode = 1
+
+[sub_resource type="Gradient" id=13]
 offsets = PoolRealArray( 0, 0.529801, 0.993378 )
 colors = PoolColorArray( 0.779888, 0.914062, 0.44989, 1, 0.280487, 0.680671, 0.710938, 1, 0, 0, 0, 1 )
 
@@ -560,6 +599,7 @@ anims/dash = SubResource( 4 )
 anims/dash2 = SubResource( 5 )
 anims/defend = SubResource( 6 )
 anims/dodge = SubResource( 7 )
+anims/fall = SubResource( 14 )
 anims/hit = SubResource( 8 )
 anims/idle = SubResource( 9 )
 
@@ -586,7 +626,7 @@ offset = Vector2( -12, 0 )
 flip_v = true
 
 [node name="FlamesP" type="CPUParticles2D" parent="Pivot/character/Position2D"]
-material = SubResource( 12 )
+material = SubResource( 10 )
 position = Vector2( 0, -16.2827 )
 z_index = 20
 emitting = false
@@ -600,10 +640,10 @@ angular_velocity = 40.0
 angular_velocity_random = 1.0
 scale_amount = 0.01
 scale_amount_random = 0.02
-color_ramp = SubResource( 13 )
+color_ramp = SubResource( 11 )
 
 [node name="AdvantageP" type="CPUParticles2D" parent="."]
-material = SubResource( 10 )
+material = SubResource( 12 )
 z_index = 10
 emitting = false
 amount = 5
@@ -620,4 +660,4 @@ angular_velocity_random = 0.2
 damping = 6.0
 scale_amount = 0.01
 scale_amount_random = 0.02
-color_ramp = SubResource( 11 )
+color_ramp = SubResource( 13 )

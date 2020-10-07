@@ -90,11 +90,11 @@ func get_pushed_from(attacker_hex_pos : Vector2):
 	print(hex_pos, " ATTACKED FROM ", attacker_hex_pos, "  // DIR IS ", dir)	
 	var aux	
 	if abs(dir.x) == 0 and abs(dir.y) != 0:
-		aux = Vector2(0, dir.y * 1)
+		aux = Vector2(0, dir.y)
 	elif abs(dir.y) == 0 and abs(dir.x) != 0:
-		aux = Vector2(dir.x * 1, 0)
+		aux = Vector2(dir.x, 0)
 	elif abs(dir.x) != 0 and abs(dir.y) != 0:
-		aux = Vector2(dir.x * 1, dir.y * 1)
+		aux = Vector2(dir.x, dir.y)
 
 	var dest = Vector2(hex_pos.x - aux.x, hex_pos.y - aux.y)
 	var goto_pos = world.get_grid().get_hex_center(dest)
@@ -106,6 +106,8 @@ func get_pushed_from(attacker_hex_pos : Vector2):
 	if world.is_obstacle(dest):
 		# got pushed to an obstacle
 		print(name, " PUSHED TO OBSTACLE")
+		play("fall")
+		yield($anim, "animation_finished")
 		defeat()
 
 func on_select_card(card_res : CardResource):
