@@ -147,6 +147,10 @@ func check_attack(turn_order, index):
 	if defensor == self.enemy:
 		yield(defensor.reveal_card(), "completed")
 	
+	if damage == 0 and player.characterClass.passiveHability == ClassResource.Passive.IGNORE_DEF:
+		attacker.set_attack_advantage(true)
+		damage = 1
+	
 	if damage > 0:
 		# play animation
 		attacker.play_attack(attacker.selected_card)
@@ -168,7 +172,13 @@ func check_attack(turn_order, index):
 
 func compare_cards():
 	# Compare the cards speed and return the turn order
-	# return [player, enemy]
+	if player.advantage and not enemy.advantage:
+		player.set_speed_advantage(false)
+		return [player, enemy]
+	elif enemy.advantage and not player.advantage:
+		enemy.set_speed_advantage(false)
+		return [enemy, player]
+	
 	if player.selected_card.speed != enemy.selected_card.speed:
 		if player.selected_card.speed > enemy.selected_card.speed:
 			return [player, enemy]

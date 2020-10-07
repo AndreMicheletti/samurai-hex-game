@@ -16,6 +16,7 @@ var moving = false
 var damage = 0
 var moved = 0
 var hand = []
+var advantage = false # if true, will attack first on next turn
 var active = false
 var defeated = false
 
@@ -134,10 +135,18 @@ func get_cell():
 	return world.HexCell.new(hex_pos)
 
 func attacked():
-	pass
+	set_attack_advantage(false)
 
 func defended():
-	pass
+	if characterClass.passiveHability == ClassResource.Passive.DEF_COUNTER:
+		set_speed_advantage(true)
+
+func set_speed_advantage(value):
+	advantage = value
+	$AdvantageP.emitting = value
+
+func set_attack_advantage(value):
+	$Pivot/character/Position2D/FlamesP.emitting = value
 
 func hit(atk_damage):
 	emit_signal("character_hit", self, atk_damage)

@@ -2,7 +2,7 @@ extends Character
 
 enum AIMode {RANDOM, BALANCED, AGRESSIVE, DEFENSIVE}
 
-var ai_mode = AIMode.RANDOM
+export(AIMode) var ai_mode = AIMode.RANDOM
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
@@ -46,23 +46,26 @@ func select_movement():
 	
 	var moves = get_remaining_moves()
 	if moves > path.size():
-		var random_moves = moves - path.size()
+		print("MOVE RANDOM")
 		match ai_mode:
 			AIMode.RANDOM:
-				randomize()
 				# MOVE RANDOM
-				while random_moves > 0:
-					var adjc = get_cell().get_all_adjacent()
-					if adjc.size() <= 0:
-						print("NOWHERE TO MOVE")
-						break
-					var dest = adjc[randi() % adjc.size()]
-					if not world.is_obstacle(dest.get_axial_coords()):
-						var random_wait = (randi() % 3) / 10.0
-						yield(get_tree().create_timer(random_wait), "timeout")
-						move_to(dest.get_axial_coords())
-						yield(self, "move_ended")
-				print("MOVE RANDOM")
+				randomize()
+				var adjc = get_cell().get_all_adjacent()
+				if adjc.size() <= 0:
+					print("NOWHERE TO MOVE")
+					return select_movement()
+				# FIND VALID DESTINATION TO MOVE
+				var dest = adjc[randi() % adjc.size()]
+				while world.is_obstacle(dest.get_axial_coords()):
+					dest = adjc[randi() % adjc.size()]
+				# MOVE
+				var random_wait = (randi() % 3) / 10.0
+				yield(get_tree().create_timer(random_wait), "timeout")
+				move_to(dest.get_axial_coords())
+				yield(self, "move_ended")
+				# CALL RECURSIVE
+				return select_movement()
 			AIMode.BALANCED:
 				pass
 			AIMode.AGGRESSIVE:
