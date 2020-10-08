@@ -60,6 +60,7 @@ func random_wait():
 
 func move_random():
 	yield(random_wait(), "completed")
+	print("MOVE RANDOM")
 	
 	var adjc = get_cell().get_all_adjacent()
 	if adjc.size() <= 0:
@@ -72,11 +73,11 @@ func move_random():
 		dest = adjc.pop_front()
 	# MOVE
 	if dest != null:
-		move_to(dest.get_axial_coords())
-		yield(self, "move_ended")
+		yield(move_to(dest.get_axial_coords()), "completed")
 
 func follow_player():
 	yield(random_wait(), "completed")
+	print("FOLLOW PLAYER")
 	
 	var aux_path = world.find_path(hex_pos, game.player.hex_pos)
 	var path = []
@@ -88,8 +89,10 @@ func follow_player():
 
 	# move following path
 	var hex = path.pop_back()
-	move_to(hex)
-	yield(self, "move_ended")
+	if not hex:
+		yield(move_random(), "completed")
+	else:
+		yield(move_to(hex), "completed")
 
 func end_turn():
 	if not active:

@@ -66,15 +66,18 @@ func _process(delta):
 		end_turn()
 
 func move_to(target : Vector2, turn = true, ignore_flags = false):
+	yield(get_tree().create_timer(0.1), "timeout")
 	if not ignore_flags and (moving or not active):
 		return
-	var path = world.find_path(self.hex_pos, target)	
-	if path.size() > 1 and (path.size() - 1) <= get_remaining_moves():
+	var path = world.find_path(self.hex_pos, target)
+	if path.size() > 1:
 		self.moving = true
 		# if has path
 		play_dash()
 		for hex in path:
 			var hex_coords = hex.get_axial_coords()
+			if get_remaining_moves() <= 0:
+				break
 			if hex_coords == self.hex_pos:
 				continue
 			if turn:
@@ -84,9 +87,9 @@ func move_to(target : Vector2, turn = true, ignore_flags = false):
 			$Tween.interpolate_property(self, "position", start_pos, goto_pos, 0.2)
 			$Tween.start()
 			yield($Tween, "tween_completed")
+			self.hex_pos = hex_coords
+			moved += 1
 		# finally
-		moved += path.size() - 1
-		self.hex_pos = target
 		self.moving = false
 		play_idle()
 	emit_signal("move_ended", self)

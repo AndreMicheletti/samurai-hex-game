@@ -71,11 +71,12 @@ func generate_world(size):
 		block.position = get_grid().get_hex_center(cell.get_axial_coords())
 		$Tileset.add_child(block)
 		
-		# also add highlight
-		var block_2 = highlight_scene.instance()
-		block_2.hex_pos = cell.get_axial_coords()
-		$Highlights.add_child(block_2)
-		block_2.init(self)
+		if not global.is_mobile():
+			# also add highlight
+			var block_2 = highlight_scene.instance()
+			block_2.hex_pos = cell.get_axial_coords()
+			$Highlights.add_child(block_2)
+			block_2.init(self)
 	
 	# build boxes
 	var available = []

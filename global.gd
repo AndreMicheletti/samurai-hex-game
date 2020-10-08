@@ -14,3 +14,6 @@ func set_player_class(idx):
 
 func set_enemy_class(idx):
 	selectedEnemyClass = classes[idx]
+
+func is_mobile():
+	return OS.get_name() == "Android"
