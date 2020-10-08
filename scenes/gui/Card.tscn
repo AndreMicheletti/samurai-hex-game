@@ -1,8 +1,9 @@
-[gd_scene load_steps=10 format=2]
+[gd_scene load_steps=13 format=2]
 
 [ext_resource path="res://scripts/Card.gd" type="Script" id=1]
 [ext_resource path="res://samurai_icon.png" type="Texture" id=2]
 [ext_resource path="res://graphics/particles/flame_01.png" type="Texture" id=3]
+[ext_resource path="res://graphics/particles/star_01.png" type="Texture" id=4]
 
 [sub_resource type="StyleBoxFlat" id=1]
 bg_color = Color( 0.776471, 0.678431, 0.411765, 1 )
@@ -162,6 +163,13 @@ tracks/2/keys = {
 [sub_resource type="CanvasItemMaterial" id=6]
 blend_mode = 1
 
+[sub_resource type="CanvasItemMaterial" id=7]
+blend_mode = 1
+
+[sub_resource type="Gradient" id=8]
+offsets = PoolRealArray( 0, 0.536424, 1 )
+colors = PoolColorArray( 0, 0, 0, 1, 1, 0.948975, 0.40625, 1, 0, 0, 0, 1 )
+
 [node name="Card" type="Panel"]
 margin_right = 80.0
 margin_bottom = 120.0
@@ -292,4 +300,15 @@ angle = 45.0
 angle_random = 1.0
 scale_amount = 0.05
 color = Color( 0.870588, 0.67451, 0.254902, 1 )
+
+[node name="Special" type="CPUParticles2D" parent="."]
+material = SubResource( 7 )
+position = Vector2( 40, 60 )
+emitting = false
+texture = ExtResource( 4 )
+emission_shape = 2
+emission_rect_extents = Vector2( 30, 50 )
+gravity = Vector2( 0, -20 )
+scale_amount = 0.05
+color_ramp = SubResource( 8 )
 [connection signal="gui_input" from="." to="." method="_on_Card_gui_input"]

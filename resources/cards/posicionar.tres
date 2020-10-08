@@ -12,3 +12,4 @@ def = 0
 speed = 2
 anim = "attack_slash"
 def_anim = "dodge"
+special = false

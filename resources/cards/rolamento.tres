@@ -6,9 +6,10 @@
 script = ExtResource( 1 )
 id = 7
 title = "Rolamento"
-mov = 1
+mov = 2
 atk = 0
 def = 0
 speed = 4
 anim = "attack_slash"
 def_anim = "dodge"
+special = false

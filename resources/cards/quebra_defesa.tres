@@ -12,3 +12,4 @@ def = 0
 speed = 2
 anim = "attack_skull_break"
 def_anim = "defend"
+special = true

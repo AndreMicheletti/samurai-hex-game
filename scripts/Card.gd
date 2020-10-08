@@ -17,6 +17,7 @@ func set_resource(card : CardResource):
 	$Margin/VBox/Def.text = "Def " + str(card.def)
 	$Margin/VBox/Mov.text = "Mov " + str(card.mov)
 	$Margin/VBox/Speed.text = "Spd " + str(card.speed)
+	$Special.emitting = card_resource.special
 
 func _on_Card_gui_input(event):
 	if enabled and event is InputEventScreenTouch:

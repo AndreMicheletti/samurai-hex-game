@@ -12,3 +12,4 @@ def = 5
 speed = 1
 anim = "attack_slash"
 def_anim = "smoke_bomb"
+special = true

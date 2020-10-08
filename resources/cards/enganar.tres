@@ -12,3 +12,4 @@ def = 3
 speed = 2
 anim = "attack_deceive"
 def_anim = "dodge"
+special = true
