@@ -10,17 +10,33 @@ script = ExtResource( 2 )
 [node name="Tween" type="Tween" parent="."]
 
 [node name="Screen" type="Control" parent="."]
-anchor_right = 1.0
-anchor_bottom = 1.0
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+margin_left = -400.0
+margin_top = -225.0
+margin_right = 400.0
+margin_bottom = 225.0
 mouse_filter = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
 __meta__ = {
-"_edit_use_anchors_": false
+"_edit_use_anchors_": true
 }
 
 [node name="Player1" type="Control" parent="Screen"]
-anchor_right = 1.0
-anchor_bottom = 1.0
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+margin_left = -400.0
+margin_top = -225.0
+margin_right = 400.0
+margin_bottom = 225.0
 mouse_filter = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
 __meta__ = {
 "_edit_use_anchors_": false
 }
@@ -142,9 +158,17 @@ margin_right = -204.802
 margin_bottom = 120.093
 
 [node name="Player2" type="Control" parent="Screen"]
-anchor_right = 1.0
-anchor_bottom = 1.0
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+margin_left = -400.0
+margin_top = -225.0
+margin_right = 400.0
+margin_bottom = 225.0
 mouse_filter = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
 __meta__ = {
 "_edit_use_anchors_": false
 }
