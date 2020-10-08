@@ -57,7 +57,7 @@ tracks/1/keys = {
 "times": PoolRealArray( 0 ),
 "transitions": PoolRealArray( 1 ),
 "update": 0,
-"values": [ Vector2( 80, 0 ) ]
+"values": [ Vector2( 120, 0 ) ]
 }
 tracks/2/type = "value"
 tracks/2/path = NodePath(".:rect_size")
@@ -69,7 +69,7 @@ tracks/2/keys = {
 "times": PoolRealArray( 0, 1.4 ),
 "transitions": PoolRealArray( 1, 1 ),
 "update": 0,
-"values": [ Vector2( 80, 120 ), Vector2( 80, 5 ) ]
+"values": [ Vector2( 120, 180 ), Vector2( 80, 5 ) ]
 }
 tracks/3/type = "value"
 tracks/3/path = NodePath("Flames:position")
@@ -81,7 +81,7 @@ tracks/3/keys = {
 "times": PoolRealArray( 0, 1.4 ),
 "transitions": PoolRealArray( 1, 1 ),
 "update": 0,
-"values": [ Vector2( 40, 110 ), Vector2( 40, 0 ) ]
+"values": [ Vector2( 50, 170 ), Vector2( 50, 0 ) ]
 }
 
 [sub_resource type="Animation" id=4]
@@ -171,10 +171,10 @@ offsets = PoolRealArray( 0, 0.536424, 1 )
 colors = PoolColorArray( 0, 0, 0, 1, 1, 0.948975, 0.40625, 1, 0, 0, 0, 1 )
 
 [node name="Card" type="Panel"]
-margin_right = 80.0
-margin_bottom = 120.0
-rect_min_size = Vector2( 80, 120 )
-rect_pivot_offset = Vector2( 40, 60 )
+margin_right = 120.0
+margin_bottom = 180.0
+rect_min_size = Vector2( 120, 180 )
+rect_pivot_offset = Vector2( 60, 90 )
 rect_clip_content = true
 mouse_default_cursor_shape = 2
 size_flags_horizontal = 0
@@ -202,8 +202,8 @@ __meta__ = {
 [node name="VBox" type="VBoxContainer" parent="Margin"]
 margin_left = 8.0
 margin_top = 8.0
-margin_right = 72.0
-margin_bottom = 112.0
+margin_right = 112.0
+margin_bottom = 172.0
 size_flags_horizontal = 3
 size_flags_vertical = 3
 __meta__ = {
@@ -211,53 +211,69 @@ __meta__ = {
 }
 
 [node name="Title" type="MarginContainer" parent="Margin/VBox"]
-margin_right = 64.0
-margin_bottom = 20.0
+margin_right = 104.0
+margin_bottom = 35.0
+rect_min_size = Vector2( 0, 35 )
 mouse_filter = 1
 custom_constants/margin_bottom = 6
 
 [node name="Label" type="Label" parent="Margin/VBox/Title"]
-margin_right = 64.0
-margin_bottom = 14.0
+margin_top = 7.0
+margin_right = 104.0
+margin_bottom = 21.0
 size_flags_horizontal = 3
 text = "Card Title"
 align = 1
 valign = 1
+autowrap = true
+uppercase = true
+max_lines_visible = 2
 
-[node name="Atk" type="Label" parent="Margin/VBox"]
-margin_top = 24.0
-margin_right = 64.0
-margin_bottom = 38.0
+[node name="Texts" type="VBoxContainer" parent="Margin/VBox"]
+margin_top = 39.0
+margin_right = 104.0
+margin_bottom = 164.0
+size_flags_horizontal = 3
+size_flags_vertical = 3
+alignment = 1
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Atk" type="Label" parent="Margin/VBox/Texts"]
+margin_top = 28.0
+margin_right = 104.0
+margin_bottom = 42.0
 mouse_filter = 1
 size_flags_horizontal = 3
 text = "Atk 2"
 align = 1
 valign = 1
 
-[node name="Def" type="Label" parent="Margin/VBox"]
-margin_top = 42.0
-margin_right = 64.0
-margin_bottom = 56.0
+[node name="Def" type="Label" parent="Margin/VBox/Texts"]
+margin_top = 46.0
+margin_right = 104.0
+margin_bottom = 60.0
 mouse_filter = 1
 size_flags_horizontal = 3
 text = "Def 2"
 align = 1
 valign = 1
 
-[node name="Mov" type="Label" parent="Margin/VBox"]
-margin_top = 60.0
-margin_right = 64.0
-margin_bottom = 74.0
+[node name="Mov" type="Label" parent="Margin/VBox/Texts"]
+margin_top = 64.0
+margin_right = 104.0
+margin_bottom = 78.0
 mouse_filter = 1
 size_flags_horizontal = 3
 text = "Mov 2"
 align = 1
 valign = 1
 
-[node name="Speed" type="Label" parent="Margin/VBox"]
-margin_top = 78.0
-margin_right = 64.0
-margin_bottom = 92.0
+[node name="Speed" type="Label" parent="Margin/VBox/Texts"]
+margin_top = 82.0
+margin_right = 104.0
+margin_bottom = 96.0
 mouse_filter = 1
 size_flags_horizontal = 3
 text = "Speed 2"
@@ -286,7 +302,7 @@ anims/flip_front = SubResource( 5 )
 
 [node name="Flames" type="CPUParticles2D" parent="."]
 material = SubResource( 6 )
-position = Vector2( 40, 110 )
+position = Vector2( 50, 170 )
 z_index = 50
 emitting = false
 amount = 80
@@ -294,7 +310,7 @@ lifetime = 0.3
 local_coords = false
 texture = ExtResource( 3 )
 emission_shape = 2
-emission_rect_extents = Vector2( 40, 1 )
+emission_rect_extents = Vector2( 55, 1 )
 gravity = Vector2( 0, -98 )
 angle = 45.0
 angle_random = 1.0

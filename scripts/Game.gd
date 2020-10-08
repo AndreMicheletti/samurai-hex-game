@@ -211,14 +211,15 @@ func compare_cards():
 				return [enemy, player]
 
 func on_turn_timeout():
-	if state == Phase.CHOOSE:
+	if state == Phase.CHOOSE and state != Phase.GAMEOVER:
 		randomize()
 		var idx = randi() % player.hand.size()
 		player.select_card(idx)
 		game_ui.remove_player_card(idx)
 
 func on_player_selected_card(_card):
-	play_phase()
+	if state != Phase.GAMEOVER:
+		play_phase()
 
 func choose_winner(_character):
 	if player.get_remaining_health() == enemy.get_remaining_health():

@@ -8,8 +8,6 @@
 [ext_resource path="res://graphics/particles/flame_01.png" type="Texture" id=7]
 [ext_resource path="res://graphics/particles/smoke_04.png" type="Texture" id=8]
 
-
-
 [sub_resource type="Animation" id=1]
 resource_name = "attack_deceive"
 length = 1.5
@@ -939,6 +937,7 @@ colors = PoolColorArray( 0.779888, 0.914062, 0.44989, 1, 0.280487, 0.680671, 0.7
 script = ExtResource( 1 )
 PlayerName = "Enemy"
 characterClass = ExtResource( 2 )
+ai_mode = 1
 
 [node name="anim" type="AnimationPlayer" parent="."]
 autoplay = "idle"

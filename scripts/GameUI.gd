@@ -31,12 +31,11 @@ onready var game_over_message = $Screen/GameOver/VBox/Top/VBox/Message
 
 signal card_pressed
 
-
 var center_left_middle
 var center_right_middle
 
 var center_left_corner = 20
-var center_right_corner = 1100
+onready var center_right_corner = get_viewport().size.x - 120 - 20
 
 # Called when the node enters the scene tree for the first time.
 func _ready():

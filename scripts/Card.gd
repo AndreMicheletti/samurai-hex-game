@@ -13,10 +13,10 @@ func _ready():
 func set_resource(card : CardResource):
 	card_resource = card
 	$Margin/VBox/Title/Label.text = str(card.title)
-	$Margin/VBox/Atk.text = "Atk " + str(card.atk)
-	$Margin/VBox/Def.text = "Def " + str(card.def)
-	$Margin/VBox/Mov.text = "Mov " + str(card.mov)
-	$Margin/VBox/Speed.text = "Spd " + str(card.speed)
+	$Margin/VBox/Texts/Atk.text = "Atk " + str(card.atk)
+	$Margin/VBox/Texts/Def.text = "Def " + str(card.def)
+	$Margin/VBox/Texts/Mov.text = "Mov " + str(card.mov)
+	$Margin/VBox/Texts/Speed.text = "Spd " + str(card.speed)
 	$Special.emitting = card_resource.special
 
 func _on_Card_gui_input(event):
