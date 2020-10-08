@@ -51,6 +51,7 @@ func init_ui():
 	# game_ui.connect("card_pressed", self, "play_phase")
 	player.connect("character_hit", game_ui, "update_health_counter")
 	enemy.connect("character_hit", game_ui, "update_health_counter")
+	game_ui.turn_time.connect("timeout", self, "on_turn_timeout")
 
 func init_game():
 	draw_phase()
@@ -79,6 +80,7 @@ func choose_phase():
 	state = Phase.CHOOSE
 	emit_signal("changed_state", Phase.CHOOSE)
 	enemy.choose_card()
+	game_ui.turn_time.start()
 
 func play_phase():
 	if state != Phase.CHOOSE:
@@ -86,6 +88,7 @@ func play_phase():
 	print("\n*********************** PLAY PHASE")
 	state = Phase.PLAY
 	emit_signal("changed_state", Phase.PLAY)
+	game_ui.turn_time.stop()
 
 	# DETERMINE TURN ORDER
 	var turn_order = compare_cards()
@@ -204,6 +207,13 @@ func compare_cards():
 				return [player, enemy]
 			else:
 				return [enemy, player]
+
+func on_turn_timeout():
+	if state == Phase.CHOOSE:
+		randomize()
+		var idx = randi() % player.hand.size()
+		player.select_card(idx)
+		game_ui.remove_player_card(idx)
 
 func on_player_selected_card(_card):
 	play_phase()

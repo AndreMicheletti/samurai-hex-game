@@ -17,6 +17,8 @@ onready var enemy_center_card = $Screen/CenterRight
 onready var player_deck = $Screen/Player1/Deck/Deck
 onready var enemy_deck = $Screen/Player2/Deck/Deck
 
+onready var turn_time = $Screen/Player1/TurnTimer
+
 signal card_pressed
 
 # Called when the node enters the scene tree for the first time.
@@ -70,6 +72,9 @@ func on_card_pressed(node):
 	if game.state == game.Phase.CHOOSE:
 		emit_signal("card_pressed", node.card_resource)
 		player_cards.remove_child(node)
+
+func remove_player_card(idx):
+	player_cards.remove_child(player_cards.get_child(idx))
 
 func show_cards():
 	$Tween.interpolate_property(
@@ -150,6 +155,11 @@ func show_game_over(player_win, message):
 	# disable click for all cards
 	for card in player_cards.get_children():
 		card.enabled = false
+	player_cards.visible = false
+	player_center_card.visible = false
+	enemy_cards.visible = false
+	enemy_center_card.visible = false
+	turn_time.stop()
 	# show game over panel
 	$Screen/GameOver.visible = true
 	$Screen/GameOver/VBox/Top/VBox/Message.text = message

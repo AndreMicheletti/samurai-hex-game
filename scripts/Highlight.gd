@@ -19,9 +19,6 @@ func init(p_world):
 		character.connect("turn_ended", self, "update_visible")
 	game.connect("changed_state", self, "on_game_state_changed")
 
-func _process(delta):
-	pass
-
 func on_game_state_changed(state):
 	if state != game.Phase.PLAY:
 		visible = false
