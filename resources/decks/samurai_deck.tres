@@ -1,0 +1,18 @@
+[gd_resource type="Resource" load_steps=11 format=2]
+
+[ext_resource path="res://resources/cards/golpe_rapido.tres" type="Resource" id=1]
+[ext_resource path="res://resources/cards/guarda.tres" type="Resource" id=2]
+[ext_resource path="res://resources/cards/finta.tres" type="Resource" id=3]
+[ext_resource path="res://resources/cards/rolamento.tres" type="Resource" id=4]
+[ext_resource path="res://resources/cards/golpe_preciso.tres" type="Resource" id=5]
+[ext_resource path="res://resources/cards/golpe_forte.tres" type="Resource" id=6]
+[ext_resource path="res://resources/cards/posicionar.tres" type="Resource" id=7]
+[ext_resource path="res://scripts/resources/DeckResource.gd" type="Script" id=8]
+[ext_resource path="res://resources/cards/golpe_surpresa.tres" type="Resource" id=9]
+[ext_resource path="res://resources/cards/quebra_defesa.tres" type="Resource" id=10]
+
+[resource]
+script = ExtResource( 8 )
+id = 1
+name = "Samurai Deck"
+cards = [ ExtResource( 7 ), ExtResource( 6 ), ExtResource( 1 ), ExtResource( 5 ), ExtResource( 2 ), ExtResource( 3 ), ExtResource( 4 ), ExtResource( 3 ), ExtResource( 6 ), ExtResource( 5 ), ExtResource( 1 ), ExtResource( 2 ), ExtResource( 7 ), ExtResource( 4 ), ExtResource( 10 ), ExtResource( 10 ), ExtResource( 10 ), ExtResource( 9 ), ExtResource( 9 ), ExtResource( 2 ) ]

@@ -9,12 +9,14 @@ export(String) var name
 export(Resource) var characterTexture
 export(Resource) var handTexture
 export(Passive) var passiveHability
+export(Resource) var deckResource
 
 func _init(p_class_id = 0, p_class_name = "",
 			p_class_char_texture = null, p_class_hand_texture = null,
-			p_passive = Passive.IGNORE_DEF):
+			p_passive = Passive.IGNORE_DEF, p_deck_resource = null):
 	id = p_class_id
 	name = p_class_name
 	characterTexture = p_class_char_texture
 	handTexture = p_class_hand_texture
 	passiveHability = p_passive
+	deckResource = p_deck_resource

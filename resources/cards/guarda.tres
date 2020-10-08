@@ -10,4 +10,5 @@ mov = 0
 atk = 0
 def = 4
 speed = 1
-anim = 0
+anim = "attack_slash"
+def_anim = "defend"

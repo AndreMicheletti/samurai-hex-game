@@ -10,4 +10,5 @@ mov = 1
 atk = 2
 def = 1
 speed = 2
-anim = 2
+anim = "attack_pierce"
+def_anim = "defend"

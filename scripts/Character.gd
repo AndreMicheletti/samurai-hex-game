@@ -6,7 +6,7 @@ export(String) var PlayerName = "Player"
 export(int) var Health = 4
 export(Resource) var characterClass
 
-export(Resource) var deck
+# export(Resource) var deck
 
 onready var world = get_parent()
 onready var game = world.get_parent()
@@ -47,7 +47,7 @@ func _ready():
 		$Pivot/character/Position2D/hand.offset = Vector2(-17, 0)
 
 func init_deck():
-	gameplay_deck = deck.cards.duplicate(true)
+	gameplay_deck = characterClass.deckResource.cards.duplicate(true)
 	gameplay_deck.shuffle()
 
 func teleport_to(pos : Vector2):
@@ -146,8 +146,6 @@ func play_turn():
 	print("PLAYER PLAY TURN!! ")
 	moved = 0
 	emit_signal("turn_started", self)
-	# yield(get_tree().create_timer(0.5), "timeout")
-	# emit_signal("turn_ended")
 
 func end_turn():
 	if not active:
@@ -199,13 +197,11 @@ func play(anim_name):
 	$anim.play(anim_name)
 
 func play_attack(card_res : CardResource):
-	match card_res.anim:
-		CardResource.AttackAnim.SLASH:
-			play("attack_slash")			
-		CardResource.AttackAnim.PIERCE:
-			play("attack_pierce")
-		CardResource.AttackAnim.UPPER:
-			play("attack_upper")
+	play(card_res.anim)
+
+func play_defend(card_res : CardResource):
+	play(card_res.def_anim)
+	yield($anim, "animation_finished")
 
 func play_dash():
 	play("dash2")
@@ -215,14 +211,6 @@ func play_idle():
 
 func play_hit():
 	play("hit")
-	yield($anim, "animation_finished")
-
-func play_defend():
-	play("defend")
-	yield($anim, "animation_finished")
-
-func play_dodge():
-	play("dodge")
 	yield($anim, "animation_finished")
 
 func emit_anim_hit():

@@ -1,13 +1,234 @@
-[gd_scene load_steps=22 format=2]
+[gd_scene load_steps=28 format=2]
 
 [ext_resource path="res://scripts/Character.gd" type="Script" id=1]
-[ext_resource path="res://resources/decks/default_deck.tres" type="Resource" id=2]
-[ext_resource path="res://graphics/characters/sabre_hand.png" type="Texture" id=3]
+[ext_resource path="res://graphics/characters/bo_hand.png" type="Texture" id=3]
 [ext_resource path="res://graphics/characters/samurai.png" type="Texture" id=4]
 [ext_resource path="res://resources/classes/elite.tres" type="Resource" id=5]
 [ext_resource path="res://graphics/particles/twirl_01.png" type="Texture" id=6]
 [ext_resource path="res://graphics/particles/flame_01.png" type="Texture" id=7]
+[ext_resource path="res://graphics/particles/smoke_04.png" type="Texture" id=8]
 
+[sub_resource type="Animation" id=19]
+resource_name = "attack_deceive"
+length = 1.5
+tracks/0/type = "value"
+tracks/0/path = NodePath("Pivot/character:position")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0, 0.3, 0.6, 0.8, 1, 1.2, 1.5 ),
+"transitions": PoolRealArray( 1, 1, 1, 1, 1, 1, 1 ),
+"update": 0,
+"values": [ Vector2( 0, 0 ), Vector2( -9.20279, -2.35968 ), Vector2( 10.1466, -1.17984 ), Vector2( 10.1466, -1.17984 ), Vector2( 9.91066, -6.84309 ), Vector2( 5.89919, 1.65178 ), Vector2( 0, 0 ) ]
+}
+tracks/1/type = "value"
+tracks/1/path = NodePath("Pivot/character:rotation_degrees")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/keys = {
+"times": PoolRealArray( 0, 0.3, 0.6, 0.8, 1, 1.2, 1.5 ),
+"transitions": PoolRealArray( 1, 1, 1, 1, 1, 1, 1 ),
+"update": 0,
+"values": [ 0.0, 36.4547, -46.5137, -46.5137, 18.9346, -50.2931, 0.0 ]
+}
+tracks/2/type = "value"
+tracks/2/path = NodePath("Pivot/character/Position2D:position")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/keys = {
+"times": PoolRealArray( 0, 0.3, 0.6, 0.8, 1, 1.2, 1.5 ),
+"transitions": PoolRealArray( 1, 1, 1, 1, 1, 1, 1 ),
+"update": 0,
+"values": [ Vector2( 0, -7 ), Vector2( 10.0575, -7.68224 ), Vector2( -7.39007, -10.647 ), Vector2( -7.39007, -10.647 ), Vector2( -16.173, -16.6148 ), Vector2( -1.62343, -9.0668 ), Vector2( 0, -7 ) ]
+}
+tracks/3/type = "value"
+tracks/3/path = NodePath("Pivot/character/Position2D:rotation_degrees")
+tracks/3/interp = 1
+tracks/3/loop_wrap = true
+tracks/3/imported = false
+tracks/3/enabled = true
+tracks/3/keys = {
+"times": PoolRealArray( 0, 0.3, 0.6, 0.8, 1, 1.2, 1.5 ),
+"transitions": PoolRealArray( 1, 1, 1, 1, 1, 1, 1 ),
+"update": 0,
+"values": [ 0.0, -42.7063, 48.824, 48.824, -18.806, 48.2512, 0.0 ]
+}
+tracks/4/type = "method"
+tracks/4/path = NodePath(".")
+tracks/4/interp = 1
+tracks/4/loop_wrap = true
+tracks/4/imported = false
+tracks/4/enabled = true
+tracks/4/keys = {
+"times": PoolRealArray( 0.9 ),
+"transitions": PoolRealArray( 1 ),
+"values": [ {
+"args": [  ],
+"method": "emit_anim_hit"
+} ]
+}
+
+[sub_resource type="Animation" id=20]
+resource_name = "attack_forward"
+length = 1.5
+tracks/0/type = "value"
+tracks/0/path = NodePath("Pivot/character:position")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0, 0.4, 0.6, 1 ),
+"transitions": PoolRealArray( 1, 1, 1, 1 ),
+"update": 0,
+"values": [ Vector2( 0, 0 ), Vector2( 14.3941, -6.84309 ), Vector2( 14.3941, -6.84309 ), Vector2( 0, 0 ) ]
+}
+tracks/1/type = "value"
+tracks/1/path = NodePath("Pivot/character:rotation_degrees")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/keys = {
+"times": PoolRealArray( 0, 0.1, 0.7, 1 ),
+"transitions": PoolRealArray( 1, 1, 1, 1 ),
+"update": 0,
+"values": [ 0.0, -37.5398, -37.5398, 0.0 ]
+}
+tracks/2/type = "value"
+tracks/2/path = NodePath("Pivot/character:scale")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/keys = {
+"times": PoolRealArray( 0, 0.3, 0.5, 1 ),
+"transitions": PoolRealArray( 1, 1, 1, 1 ),
+"update": 0,
+"values": [ Vector2( 1, 1 ), Vector2( 1.4, 1.4 ), Vector2( 1, 1 ), Vector2( 1, 1 ) ]
+}
+tracks/3/type = "value"
+tracks/3/path = NodePath("Pivot/character/Position2D:position")
+tracks/3/interp = 1
+tracks/3/loop_wrap = true
+tracks/3/imported = false
+tracks/3/enabled = true
+tracks/3/keys = {
+"times": PoolRealArray( 0, 0.1, 0.3, 0.4, 0.6, 1 ),
+"transitions": PoolRealArray( 1, 1, 1, 1, 1, 1 ),
+"update": 0,
+"values": [ Vector2( 0, -7 ), Vector2( -8.88433, -7.37921 ), Vector2( -1.078, -18 ), Vector2( -1.078, -20 ), Vector2( -11.802, -7.71075 ), Vector2( 0, -7 ) ]
+}
+tracks/4/type = "value"
+tracks/4/path = NodePath("Pivot/character/Position2D:rotation_degrees")
+tracks/4/interp = 1
+tracks/4/loop_wrap = true
+tracks/4/imported = false
+tracks/4/enabled = true
+tracks/4/keys = {
+"times": PoolRealArray( 0, 0.1, 0.3, 0.4, 0.6, 1 ),
+"transitions": PoolRealArray( 1, 1, 1, 1, 1, 1 ),
+"update": 0,
+"values": [ 0.0, 38.0724, 36.4784, 36.4784, 34.129, 0.0 ]
+}
+tracks/5/type = "method"
+tracks/5/path = NodePath(".")
+tracks/5/interp = 1
+tracks/5/loop_wrap = true
+tracks/5/imported = false
+tracks/5/enabled = true
+tracks/5/keys = {
+"times": PoolRealArray( 0.2 ),
+"transitions": PoolRealArray( 1 ),
+"values": [ {
+"args": [  ],
+"method": "emit_anim_hit"
+} ]
+}
+
+[sub_resource type="Animation" id=16]
+resource_name = "attack_jump"
+length = 1.5
+tracks/0/type = "value"
+tracks/0/path = NodePath("Pivot/character:position")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0, 0.2, 0.4, 0.6, 1.5 ),
+"transitions": PoolRealArray( 1, 1, 1, 1, 1 ),
+"update": 0,
+"values": [ Vector2( 0, 0 ), Vector2( 0, 5 ), Vector2( 0, 10 ), Vector2( 0, 2.21304 ), Vector2( 0, 0 ) ]
+}
+tracks/1/type = "value"
+tracks/1/path = NodePath("Pivot/character:rotation_degrees")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/keys = {
+"times": PoolRealArray( 0, 0.4, 0.6, 1.5 ),
+"transitions": PoolRealArray( 1, 1, 1, 1 ),
+"update": 0,
+"values": [ 0.0, 35.8242, -34.9469, 0.0 ]
+}
+tracks/2/type = "value"
+tracks/2/path = NodePath("Pivot/character/Position2D:position")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/keys = {
+"times": PoolRealArray( 0, 0.4, 0.6, 1.5 ),
+"transitions": PoolRealArray( 1, 1, 1, 1 ),
+"update": 0,
+"values": [ Vector2( 0, -7 ), Vector2( 10.404, -5.48845 ), Vector2( 17.2438, -9.9207 ), Vector2( 0, -7 ) ]
+}
+tracks/3/type = "value"
+tracks/3/path = NodePath("Pivot/character/Position2D:rotation_degrees")
+tracks/3/interp = 1
+tracks/3/loop_wrap = true
+tracks/3/imported = false
+tracks/3/enabled = true
+tracks/3/keys = {
+"times": PoolRealArray( 0, 0.4, 0.6, 1.5 ),
+"transitions": PoolRealArray( 1, 1, 1, 1 ),
+"update": 0,
+"values": [ 0.0, -36.639, 34.0848, 0.0 ]
+}
+tracks/4/type = "value"
+tracks/4/path = NodePath("Pivot/character:scale")
+tracks/4/interp = 1
+tracks/4/loop_wrap = true
+tracks/4/imported = false
+tracks/4/enabled = true
+tracks/4/keys = {
+"times": PoolRealArray( 0, 0.2, 0.4, 1.5 ),
+"transitions": PoolRealArray( 1, 1, 1, 1 ),
+"update": 0,
+"values": [ Vector2( 1, 1 ), Vector2( 1.3, 1.3 ), Vector2( 1, 1 ), Vector2( 1, 1 ) ]
+}
+tracks/5/type = "method"
+tracks/5/path = NodePath(".")
+tracks/5/interp = 1
+tracks/5/loop_wrap = true
+tracks/5/imported = false
+tracks/5/enabled = true
+tracks/5/keys = {
+"times": PoolRealArray( 0.5 ),
+"transitions": PoolRealArray( 1 ),
+"values": [ {
+"args": [  ],
+"method": "emit_anim_hit"
+} ]
+}
 
 [sub_resource type="Animation" id=1]
 resource_name = "attack_pierce"
@@ -61,9 +282,86 @@ tracks/3/keys = {
 "method": "emit_anim_hit"
 } ]
 }
+tracks/4/type = "value"
+tracks/4/path = NodePath("Pivot/character:position")
+tracks/4/interp = 1
+tracks/4/loop_wrap = true
+tracks/4/imported = false
+tracks/4/enabled = true
+tracks/4/keys = {
+"times": PoolRealArray( 0, 0.4, 0.6, 0.9 ),
+"transitions": PoolRealArray( 1, 1, 1, 1 ),
+"update": 0,
+"values": [ Vector2( 0, 0 ), Vector2( 0, 12.9783 ), Vector2( 3.65685e-07, -11.5625 ), Vector2( 0, 0 ) ]
+}
 
 [sub_resource type="Animation" id=2]
-resource_name = "attack_slash"
+resource_name = "attack_skull_break"
+length = 1.5
+tracks/0/type = "value"
+tracks/0/path = NodePath("Pivot/character:position")
+tracks/0/interp = 2
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0, 0.2, 0.4, 0.5, 1, 1.5 ),
+"transitions": PoolRealArray( 1, 1, 1, 1, 1, 1 ),
+"update": 0,
+"values": [ Vector2( 0, 0 ), Vector2( 4.95534, 0.943878 ), Vector2( 4.95534, 0.943878 ), Vector2( 4.95534, 0.943878 ), Vector2( 0, -2.12372 ), Vector2( 0, 0 ) ]
+}
+tracks/1/type = "value"
+tracks/1/path = NodePath("Pivot/character:rotation_degrees")
+tracks/1/interp = 2
+tracks/1/loop_wrap = true
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/keys = {
+"times": PoolRealArray( 0, 0.2, 0.4, 0.5, 1, 1.5 ),
+"transitions": PoolRealArray( 1, 1, 1, 1, 1, 1 ),
+"update": 0,
+"values": [ 0.0, -41.3134, -20.2093, -41.3134, 0.0, 0.0 ]
+}
+tracks/2/type = "value"
+tracks/2/path = NodePath("Pivot/character/Position2D:position")
+tracks/2/interp = 2
+tracks/2/loop_wrap = true
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/keys = {
+"times": PoolRealArray( 0, 0.2, 0.4, 0.5, 0.8, 1, 1.5 ),
+"transitions": PoolRealArray( 1, 1, 1, 1, 1, 1, 1 ),
+"update": 0,
+"values": [ Vector2( 0, -7 ), Vector2( -2.89461, -12.9999 ), Vector2( -0.196749, -18.7597 ), Vector2( -2.89461, -12.9999 ), Vector2( -12.2407, -11.5353 ), Vector2( 17.7763, -5.55865 ), Vector2( 0, -7 ) ]
+}
+tracks/3/type = "value"
+tracks/3/path = NodePath("Pivot/character/Position2D:rotation_degrees")
+tracks/3/interp = 2
+tracks/3/loop_wrap = true
+tracks/3/imported = false
+tracks/3/enabled = true
+tracks/3/keys = {
+"times": PoolRealArray( 0, 0.2, 0.4, 0.5, 0.8, 1, 1.5 ),
+"transitions": PoolRealArray( 1, 1, 1, 1, 1, 1, 1 ),
+"update": 0,
+"values": [ 0.0, -109.485, -138.531, -109.485, -51.6272, 64.0881, 0.0 ]
+}
+tracks/4/type = "method"
+tracks/4/path = NodePath(".")
+tracks/4/interp = 1
+tracks/4/loop_wrap = true
+tracks/4/imported = false
+tracks/4/enabled = true
+tracks/4/keys = {
+"times": PoolRealArray( 0.8 ),
+"transitions": PoolRealArray( 1 ),
+"values": [ {
+"args": [  ],
+"method": "emit_anim_hit"
+} ]
+}
+
+[sub_resource type="Animation" id=3]
 tracks/0/type = "value"
 tracks/0/path = NodePath("Pivot/character:position")
 tracks/0/interp = 2
@@ -127,8 +425,7 @@ tracks/4/keys = {
 } ]
 }
 
-[sub_resource type="Animation" id=3]
-resource_name = "attack_upper"
+[sub_resource type="Animation" id=4]
 tracks/0/type = "value"
 tracks/0/path = NodePath("Pivot/character:position")
 tracks/0/interp = 2
@@ -216,8 +513,7 @@ tracks/6/keys = {
 } ]
 }
 
-[sub_resource type="Animation" id=4]
-resource_name = "dash"
+[sub_resource type="Animation" id=5]
 tracks/0/type = "value"
 tracks/0/path = NodePath("Pivot/character:position")
 tracks/0/interp = 1
@@ -267,8 +563,7 @@ tracks/3/keys = {
 "values": [ 0.0, -41.8379, -41.8379, 0.0 ]
 }
 
-[sub_resource type="Animation" id=5]
-resource_name = "dash2"
+[sub_resource type="Animation" id=6]
 loop = true
 tracks/0/type = "value"
 tracks/0/path = NodePath("Pivot/character/Position2D:rotation_degrees")
@@ -307,7 +602,7 @@ tracks/2/keys = {
 "values": [ 36.0, 36.0 ]
 }
 
-[sub_resource type="Animation" id=6]
+[sub_resource type="Animation" id=7]
 tracks/0/type = "value"
 tracks/0/path = NodePath("Pivot/character/Position2D:position")
 tracks/0/interp = 2
@@ -345,7 +640,7 @@ tracks/2/keys = {
 "values": [ Vector2( 0, 0 ), Vector2( 0, 0 ), Vector2( 0, 7.77829 ), Vector2( 0, 7.77829 ), Vector2( 0, 0 ) ]
 }
 
-[sub_resource type="Animation" id=7]
+[sub_resource type="Animation" id=8]
 tracks/0/type = "value"
 tracks/0/path = NodePath("Pivot/character:position")
 tracks/0/interp = 2
@@ -395,7 +690,7 @@ tracks/3/keys = {
 "values": [ 0.0, -65.4082, -65.4082, 0.0 ]
 }
 
-[sub_resource type="Animation" id=14]
+[sub_resource type="Animation" id=9]
 resource_name = "fall"
 tracks/0/type = "value"
 tracks/0/path = NodePath("Pivot/character:scale")
@@ -434,7 +729,7 @@ tracks/2/keys = {
 "values": [ 0.0, -48.8899, -48.8899 ]
 }
 
-[sub_resource type="Animation" id=8]
+[sub_resource type="Animation" id=10]
 tracks/0/type = "value"
 tracks/0/path = NodePath("Pivot/character:position")
 tracks/0/interp = 1
@@ -484,7 +779,7 @@ tracks/3/keys = {
 "values": [ 0.0, 0.0, -40.635, 0.0, 0.0 ]
 }
 
-[sub_resource type="Animation" id=9]
+[sub_resource type="Animation" id=11]
 length = 2.0
 loop = true
 tracks/0/type = "value"
@@ -572,37 +867,96 @@ tracks/6/keys = {
 "values": [ Vector2( 0, 0 ), Vector2( 0, 0 ) ]
 }
 
-[sub_resource type="CanvasItemMaterial" id=10]
-blend_mode = 1
-
-[sub_resource type="Gradient" id=11]
-offsets = PoolRealArray( 0, 0.84106, 1 )
-colors = PoolColorArray( 1, 0.238281, 0.238281, 1, 1, 0.658824, 0.00392157, 1, 0, 0, 0, 1 )
+[sub_resource type="Animation" id=18]
+resource_name = "smoke_bomb"
+length = 1.5
+tracks/0/type = "value"
+tracks/0/path = NodePath("Pivot/character/Position2D:position")
+tracks/0/interp = 2
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0, 0.1, 0.2, 0.3, 1.4, 1.5 ),
+"transitions": PoolRealArray( 1, 1, 1, 1, 1, 1 ),
+"update": 0,
+"values": [ Vector2( 0, -7 ), Vector2( 0, -7 ), Vector2( -11.2614, -7.46583 ), Vector2( -11.2614, -7.46583 ), Vector2( -11.2614, -7.46583 ), Vector2( 0, -7 ) ]
+}
+tracks/1/type = "value"
+tracks/1/path = NodePath("Pivot/character/Position2D:rotation_degrees")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/keys = {
+"times": PoolRealArray( 0, 0.1, 0.2, 0.3, 1.4, 1.5 ),
+"transitions": PoolRealArray( 1, 1, 1, 1, 1, 1 ),
+"update": 0,
+"values": [ 0.0, 0.0, 52.0, 74.2954, 74.2954, 0.0 ]
+}
+tracks/2/type = "value"
+tracks/2/path = NodePath("Pivot/character:position")
+tracks/2/interp = 2
+tracks/2/loop_wrap = true
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/keys = {
+"times": PoolRealArray( 0, 0.1, 0.2, 1.4, 1.5 ),
+"transitions": PoolRealArray( 1, 1, 1, 1, 1 ),
+"update": 0,
+"values": [ Vector2( 0, 0 ), Vector2( 0, 0 ), Vector2( 0, 12 ), Vector2( 0, 11 ), Vector2( 0, 0 ) ]
+}
+tracks/3/type = "value"
+tracks/3/path = NodePath("Pivot/smokeBomb:emitting")
+tracks/3/interp = 1
+tracks/3/loop_wrap = true
+tracks/3/imported = false
+tracks/3/enabled = true
+tracks/3/keys = {
+"times": PoolRealArray( 0, 0.8, 1.5 ),
+"transitions": PoolRealArray( 1, 1, 1 ),
+"update": 1,
+"values": [ true, true, false ]
+}
 
 [sub_resource type="CanvasItemMaterial" id=12]
 blend_mode = 1
 
 [sub_resource type="Gradient" id=13]
+offsets = PoolRealArray( 0, 0.84106, 1 )
+colors = PoolColorArray( 1, 0.238281, 0.238281, 1, 1, 0.658824, 0.00392157, 1, 0, 0, 0, 1 )
+
+[sub_resource type="CanvasItemMaterial" id=17]
+blend_mode = 1
+
+[sub_resource type="CanvasItemMaterial" id=14]
+blend_mode = 1
+
+[sub_resource type="Gradient" id=15]
 offsets = PoolRealArray( 0, 0.529801, 0.993378 )
 colors = PoolColorArray( 0.779888, 0.914062, 0.44989, 1, 0.280487, 0.680671, 0.710938, 1, 0, 0, 0, 1 )
 
 [node name="Player" type="Node2D"]
 script = ExtResource( 1 )
 characterClass = ExtResource( 5 )
-deck = ExtResource( 2 )
 
 [node name="anim" type="AnimationPlayer" parent="."]
 autoplay = "idle"
+anims/attack_deceive = SubResource( 19 )
+anims/attack_forward = SubResource( 20 )
+anims/attack_jump = SubResource( 16 )
 anims/attack_pierce = SubResource( 1 )
-anims/attack_slash = SubResource( 2 )
-anims/attack_upper = SubResource( 3 )
-anims/dash = SubResource( 4 )
-anims/dash2 = SubResource( 5 )
-anims/defend = SubResource( 6 )
-anims/dodge = SubResource( 7 )
-anims/fall = SubResource( 14 )
-anims/hit = SubResource( 8 )
-anims/idle = SubResource( 9 )
+anims/attack_skull_break = SubResource( 2 )
+anims/attack_slash = SubResource( 3 )
+anims/attack_upper = SubResource( 4 )
+anims/dash = SubResource( 5 )
+anims/dash2 = SubResource( 6 )
+anims/defend = SubResource( 7 )
+anims/dodge = SubResource( 8 )
+anims/fall = SubResource( 9 )
+anims/hit = SubResource( 10 )
+anims/idle = SubResource( 11 )
+anims/smoke_bomb = SubResource( 18 )
 
 [node name="Tween" type="Tween" parent="."]
 
@@ -627,7 +981,7 @@ offset = Vector2( -12, 0 )
 flip_v = true
 
 [node name="FlamesP" type="CPUParticles2D" parent="Pivot/character/Position2D"]
-material = SubResource( 10 )
+material = SubResource( 12 )
 position = Vector2( 0, -16.2827 )
 z_index = 20
 emitting = false
@@ -641,10 +995,26 @@ angular_velocity = 40.0
 angular_velocity_random = 1.0
 scale_amount = 0.01
 scale_amount_random = 0.02
-color_ramp = SubResource( 11 )
+color_ramp = SubResource( 13 )
+
+[node name="smokeBomb" type="CPUParticles2D" parent="Pivot"]
+material = SubResource( 17 )
+z_index = 25
+emitting = false
+amount = 100
+lifetime = 2.0
+texture = ExtResource( 8 )
+spread = 180.0
+gravity = Vector2( 0, 0 )
+initial_velocity = 85.0
+initial_velocity_random = 1.0
+tangential_accel = 65.0
+damping = 80.0
+scale_amount = 0.08
+color = Color( 0.286275, 0.286275, 0.286275, 1 )
 
 [node name="AdvantageP" type="CPUParticles2D" parent="."]
-material = SubResource( 12 )
+material = SubResource( 14 )
 z_index = 10
 emitting = false
 amount = 5
@@ -661,4 +1031,4 @@ angular_velocity_random = 0.2
 damping = 6.0
 scale_amount = 0.01
 scale_amount_random = 0.02
-color_ramp = SubResource( 13 )
+color_ramp = SubResource( 15 )

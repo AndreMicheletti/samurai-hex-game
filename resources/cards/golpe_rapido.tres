@@ -10,4 +10,5 @@ mov = 2
 atk = 1
 def = 1
 speed = 3
-anim = 0
+anim = "attack_slash"
+def_anim = "dodge"

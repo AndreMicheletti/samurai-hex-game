@@ -1,8 +1,9 @@
-[gd_resource type="Resource" load_steps=4 format=2]
+[gd_resource type="Resource" load_steps=5 format=2]
 
 [ext_resource path="res://scripts/resources/ClassResource.gd" type="Script" id=1]
 [ext_resource path="res://graphics/characters/sabre_hand.png" type="Texture" id=2]
 [ext_resource path="res://graphics/characters/samurai.png" type="Texture" id=3]
+[ext_resource path="res://resources/decks/samurai_deck.tres" type="Resource" id=4]
 
 [resource]
 script = ExtResource( 1 )
@@ -11,3 +12,4 @@ name = "Samurai"
 characterTexture = ExtResource( 3 )
 handTexture = ExtResource( 2 )
 passiveHability = 0
+deckResource = ExtResource( 4 )

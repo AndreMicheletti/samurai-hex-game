@@ -172,9 +172,9 @@ func check_attack(turn_order, index):
 		return true
 	else:
 		# play animation
-		attacker.play("attack_slash")
+		attacker.play_attack(attacker.selected_card)
 		yield(attacker, "anim_hit")
-		yield(defensor.play_defend(), "completed")
+		yield(defensor.play_defend(defensor.selected_card), "completed")
 		yield(defensor.defended(attacker), "completed")
 	
 	attacker.look_to_hex(defensor.hex_pos)
