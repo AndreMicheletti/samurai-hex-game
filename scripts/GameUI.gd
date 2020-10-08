@@ -14,6 +14,9 @@ onready var enemy_cards = $Screen/Player1/Cards
 onready var player_center_card = $Screen/CenterLeft
 onready var enemy_center_card = $Screen/CenterRight
 
+onready var player_deck = $Screen/Player1/Deck/Deck
+onready var enemy_deck = $Screen/Player2/Deck/Deck
+
 signal card_pressed
 
 # Called when the node enters the scene tree for the first time.
@@ -26,6 +29,8 @@ func init():
 	init_player_gui()
 	init_health_counter()
 	player.connect("card_dealed", self, "add_card")
+	player.connect("card_dealed", self, "update_decks")
+	enemy.connect("card_dealed", self, "update_decks")
 	player.connect("card_selected", self, "on_player_select_card")
 	enemy.connect("card_selected", self, "on_enemy_select_card")
 
@@ -136,3 +141,26 @@ func reveal_enemy_card():
 	if enemy_center_card.get_child(0).back:
 		yield(enemy_center_card.get_child(0).flip(), "completed")
 	yield(get_tree().create_timer(0.1), "timeout")
+
+func update_decks(_card_dealed):
+	player_deck.set_value(player.deck_count())
+	enemy_deck.set_value(enemy.deck_count())
+
+func show_game_over(player_win, message):
+	# disable click for all cards
+	for card in player_cards.get_children():
+		card.enabled = false
+	# show game over panel
+	$Screen/GameOver.visible = true
+	$Screen/GameOver/VBox/Top/VBox/Message.text = message
+	if player_win:
+		$Screen/GameOver/VBox/Top/VBox/Winner.text = "YOU WIN"
+	else:
+		$Screen/GameOver/VBox/Top/VBox/Winner.text = "YOU LOSE"
+
+func _on_PlayAgain_pressed():
+	get_tree().reload_current_scene()
+
+func _on_Exit_pressed():
+	var title_scene = load("res://scenes/TitleScreen.tscn")
+	get_tree().change_scene_to(title_scene)

@@ -50,15 +50,17 @@ func select_movement():
 		match ai_mode:
 			AIMode.RANDOM:
 				# MOVE RANDOM
-				randomize()
 				var adjc = get_cell().get_all_adjacent()
 				if adjc.size() <= 0:
 					print("NOWHERE TO MOVE")
 					return select_movement()
 				# FIND VALID DESTINATION TO MOVE
-				var dest = adjc[randi() % adjc.size()]
-				while world.is_obstacle(dest.get_axial_coords()):
-					dest = adjc[randi() % adjc.size()]
+				adjc.shuffle()
+				var dest = adjc.pop_front()
+				while dest != null and world.is_obstacle(dest.get_axial_coords()):
+					print("stuck in while")
+					adjc.shuffle()
+					dest = adjc.pop_front()
 				# MOVE
 				var random_wait = (randi() % 3) / 10.0
 				yield(get_tree().create_timer(random_wait), "timeout")

@@ -12,6 +12,7 @@ onready var world = get_parent()
 onready var game = world.get_parent()
 
 var hex_pos = Vector2()
+var gameplay_deck = []
 var moving = false
 var damage = 0
 var moved = 0
@@ -26,6 +27,7 @@ var selected_card = null
 signal anim_hit
 signal card_dealed
 signal card_selected
+signal deck_depleted
 
 signal move_ended
 signal turn_started
@@ -38,11 +40,15 @@ signal character_defeated
 func _ready():
 	add_to_group("Character")
 	hex_pos = Vector2(0, 0)
-	shuffle_deck()
+	init_deck()
 	$Pivot/character.texture = characterClass.characterTexture
 	$Pivot/character/Position2D/hand.texture = characterClass.handTexture
 	if characterClass.name == "Elite":
 		$Pivot/character/Position2D/hand.offset = Vector2(-17, 0)
+
+func init_deck():
+	gameplay_deck = deck.cards.duplicate(true)
+	gameplay_deck.shuffle()
 
 func teleport_to(pos : Vector2):
 	position = world.get_grid().get_hex_center(pos)
@@ -118,14 +124,18 @@ func on_select_card(card_res : CardResource):
 	else:
 		print("NOT FOUND CARD ", card_res.title, " IN HAND ", hand)
 
-func shuffle_deck():
-	deck.shuffle()
-
 func deal_cards(n):
 	for i in range(n):
-		var card = deck.deal()
+		var card = gameplay_deck.pop_back()
+		if not card:
+			if hand.size() == 0:
+				emit_signal("deck_depleted", self)
+			return
 		emit_signal("card_dealed", card)
 		hand.append(card)
+
+func deck_count():
+	return gameplay_deck.size()
 
 func select_card(index):
 	selected_card = hand[index]

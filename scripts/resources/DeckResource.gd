@@ -10,11 +10,3 @@ func _init(p_deck_id = 0, p_deck_name = "", p_deck_cards = []):
 	id = p_deck_id
 	name = p_deck_name
 	cards = p_deck_cards
-
-func deal():
-	randomize()
-	return cards[randi() % cards.size()]
-
-func shuffle():
-	randomize()
-	cards.shuffle()

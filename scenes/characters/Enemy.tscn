@@ -1,12 +1,13 @@
 [gd_scene load_steps=22 format=2]
 
 [ext_resource path="res://scripts/EnemyCharacter.gd" type="Script" id=1]
-[ext_resource path="res://resources/decks/samurai_deck.tres" type="Resource" id=2]
+[ext_resource path="res://resources/decks/default_deck.tres" type="Resource" id=2]
 [ext_resource path="res://graphics/characters/sabre_hand.png" type="Texture" id=3]
 [ext_resource path="res://graphics/characters/samurai.png" type="Texture" id=4]
 [ext_resource path="res://resources/classes/monk.tres" type="Resource" id=5]
 [ext_resource path="res://graphics/particles/twirl_01.png" type="Texture" id=6]
 [ext_resource path="res://graphics/particles/flame_01.png" type="Texture" id=7]
+
 
 [sub_resource type="Animation" id=1]
 resource_name = "attack_pierce"

@@ -282,3 +282,94 @@ mouse_filter = 2
 __meta__ = {
 "_edit_use_anchors_": false
 }
+
+[node name="GameOver" type="Panel" parent="Screen"]
+visible = false
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+margin_left = -228.0
+margin_top = -98.0
+margin_right = 228.0
+margin_bottom = 98.0
+mouse_filter = 2
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="VBox" type="VBoxContainer" parent="Screen/GameOver"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+size_flags_horizontal = 3
+size_flags_vertical = 3
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Top" type="MarginContainer" parent="Screen/GameOver/VBox"]
+margin_right = 456.0
+margin_bottom = 100.0
+rect_min_size = Vector2( 0, 100 )
+size_flags_horizontal = 3
+custom_constants/margin_right = 20
+custom_constants/margin_top = 10
+custom_constants/margin_left = 20
+custom_constants/margin_bottom = 10
+
+[node name="VBox" type="VBoxContainer" parent="Screen/GameOver/VBox/Top"]
+margin_left = 20.0
+margin_top = 10.0
+margin_right = 436.0
+margin_bottom = 90.0
+custom_constants/separation = 15
+alignment = 1
+
+[node name="Winner" type="Label" parent="Screen/GameOver/VBox/Top/VBox"]
+margin_top = 18.0
+margin_right = 416.0
+margin_bottom = 32.0
+text = "YOU WIN"
+align = 1
+
+[node name="Message" type="Label" parent="Screen/GameOver/VBox/Top/VBox"]
+margin_top = 47.0
+margin_right = 416.0
+margin_bottom = 61.0
+text = "You are awesome"
+align = 1
+
+[node name="Bottom" type="MarginContainer" parent="Screen/GameOver/VBox"]
+margin_top = 104.0
+margin_right = 456.0
+margin_bottom = 196.0
+size_flags_horizontal = 3
+size_flags_vertical = 3
+custom_constants/margin_right = 50
+custom_constants/margin_top = 20
+custom_constants/margin_left = 50
+custom_constants/margin_bottom = 20
+
+[node name="HBox" type="HBoxContainer" parent="Screen/GameOver/VBox/Bottom"]
+margin_left = 50.0
+margin_top = 20.0
+margin_right = 406.0
+margin_bottom = 72.0
+size_flags_horizontal = 3
+size_flags_vertical = 3
+custom_constants/separation = 25
+alignment = 1
+
+[node name="PlayAgain" type="Button" parent="Screen/GameOver/VBox/Bottom/HBox"]
+margin_left = 80.0
+margin_right = 157.0
+margin_bottom = 52.0
+text = "Play Again"
+
+[node name="Exit" type="Button" parent="Screen/GameOver/VBox/Bottom/HBox"]
+margin_left = 182.0
+margin_right = 275.0
+margin_bottom = 52.0
+text = "Exit to menu"
+[connection signal="pressed" from="Screen/GameOver/VBox/Bottom/HBox/PlayAgain" to="." method="_on_PlayAgain_pressed"]
+[connection signal="pressed" from="Screen/GameOver/VBox/Bottom/HBox/Exit" to="." method="_on_Exit_pressed"]

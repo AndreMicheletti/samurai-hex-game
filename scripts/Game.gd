@@ -1,6 +1,6 @@
 extends Node2D
 
-enum Phase {DRAW, CHOOSE, PLAY}
+enum Phase {DRAW, CHOOSE, PLAY, GAMEOVER}
 
 var world_scene = preload("res://scenes/world/World.tscn")
 var player_scene = preload("res://scenes/characters/Player.tscn")
@@ -15,6 +15,7 @@ var enemy
 var state = Phase.DRAW
 
 var first_draw = true
+var first_blood = null
 
 signal changed_state
 
@@ -31,8 +32,10 @@ func create_players():
 	player.characterClass = global.selectedPlayerClass
 	enemy.characterClass = global.selectedEnemyClass
 	player.connect("card_selected", self, "on_player_selected_card")
-	player.connect("character_defeated", self, "win_game")
-	enemy.connect("character_defeated", self, "lose_game")
+	player.connect("character_defeated", self, "lose_game")
+	player.connect("deck_depleted", self, "choose_winner")
+	enemy.connect("deck_depleted", self, "choose_winner")
+	enemy.connect("character_defeated", self, "win_game")
 
 func create_world():
 	world = world_scene.instance()
@@ -45,7 +48,7 @@ func init_ui():
 	add_child(game_ui)
 	game_ui.init()
 	game_ui.connect("card_pressed", player, "on_select_card")
-	game_ui.connect("card_pressed", self, "play_phase")
+	# game_ui.connect("card_pressed", self, "play_phase")
 	player.connect("character_hit", game_ui, "update_health_counter")
 	enemy.connect("character_hit", game_ui, "update_health_counter")
 
@@ -154,6 +157,9 @@ func check_attack(turn_order, index):
 		damage = 1
 	
 	if damage > 0:
+		# set first blood
+		if first_blood == null:
+			first_blood = attacker
 		# play animation
 		attacker.play_attack(attacker.selected_card)
 		yield(attacker, "anim_hit")
@@ -202,11 +208,26 @@ func compare_cards():
 func on_player_selected_card(_card):
 	play_phase()
 
-func win_game(_character):
+func choose_winner(_character):
+	if player.get_remaining_health() == enemy.get_remaining_health():
+		if first_blood == player:
+			win_game(null, "You draw first blood")
+		else:
+			lose_game(null, "The opponent draw first blood")
+	else:
+		if player.get_remaining_health() > enemy.get_remaining_health():
+			win_game(null, "You suffered less damage")
+		else:
+			lose_game(null, "You suffered more damage")
+
+func win_game(_character, message="You defeated your opponent"):
+	game_ui.show_game_over(true, message)
 	reset_scene()
 
-func lose_game(_character):
+func lose_game(_character, message="You were defeated"):
+	game_ui.show_game_over(false, message)
 	reset_scene()
 
 func reset_scene():
-	get_tree().reload_current_scene()
+	state = Phase.GAMEOVER
+	# get_tree().reload_current_scene()
