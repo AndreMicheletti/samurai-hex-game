@@ -10,306 +10,11 @@ script = ExtResource( 2 )
 [node name="Tween" type="Tween" parent="."]
 
 [node name="Screen" type="Control" parent="."]
-anchor_left = 0.5
-anchor_top = 0.5
-anchor_right = 0.5
-anchor_bottom = 0.5
-margin_left = -400.0
-margin_top = -225.0
-margin_right = 400.0
-margin_bottom = 225.0
-mouse_filter = 2
-size_flags_horizontal = 3
-size_flags_vertical = 3
-__meta__ = {
-"_edit_use_anchors_": true
-}
-
-[node name="Player1" type="Control" parent="Screen"]
-anchor_left = 0.5
-anchor_top = 0.5
-anchor_right = 0.5
-anchor_bottom = 0.5
-margin_left = -400.0
-margin_top = -225.0
-margin_right = 400.0
-margin_bottom = 225.0
-mouse_filter = 2
-size_flags_horizontal = 3
-size_flags_vertical = 3
-__meta__ = {
-"_edit_use_anchors_": false
-}
-
-[node name="Box" type="MarginContainer" parent="Screen/Player1"]
-margin_top = 363.0
-margin_right = 220.0
-margin_bottom = 459.0
-mouse_filter = 2
-size_flags_vertical = 3
-custom_constants/margin_right = 5
-custom_constants/margin_top = 5
-custom_constants/margin_left = 5
-custom_constants/margin_bottom = 20
-__meta__ = {
-"_edit_use_anchors_": false
-}
-
-[node name="Panel" type="Panel" parent="Screen/Player1/Box"]
-margin_left = 5.0
-margin_top = 5.0
-margin_right = 215.0
-margin_bottom = 76.0
-mouse_filter = 2
-size_flags_horizontal = 3
-size_flags_vertical = 3
-
-[node name="Content" type="VBoxContainer" parent="Screen/Player1/Box/Panel"]
 anchor_right = 1.0
 anchor_bottom = 1.0
 mouse_filter = 2
 size_flags_horizontal = 3
 size_flags_vertical = 3
-__meta__ = {
-"_edit_use_anchors_": false
-}
-
-[node name="Name" type="MarginContainer" parent="Screen/Player1/Box/Panel/Content"]
-margin_right = 210.0
-margin_bottom = 34.0
-mouse_filter = 2
-size_flags_horizontal = 3
-custom_constants/margin_right = 5
-custom_constants/margin_top = 10
-custom_constants/margin_left = 5
-custom_constants/margin_bottom = 10
-
-[node name="Label" type="Label" parent="Screen/Player1/Box/Panel/Content/Name"]
-margin_left = 5.0
-margin_top = 10.0
-margin_right = 205.0
-margin_bottom = 24.0
-size_flags_horizontal = 3
-text = "Player"
-align = 1
-valign = 1
-
-[node name="Health" type="MarginContainer" parent="Screen/Player1/Box/Panel/Content"]
-margin_top = 38.0
-margin_right = 210.0
-margin_bottom = 38.0
-mouse_filter = 2
-size_flags_horizontal = 3
-custom_constants/margin_right = 10
-custom_constants/margin_left = 10
-
-[node name="Counter" type="HBoxContainer" parent="Screen/Player1/Box/Panel/Content/Health"]
-margin_left = 10.0
-margin_right = 200.0
-mouse_filter = 2
-size_flags_horizontal = 3
-size_flags_vertical = 3
-alignment = 1
-__meta__ = {
-"_edit_use_anchors_": false
-}
-
-[node name="Cards" type="HBoxContainer" parent="Screen/Player1"]
-margin_left = 275.0
-margin_top = 400.0
-margin_right = 640.0
-margin_bottom = 520.0
-mouse_filter = 2
-size_flags_horizontal = 3
-size_flags_vertical = 3
-custom_constants/separation = 15
-alignment = 1
-__meta__ = {
-"_edit_use_anchors_": false
-}
-
-[node name="Deck" type="MarginContainer" parent="Screen/Player1"]
-margin_left = 700.0
-margin_top = 310.0
-margin_right = 800.0
-margin_bottom = 455.0
-rect_min_size = Vector2( 100, 140 )
-mouse_filter = 2
-size_flags_vertical = 3
-custom_constants/margin_right = 5
-custom_constants/margin_top = 5
-custom_constants/margin_left = 5
-custom_constants/margin_bottom = 5
-__meta__ = {
-"_edit_use_anchors_": false
-}
-
-[node name="Deck" parent="Screen/Player1/Deck" instance=ExtResource( 3 )]
-margin_left = 5.0
-margin_top = 5.0
-margin_right = 85.0
-margin_bottom = 125.0
-mouse_filter = 2
-
-[node name="TurnTimer" parent="Screen/Player1" instance=ExtResource( 1 )]
-margin_left = -379.802
-margin_top = 94.0933
-margin_right = -204.802
-margin_bottom = 120.093
-
-[node name="Player2" type="Control" parent="Screen"]
-anchor_left = 0.5
-anchor_top = 0.5
-anchor_right = 0.5
-anchor_bottom = 0.5
-margin_left = -400.0
-margin_top = -225.0
-margin_right = 400.0
-margin_bottom = 225.0
-mouse_filter = 2
-size_flags_horizontal = 3
-size_flags_vertical = 3
-__meta__ = {
-"_edit_use_anchors_": false
-}
-
-[node name="Box" type="MarginContainer" parent="Screen/Player2"]
-margin_left = 577.044
-margin_top = 8.96216
-margin_right = 797.044
-margin_bottom = 104.962
-mouse_filter = 2
-size_flags_vertical = 3
-custom_constants/margin_right = 5
-custom_constants/margin_top = 5
-custom_constants/margin_left = 5
-custom_constants/margin_bottom = 20
-__meta__ = {
-"_edit_use_anchors_": false
-}
-
-[node name="Panel" type="Panel" parent="Screen/Player2/Box"]
-margin_left = 5.0
-margin_top = 5.0
-margin_right = 215.0
-margin_bottom = 75.0
-mouse_filter = 2
-size_flags_horizontal = 3
-size_flags_vertical = 3
-
-[node name="Content" type="VBoxContainer" parent="Screen/Player2/Box/Panel"]
-anchor_right = 1.0
-anchor_bottom = 1.0
-mouse_filter = 2
-size_flags_horizontal = 3
-size_flags_vertical = 3
-__meta__ = {
-"_edit_use_anchors_": false
-}
-
-[node name="Name" type="MarginContainer" parent="Screen/Player2/Box/Panel/Content"]
-margin_right = 210.0
-margin_bottom = 34.0
-mouse_filter = 2
-size_flags_horizontal = 3
-custom_constants/margin_right = 5
-custom_constants/margin_top = 10
-custom_constants/margin_left = 5
-custom_constants/margin_bottom = 10
-
-[node name="Label" type="Label" parent="Screen/Player2/Box/Panel/Content/Name"]
-margin_left = 5.0
-margin_top = 10.0
-margin_right = 205.0
-margin_bottom = 24.0
-size_flags_horizontal = 3
-text = "Player"
-align = 1
-valign = 1
-
-[node name="Health" type="MarginContainer" parent="Screen/Player2/Box/Panel/Content"]
-margin_top = 38.0
-margin_right = 210.0
-margin_bottom = 38.0
-mouse_filter = 2
-size_flags_horizontal = 3
-custom_constants/margin_right = 10
-custom_constants/margin_left = 10
-
-[node name="Counter" type="HBoxContainer" parent="Screen/Player2/Box/Panel/Content/Health"]
-margin_left = 10.0
-margin_right = 200.0
-mouse_filter = 2
-size_flags_horizontal = 3
-size_flags_vertical = 3
-alignment = 1
-__meta__ = {
-"_edit_use_anchors_": false
-}
-
-[node name="Cards" type="HBoxContainer" parent="Screen/Player2"]
-margin_left = 162.867
-margin_top = -75.0
-margin_right = 527.867
-margin_bottom = 45.0
-mouse_filter = 2
-size_flags_horizontal = 3
-size_flags_vertical = 3
-custom_constants/separation = 15
-alignment = 1
-__meta__ = {
-"_edit_use_anchors_": false
-}
-
-[node name="Deck" type="MarginContainer" parent="Screen/Player2"]
-margin_left = 5.78363
-margin_top = 1.31931
-margin_right = 105.784
-margin_bottom = 146.319
-rect_min_size = Vector2( 100, 140 )
-mouse_filter = 2
-size_flags_vertical = 3
-custom_constants/margin_right = 5
-custom_constants/margin_top = 5
-custom_constants/margin_left = 5
-custom_constants/margin_bottom = 5
-__meta__ = {
-"_edit_use_anchors_": false
-}
-
-[node name="Deck" parent="Screen/Player2/Deck" instance=ExtResource( 3 )]
-margin_left = 5.0
-margin_top = 5.0
-margin_right = 85.0
-margin_bottom = 125.0
-mouse_filter = 2
-
-[node name="CenterLeft" type="ReferenceRect" parent="Screen"]
-anchor_left = 0.5
-anchor_top = 0.5
-anchor_right = 0.5
-anchor_bottom = 0.5
-margin_left = -130.0
-margin_top = -60.0
-margin_right = -49.9996
-margin_bottom = 60.0
-rect_min_size = Vector2( 80, 120 )
-mouse_filter = 2
-__meta__ = {
-"_edit_use_anchors_": false
-}
-
-[node name="CenterRight" type="ReferenceRect" parent="Screen"]
-anchor_left = 0.5
-anchor_top = 0.5
-anchor_right = 0.5
-anchor_bottom = 0.5
-margin_left = 50.0
-margin_top = -60.0
-margin_right = 130.0
-margin_bottom = 60.0
-rect_min_size = Vector2( 80, 120 )
-mouse_filter = 2
 __meta__ = {
 "_edit_use_anchors_": false
 }
@@ -402,5 +107,334 @@ margin_left = 182.0
 margin_right = 275.0
 margin_bottom = 52.0
 text = "Exit to menu"
+
+[node name="Top" type="Control" parent="."]
+anchor_right = 1.0
+margin_bottom = 140.0
+mouse_filter = 2
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Player2" type="Control" parent="Top"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+mouse_filter = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Box" type="MarginContainer" parent="Top/Player2"]
+anchor_left = 1.0
+anchor_right = 1.0
+margin_left = -300.0
+margin_bottom = 120.0
+rect_min_size = Vector2( 300, 120 )
+mouse_filter = 2
+size_flags_vertical = 3
+custom_constants/margin_right = 5
+custom_constants/margin_top = 5
+custom_constants/margin_left = 5
+custom_constants/margin_bottom = 20
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Panel" type="Panel" parent="Top/Player2/Box"]
+margin_left = 5.0
+margin_top = 5.0
+margin_right = 295.0
+margin_bottom = 100.0
+mouse_filter = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+
+[node name="Content" type="VBoxContainer" parent="Top/Player2/Box/Panel"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+mouse_filter = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Name" type="MarginContainer" parent="Top/Player2/Box/Panel/Content"]
+margin_right = 290.0
+margin_bottom = 34.0
+mouse_filter = 2
+size_flags_horizontal = 3
+custom_constants/margin_right = 5
+custom_constants/margin_top = 10
+custom_constants/margin_left = 5
+custom_constants/margin_bottom = 10
+
+[node name="Label" type="Label" parent="Top/Player2/Box/Panel/Content/Name"]
+margin_left = 5.0
+margin_top = 10.0
+margin_right = 285.0
+margin_bottom = 24.0
+size_flags_horizontal = 3
+text = "Player"
+align = 1
+valign = 1
+
+[node name="Health" type="MarginContainer" parent="Top/Player2/Box/Panel/Content"]
+margin_top = 38.0
+margin_right = 290.0
+margin_bottom = 38.0
+mouse_filter = 2
+size_flags_horizontal = 3
+custom_constants/margin_right = 10
+custom_constants/margin_left = 10
+
+[node name="Counter" type="HBoxContainer" parent="Top/Player2/Box/Panel/Content/Health"]
+margin_left = 10.0
+margin_right = 280.0
+mouse_filter = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+alignment = 1
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Cards" type="HBoxContainer" parent="Top/Player2"]
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+margin_left = -360.988
+margin_top = -184.785
+margin_right = 204.012
+margin_bottom = -38.7855
+rect_min_size = Vector2( 565, 146 )
+mouse_filter = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+custom_constants/separation = 15
+alignment = 1
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Deck" type="MarginContainer" parent="Top/Player2"]
+margin_right = 100.0
+margin_bottom = 145.0
+rect_min_size = Vector2( 100, 140 )
+mouse_filter = 2
+size_flags_vertical = 3
+custom_constants/margin_right = 5
+custom_constants/margin_top = 5
+custom_constants/margin_left = 5
+custom_constants/margin_bottom = 5
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Deck" parent="Top/Player2/Deck" instance=ExtResource( 3 )]
+margin_left = 5.0
+margin_top = 5.0
+margin_right = 85.0
+margin_bottom = 125.0
+mouse_filter = 2
+
+[node name="Center" type="Control" parent="."]
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+margin_left = -600.0
+margin_top = -81.0
+margin_right = 600.0
+margin_bottom = 81.0
+mouse_filter = 2
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="CenterLeft" type="ReferenceRect" parent="Center"]
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+margin_left = -150.0
+margin_top = -60.0
+margin_right = -69.9995
+margin_bottom = 60.0
+rect_min_size = Vector2( 80, 120 )
+mouse_filter = 2
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="CenterRight" type="ReferenceRect" parent="Center"]
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+margin_left = 80.0001
+margin_top = -60.0
+margin_right = 160.0
+margin_bottom = 60.0
+rect_min_size = Vector2( 80, 120 )
+mouse_filter = 2
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Bottom" type="Control" parent="."]
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+margin_top = -166.0
+mouse_filter = 2
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Player1" type="Control" parent="Bottom"]
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+margin_top = -146.0
+mouse_filter = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Box" type="MarginContainer" parent="Bottom/Player1"]
+anchor_bottom = 1.0
+margin_top = 21.0
+margin_right = 300.0
+margin_bottom = -4.99998
+rect_min_size = Vector2( 300, 120 )
+mouse_filter = 2
+size_flags_vertical = 3
+custom_constants/margin_right = 5
+custom_constants/margin_top = 5
+custom_constants/margin_left = 5
+custom_constants/margin_bottom = 20
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Panel" type="Panel" parent="Bottom/Player1/Box"]
+margin_left = 5.0
+margin_top = 5.0
+margin_right = 295.0
+margin_bottom = 100.0
+mouse_filter = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+
+[node name="Content" type="VBoxContainer" parent="Bottom/Player1/Box/Panel"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+mouse_filter = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Name" type="MarginContainer" parent="Bottom/Player1/Box/Panel/Content"]
+margin_right = 290.0
+margin_bottom = 34.0
+mouse_filter = 2
+size_flags_horizontal = 3
+custom_constants/margin_right = 5
+custom_constants/margin_top = 10
+custom_constants/margin_left = 5
+custom_constants/margin_bottom = 10
+
+[node name="Label" type="Label" parent="Bottom/Player1/Box/Panel/Content/Name"]
+margin_left = 5.0
+margin_top = 10.0
+margin_right = 285.0
+margin_bottom = 24.0
+size_flags_horizontal = 3
+text = "Player"
+align = 1
+valign = 1
+
+[node name="Health" type="MarginContainer" parent="Bottom/Player1/Box/Panel/Content"]
+margin_top = 38.0
+margin_right = 290.0
+margin_bottom = 38.0
+mouse_filter = 2
+size_flags_horizontal = 3
+custom_constants/margin_right = 10
+custom_constants/margin_left = 10
+
+[node name="Counter" type="HBoxContainer" parent="Bottom/Player1/Box/Panel/Content/Health"]
+margin_left = 10.0
+margin_right = 280.0
+mouse_filter = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+alignment = 1
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Cards" type="HBoxContainer" parent="Bottom/Player1"]
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+margin_left = -161.858
+margin_top = 31.6501
+margin_right = 403.142
+margin_bottom = 177.65
+rect_min_size = Vector2( 565, 146 )
+mouse_filter = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+custom_constants/separation = 15
+alignment = 1
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Deck" type="MarginContainer" parent="Bottom/Player1"]
+anchor_left = 1.0
+anchor_top = 0.5
+anchor_right = 1.0
+anchor_bottom = 0.5
+margin_left = -100.0
+margin_top = -72.5
+margin_bottom = 72.5
+rect_min_size = Vector2( 100, 140 )
+mouse_filter = 2
+size_flags_vertical = 3
+custom_constants/margin_right = 5
+custom_constants/margin_top = 5
+custom_constants/margin_left = 5
+custom_constants/margin_bottom = 5
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Deck" parent="Bottom/Player1/Deck" instance=ExtResource( 3 )]
+margin_left = 5.0
+margin_top = 5.0
+margin_right = 85.0
+margin_bottom = 125.0
+mouse_filter = 2
+
+[node name="TurnTimer" parent="Bottom/Player1" instance=ExtResource( 1 )]
+anchor_left = 0.0
+anchor_top = 0.0
+anchor_right = 0.0
+anchor_bottom = 0.0
+margin_left = 60.8444
+margin_top = -16.437
+margin_right = 235.844
+margin_bottom = 9.56276
 [connection signal="pressed" from="Screen/GameOver/VBox/Bottom/HBox/PlayAgain" to="." method="_on_PlayAgain_pressed"]
 [connection signal="pressed" from="Screen/GameOver/VBox/Bottom/HBox/Exit" to="." method="_on_Exit_pressed"]

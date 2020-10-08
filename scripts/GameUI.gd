@@ -8,24 +8,43 @@ var card_scene = preload("res://scenes/gui/Card.tscn")
 var player
 var enemy
 
-onready var player_cards = $Screen/Player1/Cards
-onready var enemy_cards = $Screen/Player1/Cards
+onready var player_cards = $Bottom/Player1/Cards
+onready var enemy_cards = $Top/Player2/Cards
 
-onready var player_center_card = $Screen/CenterLeft
-onready var enemy_center_card = $Screen/CenterRight
+onready var player_center_card = $Center/CenterLeft
+onready var enemy_center_card = $Center/CenterRight
 
-onready var player_deck = $Screen/Player1/Deck/Deck
-onready var enemy_deck = $Screen/Player2/Deck/Deck
+onready var player_deck = $Bottom/Player1/Deck/Deck
+onready var enemy_deck = $Top/Player2/Deck/Deck
 
-onready var turn_time = $Screen/Player1/TurnTimer
+onready var player_name = $Bottom/Player1/Box/Panel/Content/Name/Label
+onready var enemy_name = $Top/Player2/Box/Panel/Content/Name/Label
+
+onready var player_health = $Bottom/Player1/Box/Panel/Content/Health/Counter
+onready var enemy_health = $Top/Player2/Box/Panel/Content/Health/Counter
+
+onready var turn_time = $Bottom/Player1/TurnTimer
+
+onready var game_over = $Screen/GameOver
+onready var game_over_winner = $Screen/GameOver/VBox/Top/VBox/Winner
+onready var game_over_message = $Screen/GameOver/VBox/Top/VBox/Message
 
 signal card_pressed
+
+
+var center_left_middle
+var center_right_middle
+
+var center_left_corner = 20
+var center_right_corner = 1100
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
 	pass
 
 func init():
+	center_left_middle = player_center_card.rect_position.x
+	center_right_middle = enemy_center_card.rect_position.x
 	player = game.player
 	enemy = game.enemy
 	init_player_gui()
@@ -37,28 +56,28 @@ func init():
 	enemy.connect("card_selected", self, "on_enemy_select_card")
 
 func init_player_gui():
-	$Screen/Player1/Box/Panel/Content/Name/Label.text = player.PlayerName
+	player_name.text = player.PlayerName
 
 func init_health_counter():
 	# PLAYER HEALTH COUNTER
-	var player_node = $Screen/Player1/Box/Panel/Content/Health/Counter
+	var player_node = player_health
 	for i in range(player.get_remaining_health()):
 		var node = damage_scene.instance()
 		player_node.add_child(node)
 	
 	# ENEMY HEALTH COUNTER
-	var enemy_node = $Screen/Player2/Box/Panel/Content/Health/Counter
+	var enemy_node = enemy_health
 	for i in range(enemy.get_remaining_health()):
 		var node = damage_scene.instance()
 		enemy_node.add_child(node)
 
 func update_health_counter(character, damage):
 	if character == player:
-		var player_node = $Screen/Player1/Box/Panel/Content/Health/Counter
+		var player_node = player_health
 		for i in range(damage):
 			player_node.remove_child(player_node.get_child(0))
 	else:
-		var enemy_node = $Screen/Player2/Box/Panel/Content/Health/Counter
+		var enemy_node = enemy_health
 		for i in range(damage):
 			enemy_node.remove_child(enemy_node.get_child(0))
 
@@ -80,17 +99,17 @@ func show_cards():
 	$Tween.interpolate_property(
 		player_cards, "rect_position",
 		player_cards.rect_position,
-		Vector2(player_cards.rect_position.x, 320),
+		Vector2(player_cards.rect_position.x, player_cards.rect_position.y - 100),
 		0.4)
 	$Tween.interpolate_property(
 		player_center_card, "rect_position",
 		player_center_card.rect_position,
-		Vector2(270, player_center_card.rect_position.y),
+		Vector2(center_left_middle, player_center_card.rect_position.y),
 		0.4)
 	$Tween.interpolate_property(
 		enemy_center_card, "rect_position",
 		enemy_center_card.rect_position,
-		Vector2(450, enemy_center_card.rect_position.y),
+		Vector2(center_right_middle, enemy_center_card.rect_position.y),
 		0.4)
 	$Tween.start()
 	yield($Tween, "tween_completed")
@@ -99,17 +118,17 @@ func hide_cards():
 	$Tween.interpolate_property(
 		player_cards, "rect_position",
 		player_cards.rect_position,
-		Vector2(player_cards.rect_position.x, 400),
+		Vector2(player_cards.rect_position.x, player_cards.rect_position.y + 100),
 		0.4)
 	$Tween.interpolate_property(
 		player_center_card, "rect_position",
 		player_center_card.rect_position,
-		Vector2(20, player_center_card.rect_position.y),
+		Vector2(center_left_corner, player_center_card.rect_position.y),
 		0.4)
 	$Tween.interpolate_property(
 		enemy_center_card, "rect_position",
 		enemy_center_card.rect_position,
-		Vector2(705, enemy_center_card.rect_position.y),
+		Vector2(center_right_corner, enemy_center_card.rect_position.y),
 		0.4)
 	$Tween.start()
 	yield($Tween, "tween_completed")
@@ -161,12 +180,12 @@ func show_game_over(player_win, message):
 	enemy_center_card.visible = false
 	turn_time.stop()
 	# show game over panel
-	$Screen/GameOver.visible = true
-	$Screen/GameOver/VBox/Top/VBox/Message.text = message
+	game_over.visible = true
+	game_over_message.text = message
 	if player_win:
-		$Screen/GameOver/VBox/Top/VBox/Winner.text = "YOU WIN"
+		game_over_winner.text = "YOU WIN"
 	else:
-		$Screen/GameOver/VBox/Top/VBox/Winner.text = "YOU LOSE"
+		game_over_winner.text = "YOU LOSE"
 
 func _on_PlayAgain_pressed():
 	get_tree().reload_current_scene()

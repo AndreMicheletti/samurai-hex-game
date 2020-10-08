@@ -57,6 +57,8 @@ func init_game():
 	draw_phase()
 
 func draw_phase():
+	if state == Phase.GAMEOVER:
+		return
 	print("\n*********************** DRAW PHASE")
 	yield(game_ui.reset_center(), "completed")
 	player.selected_card = null
@@ -74,7 +76,7 @@ func draw_phase():
 	choose_phase()
 
 func choose_phase():
-	if state != Phase.DRAW:
+	if state != Phase.DRAW or state == Phase.GAMEOVER:
 		return
 	print("\n*********************** CHOOSE PHASE")
 	state = Phase.CHOOSE
@@ -83,7 +85,7 @@ func choose_phase():
 	game_ui.turn_time.start()
 
 func play_phase():
-	if state != Phase.CHOOSE:
+	if state != Phase.CHOOSE or state == Phase.GAMEOVER:
 		return
 	print("\n*********************** PLAY PHASE")
 	state = Phase.PLAY
