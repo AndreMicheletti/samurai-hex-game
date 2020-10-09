@@ -302,7 +302,7 @@ anims/flip_front = SubResource( 5 )
 
 [node name="Flames" type="CPUParticles2D" parent="."]
 material = SubResource( 6 )
-position = Vector2( 50, 170 )
+position = Vector2( 55, 170 )
 z_index = 50
 emitting = false
 amount = 80
@@ -310,7 +310,7 @@ lifetime = 0.3
 local_coords = false
 texture = ExtResource( 3 )
 emission_shape = 2
-emission_rect_extents = Vector2( 55, 1 )
+emission_rect_extents = Vector2( 60, 1 )
 gravity = Vector2( 0, -98 )
 angle = 45.0
 angle_random = 1.0
@@ -319,11 +319,12 @@ color = Color( 0.870588, 0.67451, 0.254902, 1 )
 
 [node name="Special" type="CPUParticles2D" parent="."]
 material = SubResource( 7 )
-position = Vector2( 40, 60 )
+position = Vector2( 60, 90 )
 emitting = false
+amount = 12
 texture = ExtResource( 4 )
 emission_shape = 2
-emission_rect_extents = Vector2( 30, 50 )
+emission_rect_extents = Vector2( 60, 80 )
 gravity = Vector2( 0, -20 )
 scale_amount = 0.05
 color_ramp = SubResource( 8 )
