@@ -40,6 +40,7 @@ func create_world():
 	world = global.worldScene.instance()
 	add_child(world)
 	world.spawn_players(player, enemy)
+	world.init_camera()
 	world.connect("pressed_hex", player, "on_pressed_hex")
 
 func init_ui():

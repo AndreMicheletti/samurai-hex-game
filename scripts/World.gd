@@ -11,6 +11,7 @@ var HexCell = preload("res://scripts/HexCell.gd")
 
 onready var tileset = $Tileset
 onready var window_size = get_viewport().size
+onready var camera = $Camera2D
 
 export(bool) var generate = true
 
@@ -123,6 +124,9 @@ func spawn_players(player, enemy):
 	player.look_to_hex(enemy.hex_pos)
 	enemy.look_to_hex(player.hex_pos)
 
+func init_camera():
+	camera.init_camera()
+
 func find_path(start, goal):
 	var exceptions = []
 	for charact in get_tree().get_nodes_in_group("Character"):
@@ -149,11 +153,16 @@ func set_click_enabled(value):
 func _unhandled_input(event):
 	if click_enabled:
 		if 'position' in event:
-			var relative_pos = self.transform.affine_inverse() * event.position
-			relative_pos.x -= (window_size.x / 2) 
-			relative_pos.y -= (window_size.y / 2)
-			relative_pos.x *= $Camera2D.zoom.x
-			relative_pos.y *= $Camera2D.zoom.y
+#			var relative_pos = self.transform.affine_inverse() * event.position
+#			relative_pos += camera.global_position
+#			relative_pos.x -= (window_size.x / 2) 
+#			relative_pos.y -= (window_size.y / 2)
+#			relative_pos.x *= camera.zoom.x
+#			relative_pos.y *= camera.zoom.y
+#			relative_pos.x -= camera.position.x
+#			relative_pos.y -= camera.position.y
+			print("camera pos ", camera.get_global_mouse_position())
+			var relative_pos = camera.get_global_mouse_position()
 			var hex = get_grid().get_hex_at(relative_pos)
 			# print("poiting at hex ", hex.get_axial_coords())
 #			if not $Samurai.moving:

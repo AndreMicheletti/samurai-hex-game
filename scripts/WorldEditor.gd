@@ -42,9 +42,10 @@ var obstacles_coords = []
 var tile_options = [
 	{"name": "player_start", "type": "p_start"},
 	{"name": "enemy_start", "type": "e_start"},
-	{"name": "box", "type": Tile.TileType.BOX},
 	{"name": "wall", "type": Tile.TileType.WALL},
 	{"name": "grass", "type": Tile.TileType.GRASS},
+	{"name": "sand", "type": Tile.TileType.SAND},
+	{"name": "box", "type": Tile.TileType.BOX},
 ]
 
 var tileset_mapper = {}

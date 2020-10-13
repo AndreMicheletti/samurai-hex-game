@@ -1,7 +1,8 @@
-[gd_scene load_steps=3 format=2]
+[gd_scene load_steps=4 format=2]
 
 [ext_resource path="res://scripts/WorldEditor.gd" type="Script" id=1]
 [ext_resource path="res://graphics/gui/card_back.png" type="Texture" id=2]
+[ext_resource path="res://scripts/Camera.gd" type="Script" id=3]
 
 [node name="Editor" type="Node2D"]
 script = ExtResource( 1 )
@@ -19,6 +20,9 @@ enemyStart = Vector2( 0, 1 )
 [node name="Camera2D" type="Camera2D" parent="World"]
 current = true
 zoom = Vector2( 0.5, 0.5 )
+script = ExtResource( 3 )
+
+[node name="Tween" type="Tween" parent="World/Camera2D"]
 
 [node name="Highlight" type="Polygon2D" parent="World"]
 scale = Vector2( 0.7, 0.7 )
