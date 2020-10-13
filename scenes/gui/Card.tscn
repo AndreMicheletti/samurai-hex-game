@@ -1,9 +1,11 @@
-[gd_scene load_steps=13 format=2]
+[gd_scene load_steps=16 format=2]
 
 [ext_resource path="res://scripts/Card.gd" type="Script" id=1]
 [ext_resource path="res://samurai_icon.png" type="Texture" id=2]
 [ext_resource path="res://graphics/particles/flame_01.png" type="Texture" id=3]
 [ext_resource path="res://graphics/particles/star_01.png" type="Texture" id=4]
+[ext_resource path="res://fonts/PixelFont.tres" type="DynamicFont" id=5]
+[ext_resource path="res://fonts/Talk_to_three_headed_monkey.ttf" type="DynamicFontData" id=6]
 
 [sub_resource type="StyleBoxFlat" id=1]
 bg_color = Color( 0.776471, 0.678431, 0.411765, 1 )
@@ -16,6 +18,10 @@ corner_radius_top_left = 4
 corner_radius_top_right = 4
 corner_radius_bottom_right = 4
 corner_radius_bottom_left = 4
+
+[sub_resource type="DynamicFont" id=9]
+outline_color = Color( 0, 0, 0, 1 )
+font_data = ExtResource( 6 )
 
 [sub_resource type="Animation" id=2]
 resource_name = "choose"
@@ -218,10 +224,11 @@ mouse_filter = 1
 custom_constants/margin_bottom = 6
 
 [node name="Label" type="Label" parent="Margin/VBox/Title"]
-margin_top = 7.0
+margin_top = 3.0
 margin_right = 104.0
-margin_bottom = 21.0
+margin_bottom = 25.0
 size_flags_horizontal = 3
+custom_fonts/font = SubResource( 9 )
 text = "Card Title"
 align = 1
 valign = 1
@@ -241,21 +248,23 @@ __meta__ = {
 }
 
 [node name="Atk" type="Label" parent="Margin/VBox/Texts"]
-margin_top = 28.0
+margin_top = 16.0
 margin_right = 104.0
-margin_bottom = 42.0
+margin_bottom = 36.0
 mouse_filter = 1
 size_flags_horizontal = 3
+custom_fonts/font = ExtResource( 5 )
 text = "Atk 2"
 align = 1
 valign = 1
 
 [node name="Def" type="Label" parent="Margin/VBox/Texts"]
-margin_top = 46.0
+margin_top = 40.0
 margin_right = 104.0
 margin_bottom = 60.0
 mouse_filter = 1
 size_flags_horizontal = 3
+custom_fonts/font = ExtResource( 5 )
 text = "Def 2"
 align = 1
 valign = 1
@@ -263,19 +272,21 @@ valign = 1
 [node name="Mov" type="Label" parent="Margin/VBox/Texts"]
 margin_top = 64.0
 margin_right = 104.0
-margin_bottom = 78.0
+margin_bottom = 84.0
 mouse_filter = 1
 size_flags_horizontal = 3
+custom_fonts/font = ExtResource( 5 )
 text = "Mov 2"
 align = 1
 valign = 1
 
 [node name="Speed" type="Label" parent="Margin/VBox/Texts"]
-margin_top = 82.0
+margin_top = 88.0
 margin_right = 104.0
-margin_bottom = 96.0
+margin_bottom = 108.0
 mouse_filter = 1
 size_flags_horizontal = 3
+custom_fonts/font = ExtResource( 5 )
 text = "Speed 2"
 align = 1
 valign = 1

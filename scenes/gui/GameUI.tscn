@@ -1,8 +1,39 @@
-[gd_scene load_steps=4 format=2]
+[gd_scene load_steps=11 format=2]
 
 [ext_resource path="res://scenes/gui/TurnTimer.tscn" type="PackedScene" id=1]
 [ext_resource path="res://scripts/GameUI.gd" type="Script" id=2]
 [ext_resource path="res://scenes/gui/Deck.tscn" type="PackedScene" id=3]
+[ext_resource path="res://fonts/Talk_to_three_headed_monkey.ttf" type="DynamicFontData" id=4]
+
+[sub_resource type="DynamicFont" id=3]
+size = 20
+outline_color = Color( 0, 0, 0, 1 )
+font_data = ExtResource( 4 )
+
+[sub_resource type="DynamicFont" id=4]
+size = 14
+outline_color = Color( 0, 0, 0, 1 )
+font_data = ExtResource( 4 )
+
+[sub_resource type="DynamicFont" id=5]
+size = 12
+outline_color = Color( 0, 0, 0, 1 )
+font_data = ExtResource( 4 )
+
+[sub_resource type="DynamicFont" id=6]
+size = 12
+outline_color = Color( 0, 0, 0, 1 )
+font_data = ExtResource( 4 )
+
+[sub_resource type="DynamicFont" id=1]
+size = 18
+outline_color = Color( 0, 0, 0, 1 )
+font_data = ExtResource( 4 )
+
+[sub_resource type="DynamicFont" id=2]
+size = 18
+outline_color = Color( 0, 0, 0, 1 )
+font_data = ExtResource( 4 )
 
 [node name="GameUI" type="CanvasLayer"]
 script = ExtResource( 2 )
@@ -62,16 +93,18 @@ custom_constants/separation = 15
 alignment = 1
 
 [node name="Winner" type="Label" parent="Screen/GameOver/VBox/Top/VBox"]
-margin_top = 18.0
+margin_top = 8.0
 margin_right = 416.0
-margin_bottom = 32.0
+margin_bottom = 36.0
+custom_fonts/font = SubResource( 3 )
 text = "YOU WIN"
 align = 1
 
 [node name="Message" type="Label" parent="Screen/GameOver/VBox/Top/VBox"]
-margin_top = 47.0
+margin_top = 51.0
 margin_right = 416.0
-margin_bottom = 61.0
+margin_bottom = 71.0
+custom_fonts/font = SubResource( 4 )
 text = "You are awesome"
 align = 1
 
@@ -97,15 +130,17 @@ custom_constants/separation = 25
 alignment = 1
 
 [node name="PlayAgain" type="Button" parent="Screen/GameOver/VBox/Bottom/HBox"]
-margin_left = 80.0
-margin_right = 157.0
+margin_left = 68.0
+margin_right = 156.0
 margin_bottom = 52.0
+custom_fonts/font = SubResource( 5 )
 text = "Play Again"
 
 [node name="Exit" type="Button" parent="Screen/GameOver/VBox/Bottom/HBox"]
-margin_left = 182.0
-margin_right = 275.0
+margin_left = 181.0
+margin_right = 287.0
 margin_bottom = 52.0
+custom_fonts/font = SubResource( 6 )
 text = "Exit to menu"
 
 [node name="Top" type="Control" parent="."]
@@ -163,7 +198,7 @@ __meta__ = {
 
 [node name="Name" type="MarginContainer" parent="Top/Player2/Box/Panel/Content"]
 margin_right = 290.0
-margin_bottom = 34.0
+margin_bottom = 44.0
 mouse_filter = 2
 size_flags_horizontal = 3
 custom_constants/margin_right = 5
@@ -175,16 +210,17 @@ custom_constants/margin_bottom = 10
 margin_left = 5.0
 margin_top = 10.0
 margin_right = 285.0
-margin_bottom = 24.0
+margin_bottom = 34.0
 size_flags_horizontal = 3
+custom_fonts/font = SubResource( 1 )
 text = "Player"
 align = 1
 valign = 1
 
 [node name="Health" type="MarginContainer" parent="Top/Player2/Box/Panel/Content"]
-margin_top = 38.0
+margin_top = 48.0
 margin_right = 290.0
-margin_bottom = 38.0
+margin_bottom = 48.0
 mouse_filter = 2
 size_flags_horizontal = 3
 custom_constants/margin_right = 10
@@ -344,7 +380,7 @@ __meta__ = {
 
 [node name="Name" type="MarginContainer" parent="Bottom/Player1/Box/Panel/Content"]
 margin_right = 290.0
-margin_bottom = 34.0
+margin_bottom = 44.0
 mouse_filter = 2
 size_flags_horizontal = 3
 custom_constants/margin_right = 5
@@ -356,16 +392,17 @@ custom_constants/margin_bottom = 10
 margin_left = 5.0
 margin_top = 10.0
 margin_right = 285.0
-margin_bottom = 24.0
+margin_bottom = 34.0
 size_flags_horizontal = 3
+custom_fonts/font = SubResource( 2 )
 text = "Player"
 align = 1
 valign = 1
 
 [node name="Health" type="MarginContainer" parent="Bottom/Player1/Box/Panel/Content"]
-margin_top = 38.0
+margin_top = 48.0
 margin_right = 290.0
-margin_bottom = 38.0
+margin_bottom = 48.0
 mouse_filter = 2
 size_flags_horizontal = 3
 custom_constants/margin_right = 10
