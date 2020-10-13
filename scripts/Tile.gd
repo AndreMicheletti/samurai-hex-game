@@ -6,8 +6,12 @@ enum TileType {GRASS, SAND, WALL, BOX}
 
 export(TileType) var tile_type
 
+export(bool) var passable = false
+export(Vector2) var hex_pos = Vector2(0, 0)
+
 # Called when the node enters the scene tree for the first time.
 func _ready():
+	add_to_group("Tile")
 	var grass_tiles = ["grass1.png", "grass2.png", "grass3.png"]
 	var sand_tiles = ["sand1.png", "sand2.png"]
 	var wall_tiles = ["wall1.png"]
@@ -15,8 +19,10 @@ func _ready():
 	match tile_type:
 		TileType.GRASS:
 			select_texture(grass_tiles)
+			passable = true
 		TileType.SAND:
 			select_texture(sand_tiles)
+			passable = true
 		TileType.WALL:
 			select_texture(wall_tiles)
 		TileType.BOX:

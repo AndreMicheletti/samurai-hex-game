@@ -52,10 +52,6 @@ config/icon="res://graphics/characters/monk.png"
 
 global="*res://global.gd"
 
-[debug]
-
-settings/stdout/verbose_stdout=true
-
 [display]
 
 window/size/width=1200

@@ -2,7 +2,6 @@ extends Node2D
 
 enum Phase {DRAW, CHOOSE, PLAY, GAMEOVER}
 
-var world_scene = preload("res://scenes/world/World.tscn")
 var player_scene = preload("res://scenes/characters/Player.tscn")
 var enemy_scene = preload("res://scenes/characters/Enemy.tscn")
 
@@ -38,7 +37,7 @@ func create_players():
 	enemy.connect("character_defeated", self, "win_game")
 
 func create_world():
-	world = world_scene.instance()
+	world = global.worldScene.instance()
 	add_child(world)
 	world.spawn_players(player, enemy)
 	world.connect("pressed_hex", player, "on_pressed_hex")

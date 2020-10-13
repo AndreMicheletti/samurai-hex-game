@@ -1,0 +1,174 @@
+[gd_scene load_steps=3 format=2]
+
+[ext_resource path="res://scripts/WorldEditor.gd" type="Script" id=1]
+[ext_resource path="res://graphics/gui/card_back.png" type="Texture" id=2]
+
+[node name="Editor" type="Node2D"]
+script = ExtResource( 1 )
+playerStart = Vector2( 0, -1 )
+enemyStart = Vector2( 0, 1 )
+
+[node name="World" type="Node2D" parent="."]
+
+[node name="Backgrounds" type="Node2D" parent="World"]
+
+[node name="Tileset" type="Node2D" parent="World"]
+
+[node name="Highlights" type="Node2D" parent="World"]
+
+[node name="Camera2D" type="Camera2D" parent="World"]
+current = true
+zoom = Vector2( 0.5, 0.5 )
+
+[node name="Highlight" type="Polygon2D" parent="World"]
+scale = Vector2( 0.7, 0.7 )
+color = Color( 0.160784, 0.34902, 1, 0.576471 )
+polygon = PoolVector2Array( -12.5, 21.6506, 12.5, 21.6506, 25, 0, 12.5, -21.6506, -12.5, -21.6506, -25, 0 )
+
+[node name="Highlight" type="Node2D" parent="."]
+
+[node name="polygon" type="Polygon2D" parent="Highlight"]
+scale = Vector2( 0.7, 0.7 )
+color = Color( 0.160784, 0.34902, 1, 0.576471 )
+polygon = PoolVector2Array( -12.5, 21.6506, 12.5, 21.6506, 25, 0, 12.5, -21.6506, -12.5, -21.6506, -25, 0 )
+
+[node name="Label" type="Label" parent="Highlight"]
+margin_right = 40.0
+margin_bottom = 14.0
+text = "(1,1)"
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="UI" type="CanvasLayer" parent="."]
+
+[node name="Params" type="Control" parent="UI"]
+anchor_bottom = 1.0
+rect_min_size = Vector2( 200, 0 )
+mouse_filter = 2
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Panel" type="Panel" parent="UI/Params"]
+anchor_bottom = 1.0
+rect_min_size = Vector2( 200, 0 )
+size_flags_vertical = 3
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Margin" type="MarginContainer" parent="UI/Params/Panel"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+size_flags_horizontal = 3
+size_flags_vertical = 3
+custom_constants/margin_right = 6
+custom_constants/margin_top = 10
+custom_constants/margin_left = 6
+custom_constants/margin_bottom = 10
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="VBox" type="VBoxContainer" parent="UI/Params/Panel/Margin"]
+margin_left = 6.0
+margin_top = 10.0
+margin_right = 194.0
+margin_bottom = 665.0
+size_flags_horizontal = 3
+size_flags_vertical = 3
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="MapSizeLabel" type="Label" parent="UI/Params/Panel/Margin/VBox"]
+margin_right = 188.0
+margin_bottom = 14.0
+text = "Map Size: "
+
+[node name="MapSize" type="HSlider" parent="UI/Params/Panel/Margin/VBox"]
+margin_top = 18.0
+margin_right = 188.0
+margin_bottom = 34.0
+min_value = 2.0
+max_value = 15.0
+value = 10.0
+
+[node name="HSeparator" type="HSeparator" parent="UI/Params/Panel/Margin/VBox"]
+margin_top = 38.0
+margin_right = 188.0
+margin_bottom = 63.0
+custom_constants/separation = 25
+
+[node name="TileSelect" type="OptionButton" parent="UI/Params/Panel/Margin/VBox"]
+margin_top = 67.0
+margin_right = 188.0
+margin_bottom = 87.0
+text = "Tile"
+
+[node name="TileObstacle" type="CheckBox" parent="UI/Params/Panel/Margin/VBox"]
+margin_top = 91.0
+margin_right = 188.0
+margin_bottom = 115.0
+text = "OBSTACLE"
+
+[node name="HSeparator2" type="HSeparator" parent="UI/Params/Panel/Margin/VBox"]
+margin_top = 119.0
+margin_right = 188.0
+margin_bottom = 144.0
+custom_constants/separation = 25
+
+[node name="FileName" type="LineEdit" parent="UI/Params/Panel/Margin/VBox"]
+margin_top = 148.0
+margin_right = 188.0
+margin_bottom = 172.0
+text = "map1"
+
+[node name="SaveButton" type="Button" parent="UI/Params/Panel/Margin/VBox"]
+margin_top = 176.0
+margin_right = 188.0
+margin_bottom = 196.0
+text = "SAVE"
+
+[node name="Popup" type="PopupDialog" parent="UI"]
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+margin_left = -218.0
+margin_top = -63.5
+margin_right = 217.0
+margin_bottom = 63.5
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Label" type="Label" parent="UI/Popup"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+size_flags_horizontal = 3
+size_flags_vertical = 3
+text = "Message Here"
+align = 1
+valign = 1
+autowrap = true
+max_lines_visible = 2
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="PlayerStart" type="Position2D" parent="."]
+
+[node name="Sprite" type="Sprite" parent="PlayerStart"]
+scale = Vector2( 0.4, 0.4 )
+texture = ExtResource( 2 )
+
+[node name="EnemyStart" type="Position2D" parent="."]
+
+[node name="Sprite" type="Sprite" parent="EnemyStart"]
+modulate = Color( 1, 0, 0, 1 )
+scale = Vector2( 0.4, 0.4 )
+texture = ExtResource( 2 )
+[connection signal="value_changed" from="UI/Params/Panel/Margin/VBox/MapSize" to="." method="_on_MapSize_changed"]
+[connection signal="pressed" from="UI/Params/Panel/Margin/VBox/SaveButton" to="." method="_on_SaveButton_pressed"]

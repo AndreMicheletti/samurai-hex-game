@@ -9,6 +9,8 @@ var classes = [
 var selectedPlayerClass = classes[0]
 var selectedEnemyClass = classes[0]
 
+var worldScene = null
+
 func set_player_class(idx):
 	selectedPlayerClass = classes[idx]
 

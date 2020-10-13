@@ -47,9 +47,9 @@ __meta__ = {
 }
 
 [node name="PlayerClass" type="OptionButton" parent="Center/VBox"]
-margin_top = 212.0
+margin_top = 177.0
 margin_right = 373.0
-margin_bottom = 272.0
+margin_bottom = 237.0
 rect_min_size = Vector2( 0, 60 )
 text = "Player Class"
 __meta__ = {
@@ -57,26 +57,35 @@ __meta__ = {
 }
 
 [node name="EnemyClass" type="OptionButton" parent="Center/VBox"]
-margin_top = 282.0
+margin_top = 247.0
 margin_right = 373.0
-margin_bottom = 342.0
+margin_bottom = 307.0
 rect_min_size = Vector2( 0, 60 )
 text = "Enemy Class"
 __meta__ = {
 "_edit_use_anchors_": false
 }
 
-[node name="space" type="MarginContainer" parent="Center/VBox"]
-margin_top = 352.0
+[node name="MapSelect" type="OptionButton" parent="Center/VBox"]
+margin_top = 317.0
 margin_right = 373.0
-margin_bottom = 372.0
+margin_bottom = 377.0
+rect_min_size = Vector2( 0, 60 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="space" type="MarginContainer" parent="Center/VBox"]
+margin_top = 387.0
+margin_right = 373.0
+margin_bottom = 407.0
 custom_constants/margin_top = 10
 custom_constants/margin_bottom = 10
 
 [node name="PlayButton" type="Button" parent="Center/VBox"]
-margin_top = 382.0
+margin_top = 417.0
 margin_right = 373.0
-margin_bottom = 462.0
+margin_bottom = 497.0
 rect_min_size = Vector2( 0, 80 )
 text = "Play"
 [connection signal="pressed" from="Center/VBox/PlayButton" to="." method="_on_PlayButton_pressed"]

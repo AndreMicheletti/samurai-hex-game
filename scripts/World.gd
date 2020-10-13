@@ -12,6 +12,8 @@ var HexCell = preload("res://scripts/HexCell.gd")
 onready var tileset = $Tileset
 onready var window_size = get_viewport().size
 
+export(bool) var generate = true
+
 export(Vector2) var worldZero = Vector2(0, 0)
 export(int) var world_size = 10
 export(Vector2) var playerStart = Vector2(0, 0)
@@ -24,8 +26,9 @@ var back_scene = preload("res://scenes/world/background.tscn")
 var highlight_scene = preload("res://scenes/world/Highlight.tscn")
 
 var click_enabled = false
-var obstacles_coords = []
+export(Array, Vector2) var obstacles_coords = []
 
+onready var zeroCell = HexCell.new(worldZero)
 onready var game = get_parent()
 
 signal pressed_hex
@@ -33,9 +36,28 @@ signal pressed_hex
 # Called when the node enters the scene tree for the first time.
 func _ready():
 	set_click_enabled(true)
-	HexGrid.hex_scale = Vector2(HEX_WIDTH, HEX_HEIGHT)
+	init_world()
 	build_background()
-	generate_world(world_size)
+	if generate:
+		generate_world(world_size)
+	build_highlights()
+
+func init_world():
+	HexGrid.hex_scale = Vector2(HEX_WIDTH, HEX_HEIGHT)
+	get_grid().set_bounds(Vector2(-world_size, -world_size), Vector2(world_size, world_size))
+	get_grid().add_obstacles(obstacles_coords)
+
+func build_highlights():
+	if global.is_mobile():
+		return
+	for tile in get_tree().get_nodes_in_group("Tile"):
+		if not tile.passable:
+			continue
+		var coords = tile.hex_pos
+		var block = highlight_scene.instance()
+		block.hex_pos = coords
+		$Highlights.add_child(block)
+		block.init(self)
 
 func build_background():
 	var block_size = 64
@@ -50,11 +72,7 @@ func build_background():
 			$Backgrounds.add_child(node)
 			node.position = pos
 
-func generate_world(size):
-	world_size = size
-	var zeroCell = HexCell.new(worldZero)
-	get_grid().set_bounds(Vector2(-size, -size), Vector2(size, size))
-	
+func generate_world(size):	
 	# build walls
 	var outer_walls = zeroCell.get_ring(size+1)
 	get_grid().add_obstacles(outer_walls)
@@ -62,6 +80,7 @@ func generate_world(size):
 		var block = tile_scene.instance()
 		block.tile_type = Tile.TileType.WALL
 		block.position = HexGrid.get_hex_center(cell.get_axial_coords())
+		block.hex_pos = cell.get_axial_coords()
 		$Tileset.add_child(block)
 	
 	# build grass
@@ -69,14 +88,8 @@ func generate_world(size):
 		var block = tile_scene.instance()
 		block.tile_type = Tile.TileType.GRASS
 		block.position = get_grid().get_hex_center(cell.get_axial_coords())
+		block.hex_pos = cell.get_axial_coords()
 		$Tileset.add_child(block)
-		
-		if not global.is_mobile():
-			# also add highlight
-			var block_2 = highlight_scene.instance()
-			block_2.hex_pos = cell.get_axial_coords()
-			$Highlights.add_child(block_2)
-			block_2.init(self)
 	
 	# build boxes
 	var available = []
@@ -94,10 +107,10 @@ func generate_world(size):
 		var block = tile_scene.instance()
 		block.tile_type = Tile.TileType.BOX
 		block.position = get_grid().get_hex_center(selected)
+		block.hex_pos = selected
 		$Tileset.add_child(block)
 		obstacles_coords.append(selected)
 		get_grid().add_obstacles(selected)
-		
 
 func spawn_players(player, enemy):
 	# add instances
