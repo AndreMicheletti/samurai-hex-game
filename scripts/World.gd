@@ -13,7 +13,10 @@ onready var tileset = $Tileset
 onready var window_size = get_viewport().size
 onready var camera = $Camera2D
 
+export(bool) var debug = false
 export(bool) var generate = true
+
+export(bool) var night = true
 
 export(Vector2) var worldZero = Vector2(0, 0)
 export(int) var world_size = 10
@@ -22,9 +25,9 @@ export(Vector2) var enemyStart = Vector2(0, 0)
 
 export(int) var boxCount = 14
 
-var tile_scene = preload("res://scenes/world/Tile.tscn")
 var back_scene = preload("res://scenes/world/background.tscn")
 var highlight_scene = preload("res://scenes/world/Highlight.tscn")
+var night_scene = preload("res://scenes/world/Night.tscn")
 
 var click_enabled = false
 export(Array, Vector2) var obstacles_coords = []
@@ -41,12 +44,14 @@ func _ready():
 	build_background()
 	if generate:
 		generate_world(world_size)
-	build_highlights()
+	if not debug:
+		build_highlights()
+	discover_obstacles()
+	create_night()
 
 func init_world():
 	HexGrid.hex_scale = Vector2(HEX_WIDTH, HEX_HEIGHT)
 	get_grid().set_bounds(Vector2(-world_size, -world_size), Vector2(world_size, world_size))
-	get_grid().add_obstacles(obstacles_coords)
 
 func build_highlights():
 	if global.is_mobile():
@@ -73,21 +78,31 @@ func build_background():
 			$Backgrounds.add_child(node)
 			node.position = pos
 
-func generate_world(size):	
+func discover_obstacles():
+	for node in get_tree().get_nodes_in_group("ObstacleTile"):
+		obstacles_coords.append(node.hex_pos)
+	get_grid().add_obstacles(obstacles_coords)
+
+func create_night():
+	var night = night_scene.instance()
+	add_child(night)
+
+func generate_world(size):
 	# build walls
-	var outer_walls = zeroCell.get_ring(size+1)
-	get_grid().add_obstacles(outer_walls)
+	var outer_walls = zeroCell.get_ring(size+1)	
+	var wall = TileLoader.get_tile("wall")
+	var grass = TileLoader.get_tile("grass")
+	var box = TileLoader.get_tile("box")
+
 	for cell in outer_walls:
-		var block = tile_scene.instance()
-		block.tile_type = Tile.TileType.WALL
+		var block = wall.instance()
 		block.position = HexGrid.get_hex_center(cell.get_axial_coords())
 		block.hex_pos = cell.get_axial_coords()
 		$Tileset.add_child(block)
 	
 	# build grass
 	for cell in zeroCell.get_all_within(size):
-		var block = tile_scene.instance()
-		block.tile_type = Tile.TileType.GRASS
+		var block = grass.instance()
 		block.position = get_grid().get_hex_center(cell.get_axial_coords())
 		block.hex_pos = cell.get_axial_coords()
 		$Tileset.add_child(block)
@@ -105,13 +120,10 @@ func generate_world(size):
 		var idx = randi() % available.size()
 		var selected = available[idx]
 		available.remove(idx)
-		var block = tile_scene.instance()
-		block.tile_type = Tile.TileType.BOX
+		var block = box.instance()
 		block.position = get_grid().get_hex_center(selected)
 		block.hex_pos = selected
 		$Tileset.add_child(block)
-		obstacles_coords.append(selected)
-		get_grid().add_obstacles(selected)
 
 func spawn_players(player, enemy):
 	# add instances
@@ -161,7 +173,7 @@ func _unhandled_input(event):
 #			relative_pos.y *= camera.zoom.y
 #			relative_pos.x -= camera.position.x
 #			relative_pos.y -= camera.position.y
-			print("camera pos ", camera.get_global_mouse_position())
+#			print("camera pos ", camera.get_global_mouse_position())
 			var relative_pos = camera.get_global_mouse_position()
 			var hex = get_grid().get_hex_at(relative_pos)
 			# print("poiting at hex ", hex.get_axial_coords())

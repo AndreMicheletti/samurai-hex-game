@@ -1,0 +1,17 @@
+[gd_scene load_steps=4 format=2]
+
+[ext_resource path="res://scripts/Tile.gd" type="Script" id=1]
+[ext_resource path="res://graphics/world/sand2.png" type="Texture" id=2]
+[ext_resource path="res://graphics/world/sand1.png" type="Texture" id=3]
+
+[node name="Wall" type="Node2D"]
+script = ExtResource( 1 )
+passable = true
+textures_random = [ ExtResource( 3 ), ExtResource( 2 ) ]
+
+[node name="Sprite" type="Sprite" parent="."]
+light_mask = 3
+texture = ExtResource( 3 )
+__meta__ = {
+"_edit_lock_": true
+}

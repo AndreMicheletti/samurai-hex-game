@@ -44,6 +44,19 @@ __meta__ = {
 "_edit_use_anchors_": false
 }
 
+[node name="PlayerStart" type="Position2D" parent="."]
+
+[node name="Sprite" type="Sprite" parent="PlayerStart"]
+scale = Vector2( 0.4, 0.4 )
+texture = ExtResource( 2 )
+
+[node name="EnemyStart" type="Position2D" parent="."]
+
+[node name="Sprite" type="Sprite" parent="EnemyStart"]
+modulate = Color( 1, 0, 0, 1 )
+scale = Vector2( 0.4, 0.4 )
+texture = ExtResource( 2 )
+
 [node name="UI" type="CanvasLayer" parent="."]
 
 [node name="Params" type="Control" parent="UI"]
@@ -161,18 +174,5 @@ max_lines_visible = 2
 __meta__ = {
 "_edit_use_anchors_": false
 }
-
-[node name="PlayerStart" type="Position2D" parent="."]
-
-[node name="Sprite" type="Sprite" parent="PlayerStart"]
-scale = Vector2( 0.4, 0.4 )
-texture = ExtResource( 2 )
-
-[node name="EnemyStart" type="Position2D" parent="."]
-
-[node name="Sprite" type="Sprite" parent="EnemyStart"]
-modulate = Color( 1, 0, 0, 1 )
-scale = Vector2( 0.4, 0.4 )
-texture = ExtResource( 2 )
 [connection signal="value_changed" from="UI/Params/Panel/Margin/VBox/MapSize" to="." method="_on_MapSize_changed"]
 [connection signal="pressed" from="UI/Params/Panel/Margin/VBox/SaveButton" to="." method="_on_SaveButton_pressed"]

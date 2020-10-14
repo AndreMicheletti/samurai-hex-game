@@ -32,7 +32,6 @@ export(int) var world_size = 10
 export(Vector2) var playerStart = Vector2(0, 1)
 export(Vector2) var enemyStart = Vector2(0, -1)
 
-var tile_scene = preload("res://scenes/world/Tile.tscn")
 var back_scene = preload("res://scenes/world/background.tscn")
 var highlight_scene = preload("res://scenes/world/Highlight.tscn")
 
@@ -42,10 +41,6 @@ var obstacles_coords = []
 var tile_options = [
 	{"name": "player_start", "type": "p_start"},
 	{"name": "enemy_start", "type": "e_start"},
-	{"name": "wall", "type": Tile.TileType.WALL},
-	{"name": "grass", "type": Tile.TileType.GRASS},
-	{"name": "sand", "type": Tile.TileType.SAND},
-	{"name": "box", "type": Tile.TileType.BOX},
 ]
 
 var tileset_mapper = {}
@@ -56,9 +51,16 @@ func _ready():
 	set_click_enabled(true)
 	HexGrid.hex_scale = Vector2(HEX_WIDTH, HEX_HEIGHT)
 	_on_MapSize_changed(null)
+	move_player_enemy_starts()
+	# discover tile options
+	for key in TileLoader.GAME_TILES.keys():
+		tile_options.append({
+			"name": key,
+			"type": "tile"
+		})
+	# add options to gui input
 	for option in tile_options:
 		tile_select.add_item(option["name"])
-	move_player_enemy_starts()
 
 func move_player_enemy_starts():
 	p_start.position = HexGrid.get_hex_center(playerStart)
@@ -147,14 +149,12 @@ func on_add(hex_coords):
 		mapper = obstacle_mapper
 
 	if mapper.get(hex_coords) == null:
-		var selected_tile_type = selected_tile["type"]
-		var block = tile_scene.instance()
-		block.tile_type = selected_tile_type
+		var block = TileLoader.get_tile(selected_tile["name"]).instance()
 		block.position = HexGrid.get_hex_center(hex_coords)
 		block.hex_pos = hex_coords
 		tileset.add_child(block)
 		mapper[hex_coords] = {
-			"type": selected_tile_type,
+			"type": "tile",
 			"node": block
 		}
 		block.owner = map_scene
@@ -177,6 +177,7 @@ func _on_SaveButton_pressed():
 	# set owners
 	for child in map_scene.get_children():
 		child.owner = map_scene
+	$World/Camera2D/Tween.owner = map_scene
 	# add scrpt
 	var world_script = load("res://scripts/World.gd")
 	map_scene.set_script(world_script)

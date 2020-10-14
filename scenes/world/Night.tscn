@@ -1,0 +1,11 @@
+[gd_scene load_steps=2 format=2]
+
+[ext_resource path="res://graphics/characters/elite.png" type="Texture" id=1]
+
+[node name="Night" type="CanvasModulate"]
+light_mask = 3
+color = Color( 0.368627, 0.368627, 0.368627, 1 )
+
+[node name="Sprite" type="Sprite" parent="."]
+visible = false
+texture = ExtResource( 1 )
