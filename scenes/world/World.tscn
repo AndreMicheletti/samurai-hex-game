@@ -5,6 +5,7 @@
 
 [node name="World" type="Node2D"]
 script = ExtResource( 2 )
+night = false
 world_size = 4
 playerStart = Vector2( 0, -1 )
 enemyStart = Vector2( 0, 1 )

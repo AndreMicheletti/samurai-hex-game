@@ -84,8 +84,8 @@ func discover_obstacles():
 	get_grid().add_obstacles(obstacles_coords)
 
 func create_night():
-	var night = night_scene.instance()
-	add_child(night)
+	if night:
+		add_child(night_scene.instance())
 
 func generate_world(size):
 	# build walls
