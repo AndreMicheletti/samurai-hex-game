@@ -4,12 +4,12 @@
 
 [resource]
 script = ExtResource( 1 )
-id = 7
-title = "Rolamento"
+id = 14
+title = "Fluxo"
 mov = 2
-atk = 0
-def = 1
-speed = 4
-anim = "attack_slash"
+atk = 2
+def = 2
+speed = 1
+anim = "attack_deceive"
 def_anim = "dodge"
-special = false
+special = true
