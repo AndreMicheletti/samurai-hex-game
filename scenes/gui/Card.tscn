@@ -1,9 +1,8 @@
-[gd_scene load_steps=16 format=2]
+[gd_scene load_steps=15 format=2]
 
 [ext_resource path="res://scripts/Card.gd" type="Script" id=1]
 [ext_resource path="res://samurai_icon.png" type="Texture" id=2]
 [ext_resource path="res://graphics/particles/flame_01.png" type="Texture" id=3]
-[ext_resource path="res://graphics/particles/star_01.png" type="Texture" id=4]
 [ext_resource path="res://fonts/PixelFont.tres" type="DynamicFont" id=5]
 [ext_resource path="res://fonts/Talk_to_three_headed_monkey.ttf" type="DynamicFontData" id=6]
 
@@ -19,12 +18,11 @@ corner_radius_top_right = 4
 corner_radius_bottom_right = 4
 corner_radius_bottom_left = 4
 
-[sub_resource type="DynamicFont" id=9]
+[sub_resource type="DynamicFont" id=2]
 outline_color = Color( 0, 0, 0, 1 )
 font_data = ExtResource( 6 )
 
-[sub_resource type="Animation" id=2]
-resource_name = "choose"
+[sub_resource type="Animation" id=3]
 tracks/0/type = "value"
 tracks/0/path = NodePath(".:rect_scale")
 tracks/0/interp = 1
@@ -38,8 +36,7 @@ tracks/0/keys = {
 "values": [ Vector2( 1, 1 ), Vector2( 1.4, 1.4 ), Vector2( 1.4, 1.4 ), Vector2( 1, 1 ) ]
 }
 
-[sub_resource type="Animation" id=3]
-resource_name = "destroy"
+[sub_resource type="Animation" id=4]
 length = 1.4
 tracks/0/type = "value"
 tracks/0/path = NodePath("Flames:emitting")
@@ -90,7 +87,7 @@ tracks/3/keys = {
 "values": [ Vector2( 50, 170 ), Vector2( 50, 0 ) ]
 }
 
-[sub_resource type="Animation" id=4]
+[sub_resource type="Animation" id=5]
 tracks/0/type = "value"
 tracks/0/path = NodePath(".:rect_scale")
 tracks/0/interp = 1
@@ -128,7 +125,7 @@ tracks/2/keys = {
 "values": [ true, false, false ]
 }
 
-[sub_resource type="Animation" id=5]
+[sub_resource type="Animation" id=6]
 tracks/0/type = "value"
 tracks/0/path = NodePath("Margin:visible")
 tracks/0/interp = 1
@@ -166,15 +163,15 @@ tracks/2/keys = {
 "values": [ Vector2( -1, 1 ), Vector2( 1, 1 ) ]
 }
 
-[sub_resource type="CanvasItemMaterial" id=6]
-blend_mode = 1
-
 [sub_resource type="CanvasItemMaterial" id=7]
 blend_mode = 1
 
-[sub_resource type="Gradient" id=8]
-offsets = PoolRealArray( 0, 0.536424, 1 )
-colors = PoolColorArray( 0, 0, 0, 1, 1, 0.948975, 0.40625, 1, 0, 0, 0, 1 )
+[sub_resource type="CanvasItemMaterial" id=8]
+blend_mode = 1
+
+[sub_resource type="Gradient" id=9]
+offsets = PoolRealArray( 0, 0.337121, 0.814394, 1 )
+colors = PoolColorArray( 0, 0, 0, 1, 0.664062, 0.368996, 0.0830078, 1, 0.65625, 0.53064, 0.153809, 1, 0, 0, 0, 1 )
 
 [node name="Card" type="Panel"]
 margin_right = 120.0
@@ -228,7 +225,7 @@ margin_top = 3.0
 margin_right = 104.0
 margin_bottom = 25.0
 size_flags_horizontal = 3
-custom_fonts/font = SubResource( 9 )
+custom_fonts/font = SubResource( 2 )
 text = "Card Title"
 align = 1
 valign = 1
@@ -248,9 +245,9 @@ __meta__ = {
 }
 
 [node name="Atk" type="Label" parent="Margin/VBox/Texts"]
-margin_top = 16.0
+margin_top = 24.0
 margin_right = 104.0
-margin_bottom = 36.0
+margin_bottom = 40.0
 mouse_filter = 1
 size_flags_horizontal = 3
 custom_fonts/font = ExtResource( 5 )
@@ -259,7 +256,7 @@ align = 1
 valign = 1
 
 [node name="Def" type="Label" parent="Margin/VBox/Texts"]
-margin_top = 40.0
+margin_top = 44.0
 margin_right = 104.0
 margin_bottom = 60.0
 mouse_filter = 1
@@ -272,7 +269,7 @@ valign = 1
 [node name="Mov" type="Label" parent="Margin/VBox/Texts"]
 margin_top = 64.0
 margin_right = 104.0
-margin_bottom = 84.0
+margin_bottom = 80.0
 mouse_filter = 1
 size_flags_horizontal = 3
 custom_fonts/font = ExtResource( 5 )
@@ -281,9 +278,9 @@ align = 1
 valign = 1
 
 [node name="Speed" type="Label" parent="Margin/VBox/Texts"]
-margin_top = 88.0
+margin_top = 84.0
 margin_right = 104.0
-margin_bottom = 108.0
+margin_bottom = 100.0
 mouse_filter = 1
 size_flags_horizontal = 3
 custom_fonts/font = ExtResource( 5 )
@@ -306,13 +303,13 @@ __meta__ = {
 
 [node name="anim" type="AnimationPlayer" parent="."]
 playback_speed = 1.5
-anims/choose = SubResource( 2 )
-anims/destroy = SubResource( 3 )
-anims/flip_back = SubResource( 4 )
-anims/flip_front = SubResource( 5 )
+anims/choose = SubResource( 3 )
+anims/destroy = SubResource( 4 )
+anims/flip_back = SubResource( 5 )
+anims/flip_front = SubResource( 6 )
 
 [node name="Flames" type="CPUParticles2D" parent="."]
-material = SubResource( 6 )
+material = SubResource( 7 )
 position = Vector2( 55, 170 )
 z_index = 50
 emitting = false
@@ -329,14 +326,19 @@ scale_amount = 0.05
 color = Color( 0.870588, 0.67451, 0.254902, 1 )
 
 [node name="Special" type="CPUParticles2D" parent="."]
-material = SubResource( 7 )
+material = SubResource( 8 )
 position = Vector2( 60, 90 )
 emitting = false
-amount = 12
-texture = ExtResource( 4 )
+amount = 40
+local_coords = false
+texture = ExtResource( 3 )
 emission_shape = 2
 emission_rect_extents = Vector2( 60, 80 )
-gravity = Vector2( 0, -20 )
-scale_amount = 0.05
-color_ramp = SubResource( 8 )
+gravity = Vector2( 0, -30 )
+tangential_accel = 100.0
+angle = 180.0
+angle_random = 1.0
+scale_amount = 0.04
+scale_amount_random = 0.02
+color_ramp = SubResource( 9 )
 [connection signal="gui_input" from="." to="." method="_on_Card_gui_input"]

@@ -29,11 +29,13 @@ func flip():
 		$anim.play("flip_front")
 		yield($anim, "animation_finished")
 		back = false
+		$Special.emitting = card_resource.special
 	else:
 		$anim.play("flip_back")
 		yield($anim, "animation_finished")
 		back = true
 		enabled = false
+		$Special.emitting = false
 
 func set_flipped_back():
 	enabled = false
@@ -41,6 +43,7 @@ func set_flipped_back():
 	$backside.visible = true
 	$Margin.visible = false
 	rect_scale = Vector2(-1, 1)
+	$Special.emitting = false
 
 func play_choose():
 	$anim.play("choose")
