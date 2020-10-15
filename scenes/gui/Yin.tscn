@@ -1,0 +1,162 @@
+[gd_scene load_steps=9 format=2]
+
+[ext_resource path="res://graphics/gui/yin.png" type="Texture" id=1]
+[ext_resource path="res://scripts/DragAndDrop.gd" type="Script" id=2]
+[ext_resource path="res://graphics/particles/circle_05.png" type="Texture" id=3]
+[ext_resource path="res://fonts/Talk_to_three_headed_monkey.ttf" type="DynamicFontData" id=6]
+
+[sub_resource type="DynamicFont" id=1]
+size = 18
+outline_color = Color( 0, 0, 0, 1 )
+font_data = ExtResource( 6 )
+
+[sub_resource type="RectangleShape2D" id=2]
+extents = Vector2( 80, 45 )
+
+[sub_resource type="CanvasItemMaterial" id=5]
+blend_mode = 1
+
+[sub_resource type="Gradient" id=4]
+offsets = PoolRealArray( 0, 0.57197, 1 )
+colors = PoolColorArray( 0.430641, 0.156006, 0.832031, 1, 0.39696, 0.354462, 0.898438, 1, 0, 0, 0, 1 )
+
+[node name="Yin" type="Control"]
+margin_right = 134.0
+margin_bottom = 87.0
+rect_min_size = Vector2( 134, 87 )
+rect_pivot_offset = Vector2( 67, 43 )
+mouse_default_cursor_shape = 2
+size_flags_horizontal = 0
+size_flags_vertical = 0
+script = ExtResource( 2 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+targetName = "YinTarget"
+
+[node name="Texture" type="TextureRect" parent="."]
+anchor_right = 1.0
+anchor_bottom = 1.0
+size_flags_horizontal = 3
+size_flags_vertical = 3
+texture = ExtResource( 1 )
+expand = true
+stretch_mode = 6
+__meta__ = {
+"_edit_lock_": true,
+"_edit_use_anchors_": false
+}
+
+[node name="Texts" type="Control" parent="."]
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+margin_left = -67.0
+margin_top = -43.5
+margin_right = 67.0
+margin_bottom = 43.5
+mouse_filter = 1
+__meta__ = {
+"_edit_lock_": true,
+"_edit_use_anchors_": false
+}
+
+[node name="Atk" type="Label" parent="Texts"]
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+margin_left = -43.2464
+margin_top = -38.6126
+margin_right = 20.7536
+margin_bottom = -14.6126
+mouse_filter = 1
+size_flags_horizontal = 4
+custom_fonts/font = SubResource( 1 )
+custom_colors/font_color = Color( 0, 0, 0, 1 )
+text = "Atk 2"
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Def" type="Label" parent="Texts"]
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+margin_left = -44.072
+margin_top = -13.8982
+margin_right = 9.92798
+margin_bottom = 10.1018
+mouse_filter = 1
+size_flags_horizontal = 4
+custom_fonts/font = SubResource( 1 )
+custom_colors/font_color = Color( 0, 0, 0, 1 )
+text = "Def 1"
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Cost" type="Control" parent="."]
+anchor_left = 0.732
+anchor_top = 0.592
+anchor_right = 0.732
+anchor_bottom = 0.592
+margin_left = -98.088
+margin_top = -51.504
+margin_right = 35.912
+margin_bottom = 35.496
+mouse_filter = 1
+__meta__ = {
+"_edit_lock_": true,
+"_edit_use_anchors_": false
+}
+
+[node name="Cost" type="Label" parent="Cost"]
+anchor_left = 0.733
+anchor_top = 0.573
+anchor_right = 0.733
+anchor_bottom = 0.573
+margin_left = -6.9369
+margin_top = -11.9885
+margin_right = 7.0631
+margin_bottom = 12.0115
+mouse_filter = 1
+size_flags_horizontal = 4
+custom_fonts/font = SubResource( 1 )
+text = "2"
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Tween" type="Tween" parent="."]
+
+[node name="Area2D" type="Area2D" parent="."]
+position = Vector2( 100, 65 )
+gravity = 0.0
+monitorable = false
+
+[node name="Shape" type="CollisionShape2D" parent="Area2D"]
+shape = SubResource( 2 )
+
+[node name="Effects" type="Node2D" parent="."]
+
+[node name="OnSpot" type="CPUParticles2D" parent="Effects"]
+material = SubResource( 5 )
+position = Vector2( 100, 65 )
+emitting = false
+amount = 40
+lifetime = 0.5
+texture = ExtResource( 3 )
+emission_shape = 2
+emission_rect_extents = Vector2( 70, 45 )
+direction = Vector2( 0, 0 )
+spread = 0.0
+gravity = Vector2( 0, -30 )
+angle = 180.0
+angle_random = 1.0
+scale_amount = 0.03
+scale_amount_random = 0.03
+color_ramp = SubResource( 4 )
+[connection signal="gui_input" from="." to="." method="_on_gui_input"]

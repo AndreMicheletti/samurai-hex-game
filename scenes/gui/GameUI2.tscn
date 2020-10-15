@@ -1,0 +1,332 @@
+[gd_scene load_steps=6 format=2]
+
+[ext_resource path="res://graphics/gui/yin_yang_frame.png" type="Texture" id=1]
+[ext_resource path="res://graphics/gui/energy.png" type="Texture" id=2]
+[ext_resource path="res://scenes/gui/Yin.tscn" type="PackedScene" id=3]
+[ext_resource path="res://scenes/gui/Yang.tscn" type="PackedScene" id=4]
+
+[sub_resource type="RectangleShape2D" id=1]
+extents = Vector2( 100.673, 65.7447 )
+
+[node name="GameUI2" type="CanvasLayer"]
+
+[node name="Tween" type="Tween" parent="."]
+
+[node name="Bottom" type="Control" parent="."]
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+margin_top = -250.0
+margin_bottom = 6.10352e-05
+rect_min_size = Vector2( 0, 250 )
+size_flags_horizontal = 3
+size_flags_vertical = 4
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Action" type="MarginContainer" parent="Bottom"]
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+margin_top = -220.0
+mouse_filter = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Box" type="HBoxContainer" parent="Bottom/Action"]
+margin_right = 1200.0
+margin_bottom = 220.0
+mouse_filter = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+alignment = 1
+
+[node name="Left" type="MarginContainer" parent="Bottom/Action/Box"]
+margin_right = 486.0
+margin_bottom = 220.0
+mouse_filter = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+custom_constants/margin_right = 10
+custom_constants/margin_left = 10
+
+[node name="Grid" type="GridContainer" parent="Bottom/Action/Box/Left"]
+margin_left = 10.0
+margin_right = 476.0
+margin_bottom = 220.0
+rect_min_size = Vector2( 0, 220 )
+mouse_filter = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+columns = 3
+
+[node name="Yin" parent="Bottom/Action/Box/Left/Grid" instance=ExtResource( 3 )]
+
+[node name="Yin2" parent="Bottom/Action/Box/Left/Grid" instance=ExtResource( 3 )]
+margin_left = 138.0
+margin_right = 272.0
+
+[node name="Yin3" parent="Bottom/Action/Box/Left/Grid" instance=ExtResource( 3 )]
+margin_left = 276.0
+margin_right = 410.0
+
+[node name="Yin4" parent="Bottom/Action/Box/Left/Grid" instance=ExtResource( 3 )]
+margin_top = 91.0
+margin_bottom = 178.0
+
+[node name="Yin5" parent="Bottom/Action/Box/Left/Grid" instance=ExtResource( 3 )]
+margin_left = 138.0
+margin_top = 91.0
+margin_right = 272.0
+margin_bottom = 178.0
+
+[node name="Yin6" parent="Bottom/Action/Box/Left/Grid" instance=ExtResource( 3 )]
+margin_left = 276.0
+margin_top = 91.0
+margin_right = 410.0
+margin_bottom = 178.0
+
+[node name="Center" type="MarginContainer" parent="Bottom/Action/Box"]
+show_behind_parent = true
+margin_left = 490.0
+margin_right = 710.0
+margin_bottom = 220.0
+rect_min_size = Vector2( 220, 220 )
+mouse_filter = 2
+size_flags_vertical = 3
+custom_constants/margin_right = 10
+custom_constants/margin_top = 10
+custom_constants/margin_left = 10
+custom_constants/margin_bottom = 10
+
+[node name="Control" type="Control" parent="Bottom/Action/Box/Center"]
+show_behind_parent = true
+margin_left = 9.0
+margin_top = 9.0
+margin_right = 209.0
+margin_bottom = 209.0
+rect_min_size = Vector2( 200, 200 )
+mouse_filter = 2
+size_flags_horizontal = 4
+size_flags_vertical = 4
+
+[node name="Top" type="ReferenceRect" parent="Bottom/Action/Box/Center/Control"]
+show_behind_parent = true
+margin_right = 200.0
+margin_bottom = 130.0
+rect_min_size = Vector2( 200, 130 )
+mouse_filter = 2
+size_flags_horizontal = 0
+size_flags_vertical = 0
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="YinSlot" type="Area2D" parent="Bottom/Action/Box/Center/Control/Top" groups=[
+"YinTarget",
+]]
+position = Vector2( 100, 67 )
+gravity = 0.0
+monitoring = false
+
+[node name="Shape" type="CollisionShape2D" parent="Bottom/Action/Box/Center/Control/Top/YinSlot"]
+shape = SubResource( 1 )
+
+[node name="Bottom" type="ReferenceRect" parent="Bottom/Action/Box/Center/Control"]
+show_behind_parent = true
+margin_top = 69.9153
+margin_right = 200.0
+margin_bottom = 199.915
+rect_min_size = Vector2( 200, 130 )
+mouse_filter = 2
+size_flags_horizontal = 0
+size_flags_vertical = 0
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="YangSlot" type="Area2D" parent="Bottom/Action/Box/Center/Control/Bottom" groups=[
+"YangTarget",
+]]
+position = Vector2( 100, 67 )
+gravity = 0.0
+monitoring = false
+
+[node name="Shape" type="CollisionShape2D" parent="Bottom/Action/Box/Center/Control/Bottom/YangSlot"]
+shape = SubResource( 1 )
+
+[node name="Frame" type="TextureRect" parent="Bottom/Action/Box/Center/Control"]
+show_behind_parent = true
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+margin_left = -100.0
+margin_top = -100.0
+margin_right = -60.0
+margin_bottom = -60.0
+rect_min_size = Vector2( 200, 200 )
+rect_pivot_offset = Vector2( 100, 100 )
+mouse_filter = 2
+size_flags_horizontal = 4
+size_flags_vertical = 4
+texture = ExtResource( 1 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Right" type="MarginContainer" parent="Bottom/Action/Box"]
+margin_left = 714.0
+margin_right = 1200.0
+margin_bottom = 220.0
+size_flags_horizontal = 3
+size_flags_vertical = 3
+custom_constants/margin_left = 70
+
+[node name="Grid" type="GridContainer" parent="Bottom/Action/Box/Right"]
+margin_left = 70.0
+margin_right = 486.0
+margin_bottom = 220.0
+rect_min_size = Vector2( 0, 220 )
+size_flags_horizontal = 3
+size_flags_vertical = 3
+columns = 3
+
+[node name="Yang" parent="Bottom/Action/Box/Right/Grid" instance=ExtResource( 4 )]
+
+[node name="Yang2" parent="Bottom/Action/Box/Right/Grid" instance=ExtResource( 4 )]
+margin_left = 138.0
+margin_right = 272.0
+
+[node name="Yang3" parent="Bottom/Action/Box/Right/Grid" instance=ExtResource( 4 )]
+margin_left = 276.0
+margin_right = 410.0
+
+[node name="Yang4" parent="Bottom/Action/Box/Right/Grid" instance=ExtResource( 4 )]
+margin_top = 91.0
+margin_bottom = 178.0
+
+[node name="Yang5" parent="Bottom/Action/Box/Right/Grid" instance=ExtResource( 4 )]
+margin_left = 138.0
+margin_top = 91.0
+margin_right = 272.0
+margin_bottom = 178.0
+
+[node name="Yang6" parent="Bottom/Action/Box/Right/Grid" instance=ExtResource( 4 )]
+margin_left = 276.0
+margin_top = 91.0
+margin_right = 410.0
+margin_bottom = 178.0
+
+[node name="Energy" type="HBoxContainer" parent="Bottom"]
+anchor_right = 1.0
+margin_left = 445.0
+margin_right = -445.0
+margin_bottom = 22.0
+rect_min_size = Vector2( 0, 22 )
+alignment = 1
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Energy" type="TextureRect" parent="Bottom/Energy"]
+margin_left = 40.0
+margin_right = 62.0
+margin_bottom = 22.0
+rect_min_size = Vector2( 22, 22 )
+texture = ExtResource( 2 )
+expand = true
+
+[node name="Energy2" type="TextureRect" parent="Bottom/Energy"]
+margin_left = 66.0
+margin_right = 88.0
+margin_bottom = 22.0
+rect_min_size = Vector2( 22, 22 )
+texture = ExtResource( 2 )
+expand = true
+
+[node name="Energy3" type="TextureRect" parent="Bottom/Energy"]
+margin_left = 92.0
+margin_right = 114.0
+margin_bottom = 22.0
+rect_min_size = Vector2( 22, 22 )
+texture = ExtResource( 2 )
+expand = true
+
+[node name="Energy4" type="TextureRect" parent="Bottom/Energy"]
+margin_left = 118.0
+margin_right = 140.0
+margin_bottom = 22.0
+rect_min_size = Vector2( 22, 22 )
+texture = ExtResource( 2 )
+expand = true
+
+[node name="Energy5" type="TextureRect" parent="Bottom/Energy"]
+margin_left = 144.0
+margin_right = 166.0
+margin_bottom = 22.0
+rect_min_size = Vector2( 22, 22 )
+texture = ExtResource( 2 )
+expand = true
+
+[node name="Energy6" type="TextureRect" parent="Bottom/Energy"]
+margin_left = 170.0
+margin_right = 192.0
+margin_bottom = 22.0
+rect_min_size = Vector2( 22, 22 )
+texture = ExtResource( 2 )
+expand = true
+
+[node name="Energy7" type="TextureRect" parent="Bottom/Energy"]
+margin_left = 196.0
+margin_right = 218.0
+margin_bottom = 22.0
+rect_min_size = Vector2( 22, 22 )
+texture = ExtResource( 2 )
+expand = true
+
+[node name="Energy8" type="TextureRect" parent="Bottom/Energy"]
+margin_left = 222.0
+margin_right = 244.0
+margin_bottom = 22.0
+rect_min_size = Vector2( 22, 22 )
+texture = ExtResource( 2 )
+expand = true
+
+[node name="Energy9" type="TextureRect" parent="Bottom/Energy"]
+margin_left = 248.0
+margin_right = 270.0
+margin_bottom = 22.0
+rect_min_size = Vector2( 22, 22 )
+texture = ExtResource( 2 )
+expand = true
+
+[node name="Center" type="Control" parent="."]
+anchor_top = 0.5
+anchor_right = 1.0
+anchor_bottom = 0.5
+margin_top = -22.5
+margin_bottom = 21.5
+size_flags_horizontal = 3
+size_flags_vertical = 4
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Accept" type="Button" parent="Center"]
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+margin_left = -35.0
+margin_top = -20.0
+margin_right = 35.0
+margin_bottom = 20.0
+text = "Play Turn"
+__meta__ = {
+"_edit_use_anchors_": false
+}
