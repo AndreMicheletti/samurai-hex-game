@@ -1,4 +1,4 @@
-[gd_scene load_steps=16 format=2]
+[gd_scene load_steps=18 format=2]
 
 [ext_resource path="res://graphics/gui/yin_yang_frame.png" type="Texture" id=1]
 [ext_resource path="res://fonts/Talk_to_three_headed_monkey.ttf" type="DynamicFontData" id=2]
@@ -66,6 +66,28 @@ tracks/1/keys = {
 "values": [ Vector2( 728, 220 ), Vector2( 728, 0 ) ]
 }
 
+[sub_resource type="Animation" id=6]
+resource_name = "show_turn"
+length = 4.0
+tracks/0/type = "value"
+tracks/0/path = NodePath("Screen/TurnMessage:rect_position")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0, 1, 3, 4 ),
+"transitions": PoolRealArray( 1, 1, 1, 1 ),
+"update": 0,
+"values": [ Vector2( 469.5, -89.7028 ), Vector2( 469.5, 310.5 ), Vector2( 469.5, 310.5 ), Vector2( 469.5, -89.7028 ) ]
+}
+
+[sub_resource type="DynamicFont" id=5]
+size = 40
+outline_size = 1
+outline_color = Color( 0, 0, 0, 1 )
+font_data = ExtResource( 2 )
+
 [sub_resource type="RectangleShape2D" id=1]
 extents = Vector2( 100.673, 65.7447 )
 
@@ -81,6 +103,7 @@ script = ExtResource( 5 )
 playback_speed = 2.0
 anims/hide = SubResource( 3 )
 anims/show = SubResource( 4 )
+anims/show_turn = SubResource( 6 )
 
 [node name="Tween" type="Tween" parent="."]
 
@@ -99,6 +122,22 @@ __meta__ = {
 }
 
 [node name="GameOver" parent="Screen" instance=ExtResource( 11 )]
+
+[node name="TurnMessage" type="Label" parent="Screen"]
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+margin_left = -130.5
+margin_top = -427.203
+margin_right = 156.5
+margin_bottom = -373.203
+size_flags_horizontal = 4
+custom_fonts/font = SubResource( 5 )
+text = "You go first"
+__meta__ = {
+"_edit_use_anchors_": false
+}
 
 [node name="Bottom" type="Control" parent="."]
 anchor_right = 1.0
@@ -132,9 +171,8 @@ size_flags_vertical = 3
 alignment = 1
 
 [node name="Left" type="MarginContainer" parent="Bottom/Action/Box"]
-margin_top = 220.0
 margin_right = 486.0
-margin_bottom = 440.0
+margin_bottom = 220.0
 mouse_filter = 2
 size_flags_horizontal = 3
 size_flags_vertical = 3
@@ -293,9 +331,8 @@ __meta__ = {
 
 [node name="Right" type="MarginContainer" parent="Bottom/Action/Box"]
 margin_left = 714.0
-margin_top = 220.0
 margin_right = 1200.0
-margin_bottom = 440.0
+margin_bottom = 220.0
 mouse_filter = 2
 size_flags_horizontal = 3
 size_flags_vertical = 3
@@ -303,7 +340,7 @@ custom_constants/margin_left = 70
 
 [node name="Grid" type="GridContainer" parent="Bottom/Action/Box/Right"]
 margin_left = 70.0
-margin_right = 485.0
+margin_right = 486.0
 margin_bottom = 220.0
 rect_min_size = Vector2( 0, 220 )
 mouse_filter = 2
@@ -354,9 +391,7 @@ cost = 2
 anchor_left = 0.0
 anchor_right = 0.0
 margin_left = 0.0
-margin_top = 220.0
 margin_right = 472.0
-margin_bottom = 260.0
 filledTexture = ExtResource( 7 )
 emptyTexture = ExtResource( 8 )
 
@@ -364,9 +399,7 @@ emptyTexture = ExtResource( 8 )
 anchor_left = 1.0
 anchor_right = 1.0
 margin_left = -472.0
-margin_top = 220.0
 margin_right = 0.0
-margin_bottom = 260.0
 filledTexture = ExtResource( 3 )
 current_value = 10
 

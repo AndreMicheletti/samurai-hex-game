@@ -99,15 +99,20 @@ func play_phase():
 	var turn_order = compare_cards()
 	print("TURN ORDER ", turn_order)
 	
+	yield(game_ui.hide(), "completed")
 	var first_char
+	var first_message
+	var second_message
 	if turn_order[0] == player:
 		first_char = "player"
+		first_message = "Your turn"
+		second_message = "Enemy Turn"
 	else:
 		first_char = "enemy"
-
-	# yield(game_ui.reveal_faster_card(first_char), 'completed')		
-	yield(game_ui.hide(), "completed")
+		first_message = "Enemy turn"
+		second_message = "Your turn"
 	
+	yield(game_ui.show_turn(first_message), "completed")
 	# FIRST ON TURN
 	turn_order[0].active = true
 	turn_order[0].play_turn()
@@ -119,13 +124,14 @@ func play_phase():
 		attacked = yield(attacked, "completed")
 	
 	if attacked == false:
+		yield(game_ui.show_turn(second_message), "completed")
 		# SECOND ON TURN
 		turn_order[1].active = true
 		turn_order[1].play_turn()
 		yield(turn_order[1], "turn_ended")
 		turn_order[1].active = false
 		
-		attacked = check_attack(turn_order, 0)
+		attacked = check_attack(turn_order, 1)
 		if attacked is GDScriptFunctionState:
 			attacked = yield(attacked, "completed")
 	else:

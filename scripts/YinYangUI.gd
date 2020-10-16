@@ -104,12 +104,18 @@ func update_bars():
 
 func show_game_over(player_win, message):
 	# show game over panel
+	$Bottom.queue_free()
 	game_over.visible = true
 	game_over.set_message(message)
 	if player_win:
 		game_over.set_winner("YOU WIN")
 	else:
 		game_over.set_winner("YOU LOSE")
+
+func show_turn(message):
+	$Screen/TurnMessage.text = message
+	anim.play("show_turn")
+	yield(anim, "animation_finished")
 
 func _on_GameOver_exit():
 	var title_scene = load("res://scenes/TitleScreen.tscn")

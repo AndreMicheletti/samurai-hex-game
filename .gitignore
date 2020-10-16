@@ -9,3 +9,7 @@ export_presets.cfg
 data_*/
 
 *.apk
+
+.build/*
+.build/
+

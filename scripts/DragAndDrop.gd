@@ -22,6 +22,12 @@ func _ready():
 	self.rect_size = smallSize
 	target = get_tree().get_nodes_in_group(targetName).pop_front()
 
+func _physics_process(_delta):
+	if not grabbed or selected:
+		return
+	on_spot = $Area2D.overlaps_area(target)
+	on_spot_effect.emitting = bool(on_spot)
+
 func on_grab():
 	$Tween.interpolate_property(self, "rect_size", smallSize, normalSize, 0.2, Tween.TRANS_CIRC, Tween.EASE_IN_OUT)
 	$Tween.start()
@@ -53,12 +59,6 @@ func return_to_position(interpolate = true):
 		$Tween.start()
 	else:
 		rect_size = smallSize
-
-func _physics_process(_delta):
-	if not grabbed or selected:
-		return
-	on_spot = $Area2D.overlaps_area(target)
-	on_spot_effect.emitting = bool(on_spot)
 
 func _on_gui_input(event):
 	if selected:
