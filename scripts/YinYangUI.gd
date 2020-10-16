@@ -122,4 +122,5 @@ func _on_GameOver_exit():
 	get_tree().change_scene_to(title_scene)
 
 func _on_GameOver_play_again():
+	game.delete_game()
 	get_tree().reload_current_scene()

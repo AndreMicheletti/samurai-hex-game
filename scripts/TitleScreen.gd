@@ -29,10 +29,10 @@ func _on_PlayButton_pressed():
 	var game_scene = load("res://scenes/Game.tscn")
 	var world_scene
 	if map_idx == 0:
-		world_scene = load("res://scenes/world/World.tscn")
+		world_scene = "res://scenes/world/World.tscn"
 	else:
 		var map_name = maps[map_idx - 1]
-		world_scene = load("res://resources/maps/" + map_name)
+		world_scene = "res://resources/maps/" + map_name
 	global.set_player_class(player_class.selected)
 	global.set_enemy_class(enemy_class.selected)
 	global.worldScene = world_scene

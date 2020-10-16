@@ -38,8 +38,10 @@ func create_players():
 	enemy.energy = 0
 
 func create_world():
-	world = global.worldScene.instance()
+	randomize()
+	world = load(global.worldScene).instance()
 	add_child(world)
+	world.init_world()
 	world.spawn_players(player, enemy)
 	world.init_camera()
 	world.connect("pressed_hex", player, "on_pressed_hex")
@@ -232,6 +234,11 @@ func choose_winner(_character):
 			win_game(null, "You suffered less damage")
 		else:
 			lose_game(null, "You suffered more damage")
+
+func delete_game():
+	player.free()
+	enemy.free()
+	world.free()
 
 func win_game(_character, message="You defeated your opponent"):
 	game_ui.show_game_over(true, message)

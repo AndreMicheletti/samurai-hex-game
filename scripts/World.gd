@@ -39,9 +39,14 @@ signal pressed_hex
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
+	pass
+
+func init_world():
 	HexGrid = preload("res://scripts/HexGrid.gd").new()
+	HexGrid.remove_all_obstacles()
 	set_click_enabled(true)
-	init_world()
+	HexGrid.hex_scale = Vector2(HEX_WIDTH, HEX_HEIGHT)
+	get_grid().set_bounds(Vector2(-world_size, -world_size), Vector2(world_size, world_size))
 	build_background()
 	if generate:
 		generate_world(world_size)
@@ -49,10 +54,6 @@ func _ready():
 		build_highlights()
 	discover_obstacles()
 	create_night()
-
-func init_world():
-	HexGrid.hex_scale = Vector2(HEX_WIDTH, HEX_HEIGHT)
-	get_grid().set_bounds(Vector2(-world_size, -world_size), Vector2(world_size, world_size))
 
 func build_highlights():
 	if global.is_mobile():
