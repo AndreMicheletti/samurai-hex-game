@@ -1,19 +1,18 @@
 extends Node2D
 
-enum Phase {DRAW, CHOOSE, PLAY, GAMEOVER}
+enum Phase {CHOOSE, PLAY, GAMEOVER}
 
 var player_scene = preload("res://scenes/characters/Player.tscn")
 var enemy_scene = preload("res://scenes/characters/Enemy.tscn")
 
-var ui_scene = preload("res://scenes/gui/GameUI.tscn")
+var ui_scene = preload("res://scenes/gui/YinYangUI.tscn")
 
 var world
 var game_ui
 var player
 var enemy
-var state = Phase.DRAW
+var state = Phase.CHOOSE
 
-var first_draw = true
 var first_blood = null
 
 signal changed_state
@@ -30,10 +29,7 @@ func create_players():
 	enemy = enemy_scene.instance()
 	player.characterClass = global.selectedPlayerClass
 	enemy.characterClass = global.selectedEnemyClass
-	player.connect("card_selected", self, "on_player_selected_card")
 	player.connect("character_defeated", self, "lose_game")
-	player.connect("deck_depleted", self, "choose_winner")
-	enemy.connect("deck_depleted", self, "choose_winner")
 	enemy.connect("character_defeated", self, "win_game")
 
 func create_world():
@@ -47,42 +43,36 @@ func init_ui():
 	game_ui = ui_scene.instance()
 	add_child(game_ui)
 	game_ui.init()
-	game_ui.connect("card_pressed", player, "on_select_card")
-	# game_ui.connect("card_pressed", self, "play_phase")
+	game_ui.connect("accepted_stats", self, "on_ui_accepted_stats")
 	player.connect("character_hit", game_ui, "update_health_counter")
-	enemy.connect("character_hit", game_ui, "update_health_counter")
-	game_ui.turn_time.connect("timeout", self, "on_turn_timeout")
+	# enemy.connect("character_hit", game_ui, "update_health_counter")
+	# game_ui.turn_time.connect("timeout", self, "on_turn_timeout")
+
+func on_ui_accepted_stats(stats):
+	player.selected_stats = stats
+	play_phase()
 
 func init_game():
-	draw_phase()
-
-func draw_phase():
+	choose_phase()
+	
+func reset_turn():
 	if state == Phase.GAMEOVER:
 		return
-	print("\n*********************** DRAW PHASE")
-	yield(game_ui.reset_center(), "completed")
-	player.selected_card = null
-	enemy.selected_card = null
-	state = Phase.DRAW
-	emit_signal("changed_state", Phase.DRAW)
-	if first_draw:
-		first_draw = false
-		player.deal_cards(4)
-		enemy.deal_cards(4)
-	else:
-		player.deal_cards(1)
-		enemy.deal_cards(1)
-	yield(game_ui.show_cards(), "completed")
-	choose_phase()
+	print("/ RESET TURN \\")
+	player.selected_stats = null
+	enemy.selected_stats = null
+	yield(game_ui.reset(), "completed")
+	yield(game_ui.show(), "completed")
 
 func choose_phase():
-	if state != Phase.DRAW or state == Phase.GAMEOVER:
+	if state == Phase.GAMEOVER:
 		return
 	print("\n*********************** CHOOSE PHASE")
+	reset_turn()
 	state = Phase.CHOOSE
 	emit_signal("changed_state", Phase.CHOOSE)
-	enemy.choose_card()
-	game_ui.turn_time.start()
+	enemy.choose_stats()
+	# game_ui.turn_time.start()
 
 func play_phase():
 	if state != Phase.CHOOSE or state == Phase.GAMEOVER:
@@ -90,7 +80,7 @@ func play_phase():
 	print("\n*********************** PLAY PHASE")
 	state = Phase.PLAY
 	emit_signal("changed_state", Phase.PLAY)
-	game_ui.turn_time.stop()
+#	game_ui.turn_time.stop()
 
 	# DETERMINE TURN ORDER
 	var turn_order = compare_cards()
@@ -102,8 +92,8 @@ func play_phase():
 	else:
 		first_char = "enemy"
 
-	yield(game_ui.reveal_faster_card(first_char), 'completed')		
-	yield(game_ui.hide_cards(), "completed")
+	# yield(game_ui.reveal_faster_card(first_char), 'completed')		
+	yield(game_ui.hide(), "completed")
 	
 	# FIRST ON TURN
 	turn_order[0].active = true
@@ -128,14 +118,14 @@ func play_phase():
 		turn_order[1].end_turn()
 	
 	yield(get_tree().create_timer(0.8), "timeout")
-	# BACK TO DRAW PHASE
-	draw_phase()
+	# BACK TO CHOOSE PHASE
+	choose_phase()
 
 func check_attack(turn_order, index):
 	var attacker = turn_order[index]
 	var defensor = turn_order[1 - index]
 	
-	if attacker.selected_card.atk <= 0:
+	if attacker.get_attack() <= 0:
 		return false
 	
 	var is_adjacent = false
@@ -150,7 +140,7 @@ func check_attack(turn_order, index):
 		return false
 
 	print("AN ATTACK IS HAPPENNING !!!")
-	var damage = attacker.selected_card.atk - defensor.selected_card.def
+	var damage = attacker.get_attack() - defensor.get_defense()
 	attacker.look_to_hex(defensor.hex_pos)
 	defensor.look_to_hex(attacker.hex_pos)
 	
@@ -166,7 +156,7 @@ func check_attack(turn_order, index):
 		if first_blood == null:
 			first_blood = attacker
 		# play animation
-		attacker.play_attack(attacker.selected_card)
+		attacker.play_attack(attacker.get_attack())
 		yield(attacker, "anim_hit")
 		attacker.attacked(defensor)
 		yield(defensor.play_hit(), "completed")
@@ -174,9 +164,9 @@ func check_attack(turn_order, index):
 		return true
 	else:
 		# play animation
-		attacker.play_attack(attacker.selected_card)
+		attacker.play_attack(attacker.get_attack())
 		yield(attacker, "anim_hit")
-		yield(defensor.play_defend(defensor.selected_card), "completed")
+		yield(defensor.play_defend(defensor.get_defense()), "completed")
 		yield(defensor.defended(attacker), "completed")
 	
 	attacker.look_to_hex(defensor.hex_pos)
@@ -192,14 +182,14 @@ func compare_cards():
 		enemy.set_speed_advantage(false)
 		return [enemy, player]
 	
-	if player.selected_card.speed != enemy.selected_card.speed:
-		if player.selected_card.speed > enemy.selected_card.speed:
+	if player.get_speed() != enemy.get_speed():
+		if player.get_speed() > enemy.get_speed():
 			return [player, enemy]
 		else:
 			return [enemy, player]
 	else:
-		if player.selected_card.mov != enemy.selected_card.mov:
-			if player.selected_card.mov > enemy.selected_card.mov:
+		if player.get_movement() != enemy.get_movement():
+			if player.get_movement() > enemy.get_movement():
 				return [player, enemy]
 			else:
 				return [enemy, player]
@@ -209,17 +199,6 @@ func compare_cards():
 				return [player, enemy]
 			else:
 				return [enemy, player]
-
-func on_turn_timeout():
-	if state == Phase.CHOOSE and state != Phase.GAMEOVER:
-		randomize()
-		var idx = randi() % player.hand.size()
-		player.select_card(idx)
-		game_ui.remove_player_card(idx)
-
-func on_player_selected_card(_card):
-	if state != Phase.GAMEOVER:
-		play_phase()
 
 func choose_winner(_character):
 	if player.get_remaining_health() == enemy.get_remaining_health():

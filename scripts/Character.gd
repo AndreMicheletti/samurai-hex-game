@@ -12,22 +12,19 @@ onready var world = get_parent()
 onready var game = world.get_parent()
 
 var hex_pos = Vector2()
-var gameplay_deck = []
+
 var moving = false
 var damage = 0
 var moved = 0
-var hand = []
+
 var advantage = false # if true, will attack first on next turn
 var active = false
 var defeated = false
 
-var selected_card = null
+var selected_stats = null
 
 # attack animations emit this to play the defense animation on target character
 signal anim_hit
-signal card_dealed
-signal card_selected
-signal deck_depleted
 
 signal move_ended
 signal turn_started
@@ -40,15 +37,10 @@ signal character_defeated
 func _ready():
 	add_to_group("Character")
 	hex_pos = Vector2(0, 0)
-	init_deck()
 	$Pivot/character.texture = characterClass.characterTexture
 	$Pivot/character/Position2D/hand.texture = characterClass.handTexture
 	if characterClass.name == "Elite":
 		$Pivot/character/Position2D/hand.offset = Vector2(-17, 0)
-
-func init_deck():
-	gameplay_deck = characterClass.deckResource.cards.duplicate(true)
-	gameplay_deck.shuffle()
 
 func teleport_to(pos : Vector2):
 	position = world.get_grid().get_hex_center(pos)
@@ -62,7 +54,7 @@ func look_to_hex(target: Vector2):
 func _process(delta):
 	if not active:
 		return
-	if moved >= selected_card.mov:
+	if get_remaining_moves() <= 0:
 		end_turn()
 
 func move_to(target : Vector2, turn = true, ignore_flags = false):
@@ -119,32 +111,6 @@ func get_pushed_from(attacker_hex_pos : Vector2):
 		yield($anim, "animation_finished")
 		defeat()
 
-func on_select_card(card_res : CardResource):
-	var index = hand.find(card_res)
-	if index >= 0:
-		print("FOUND CARD IN HAND! INDEX ", index)
-		select_card(index)
-	else:
-		print("NOT FOUND CARD ", card_res.title, " IN HAND ", hand)
-
-func deal_cards(n):
-	for i in range(n):
-		var card = gameplay_deck.pop_back()
-		if not card:
-			if hand.size() == 0:
-				emit_signal("deck_depleted", self)
-			return
-		emit_signal("card_dealed", card)
-		hand.append(card)
-
-func deck_count():
-	return gameplay_deck.size()
-
-func select_card(index):
-	selected_card = hand[index]
-	hand.remove(index)
-	emit_signal("card_selected", selected_card)
-
 func play_turn():
 	print("PLAYER PLAY TURN!! ")
 	moved = 0
@@ -166,7 +132,7 @@ func get_remaining_health():
 	return Health - damage
 
 func get_remaining_moves():
-	return selected_card.mov - moved
+	return get_movement() - moved
 
 func get_cell():
 	return world.HexCell.new(hex_pos)
@@ -199,11 +165,22 @@ func play(anim_name):
 	$anim.stop(true)
 	$anim.play(anim_name)
 
-func play_attack(card_res : CardResource):
-	play(card_res.anim)
+func play_attack(atk_value : int):
+	match atk_value:
+		1:
+			play("attack_deceive")
+		2:
+			play("attack_pierce")
+		3:
+			play("attack_upper")
+		4:
+			play("attack_jump")
 
-func play_defend(card_res : CardResource):
-	play(card_res.def_anim)
+func play_defend(def_value : int):
+	if def_value <= 2:
+		play("defend")
+	else:
+		play("dodge")
 	yield($anim, "animation_finished")
 
 func play_dash():
@@ -222,3 +199,23 @@ func emit_anim_hit():
 func defeat():
 	defeated = true
 	emit_signal("character_defeated", self)
+
+func get_attack():
+	if not selected_stats:
+		return null
+	return selected_stats["atk"]
+	
+func get_defense():
+	if not selected_stats:
+		return null
+	return selected_stats["def"]
+	
+func get_movement():
+	if not selected_stats:
+		return null
+	return selected_stats["mov"]
+	
+func get_speed():
+	if not selected_stats:
+		return null
+	return selected_stats["spd"]

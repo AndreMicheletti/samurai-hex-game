@@ -37,6 +37,12 @@ func select():
 	self.rect_global_position = target.get_parent().rect_global_position
 	target.emit_signal("dropped_node", self)
 
+func unselect():
+	if not selected:
+		return
+	target.emit_signal("removed_node")
+	return_to_position()
+
 func return_to_position():
 	self.rect_position = original_pos
 	on_spot_effect.emitting = false
@@ -53,8 +59,7 @@ func _physics_process(_delta):
 func _on_gui_input(event):
 	if selected:
 		if event is InputEventScreenTouch:
-			return_to_position()
-			target.emit_signal("removed_node")
+			unselect()
 	else:
 		if grabbed:
 			if event is InputEventMouseMotion or event is InputEventScreenDrag:

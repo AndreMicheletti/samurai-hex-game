@@ -8,18 +8,24 @@ export(AIMode) var ai_mode = AIMode.RANDOM
 func _ready():
 	._ready()
 
-func choose_card():
-	match ai_mode:
-		AIMode.RANDOM:
-			randomize()
-			select_card(randi() % hand.size())
-		AIMode.BALANCED:
-			randomize()
-			select_card(randi() % hand.size())
-		AIMode.AGGRESSIVE:
-			pass
-		AIMode.DEFENSIVE:
-			pass
+func choose_stats():
+	selected_stats = {
+		"atk": 2,
+		"def": 1,
+		"mov": 1,
+		"spd": 1
+	}
+#	match ai_mode:
+#		AIMode.RANDOM:
+#			randomize()
+#			select_card(randi() % hand.size())
+#		AIMode.BALANCED:
+#			randomize()
+#			select_card(randi() % hand.size())
+#		AIMode.AGGRESSIVE:
+#			pass
+#		AIMode.DEFENSIVE:
+#			pass
 
 func play_turn():
 	print("ENEMY PLAY TURN!! ")
@@ -32,8 +38,10 @@ func play_turn():
 	end_turn()
 
 func reveal_card():
-	yield(game.game_ui.reveal_enemy_card(), "completed")
-	yield(get_tree().create_timer(0.5), "timeout")
+	print("ENEMY REVEAL CARD")
+	yield(random_wait(), "completed")
+#	yield(game.game_ui.reveal_enemy_card(), "completed")
+#	yield(get_tree().create_timer(0.5), "timeout")
 
 func select_movement():
 	# FIND PATH TO PLAYER	
