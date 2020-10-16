@@ -8,12 +8,12 @@
 [ext_resource path="res://fonts/Talk_to_three_headed_monkey.ttf" type="DynamicFontData" id=6]
 [ext_resource path="res://graphics/particles/star_01.png" type="Texture" id=7]
 
-[sub_resource type="DynamicFont" id=10]
+[sub_resource type="DynamicFont" id=1]
 outline_size = 2
-outline_color = Color( 0, 0, 0, 1 )
+outline_color = Color( 0.192157, 0.172549, 0.145098, 1 )
 font_data = ExtResource( 6 )
 
-[sub_resource type="Animation" id=3]
+[sub_resource type="Animation" id=2]
 tracks/0/type = "value"
 tracks/0/path = NodePath(".:rect_scale")
 tracks/0/interp = 1
@@ -27,7 +27,7 @@ tracks/0/keys = {
 "values": [ Vector2( 1, 1 ), Vector2( 1.4, 1.4 ), Vector2( 1.4, 1.4 ), Vector2( 1, 1 ) ]
 }
 
-[sub_resource type="Animation" id=4]
+[sub_resource type="Animation" id=3]
 length = 1.4
 tracks/0/type = "value"
 tracks/0/path = NodePath("Flames:emitting")
@@ -78,7 +78,7 @@ tracks/3/keys = {
 "values": [ Vector2( 50, 170 ), Vector2( 50, 0 ) ]
 }
 
-[sub_resource type="Animation" id=11]
+[sub_resource type="Animation" id=4]
 resource_name = "destroy_nice"
 length = 1.4
 tracks/0/type = "value"
@@ -276,13 +276,14 @@ anchor_left = 0.5
 anchor_top = 0.5
 anchor_right = 0.5
 anchor_bottom = 0.5
-margin_left = -52.0
-margin_top = -11.0
-margin_right = 52.0
-margin_bottom = 11.0
+margin_left = -55.0
+margin_top = -37.0
+margin_right = 55.0
+margin_bottom = 37.0
 size_flags_horizontal = 3
-custom_fonts/font = SubResource( 10 )
-text = "Card Title"
+custom_fonts/font = SubResource( 1 )
+custom_colors/font_color = Color( 0.890196, 0.603922, 0.262745, 1 )
+text = "Card title"
 align = 1
 valign = 1
 autowrap = true
@@ -374,9 +375,9 @@ __meta__ = {
 
 [node name="anim" type="AnimationPlayer" parent="."]
 playback_speed = 1.5
-anims/choose = SubResource( 3 )
-anims/destroy = SubResource( 4 )
-anims/destroy_nice = SubResource( 11 )
+anims/choose = SubResource( 2 )
+anims/destroy = SubResource( 3 )
+anims/destroy_nice = SubResource( 4 )
 anims/flip_back = SubResource( 5 )
 anims/flip_front = SubResource( 6 )
 
