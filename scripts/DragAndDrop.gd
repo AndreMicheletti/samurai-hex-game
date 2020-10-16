@@ -17,6 +17,7 @@ var selected = false
 var original_pos
 
 func _ready():
+	add_to_group("DragAndDrop")
 	original_pos = self.rect_position
 	self.rect_size = smallSize
 	target = get_tree().get_nodes_in_group(targetName).pop_front()
@@ -41,14 +42,17 @@ func unselect():
 	if not selected:
 		return
 	target.emit_signal("removed_node")
-	return_to_position()
+	return_to_position(false)
 
-func return_to_position():
+func return_to_position(interpolate = true):
 	self.rect_position = original_pos
 	on_spot_effect.emitting = false
 	selected = false
-	$Tween.interpolate_property(self, "rect_size", normalSize, smallSize, 0.1)
-	$Tween.start()
+	if interpolate:
+		$Tween.interpolate_property(self, "rect_size", normalSize, smallSize, 0.1)
+		$Tween.start()
+	else:
+		rect_size = smallSize
 
 func _physics_process(_delta):
 	if not grabbed or selected:
@@ -73,3 +77,12 @@ func _on_gui_input(event):
 			else:
 				on_grab()
 			grabbed = event.pressed
+
+func hide():
+	if not selected:
+		$Tween.interpolate_property(self, "modulate",  Color("#FFFFFFFF"),  Color("#00FFFFFF"), 0.3)
+		$Tween.start()
+
+func show():
+	$Tween.interpolate_property(self, "modulate",  Color("#00FFFFFF"),  Color("#FFFFFFFF"), 0.3)
+	$Tween.start()

@@ -11,6 +11,7 @@ margin_left = -236.0
 margin_right = 236.0
 margin_bottom = 40.0
 rect_min_size = Vector2( 0, 40 )
+mouse_filter = 2
 custom_constants/separation = 8
 alignment = 1
 script = ExtResource( 1 )
@@ -22,6 +23,7 @@ __meta__ = {
 margin_right = 40.0
 margin_bottom = 40.0
 rect_min_size = Vector2( 40, 40 )
+mouse_filter = 2
 
 [node name="Texture" type="TextureRect" parent="0"]
 anchor_right = 1.0
@@ -41,6 +43,7 @@ margin_left = 48.0
 margin_right = 88.0
 margin_bottom = 40.0
 rect_min_size = Vector2( 40, 40 )
+mouse_filter = 2
 
 [node name="Texture" type="TextureRect" parent="1"]
 anchor_right = 1.0
@@ -60,6 +63,7 @@ margin_left = 96.0
 margin_right = 136.0
 margin_bottom = 40.0
 rect_min_size = Vector2( 40, 40 )
+mouse_filter = 2
 
 [node name="Texture" type="TextureRect" parent="2"]
 anchor_right = 1.0
@@ -79,6 +83,7 @@ margin_left = 144.0
 margin_right = 184.0
 margin_bottom = 40.0
 rect_min_size = Vector2( 40, 40 )
+mouse_filter = 2
 
 [node name="Texture" type="TextureRect" parent="3"]
 anchor_right = 1.0
@@ -98,6 +103,7 @@ margin_left = 192.0
 margin_right = 232.0
 margin_bottom = 40.0
 rect_min_size = Vector2( 40, 40 )
+mouse_filter = 2
 
 [node name="Texture" type="TextureRect" parent="4"]
 anchor_right = 1.0
@@ -117,6 +123,7 @@ margin_left = 240.0
 margin_right = 280.0
 margin_bottom = 40.0
 rect_min_size = Vector2( 40, 40 )
+mouse_filter = 2
 
 [node name="Texture" type="TextureRect" parent="5"]
 anchor_right = 1.0
@@ -136,6 +143,7 @@ margin_left = 288.0
 margin_right = 328.0
 margin_bottom = 40.0
 rect_min_size = Vector2( 40, 40 )
+mouse_filter = 2
 
 [node name="Texture" type="TextureRect" parent="6"]
 anchor_right = 1.0
@@ -155,6 +163,7 @@ margin_left = 336.0
 margin_right = 376.0
 margin_bottom = 40.0
 rect_min_size = Vector2( 40, 40 )
+mouse_filter = 2
 
 [node name="Texture" type="TextureRect" parent="7"]
 anchor_right = 1.0
@@ -174,6 +183,7 @@ margin_left = 384.0
 margin_right = 424.0
 margin_bottom = 40.0
 rect_min_size = Vector2( 40, 40 )
+mouse_filter = 2
 
 [node name="Texture" type="TextureRect" parent="8"]
 anchor_right = 1.0
@@ -193,6 +203,7 @@ margin_left = 432.0
 margin_right = 472.0
 margin_bottom = 40.0
 rect_min_size = Vector2( 40, 40 )
+mouse_filter = 2
 
 [node name="Texture" type="TextureRect" parent="9"]
 anchor_right = 1.0

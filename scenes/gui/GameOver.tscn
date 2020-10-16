@@ -1,0 +1,120 @@
+[gd_scene load_steps=7 format=2]
+
+[ext_resource path="res://fonts/Talk_to_three_headed_monkey.ttf" type="DynamicFontData" id=1]
+[ext_resource path="res://scripts/GameOverUI.gd" type="Script" id=2]
+
+[sub_resource type="DynamicFont" id=1]
+size = 20
+outline_color = Color( 0, 0, 0, 1 )
+font_data = ExtResource( 1 )
+
+[sub_resource type="DynamicFont" id=2]
+size = 14
+outline_color = Color( 0, 0, 0, 1 )
+font_data = ExtResource( 1 )
+
+[sub_resource type="DynamicFont" id=3]
+size = 12
+outline_color = Color( 0, 0, 0, 1 )
+font_data = ExtResource( 1 )
+
+[sub_resource type="DynamicFont" id=4]
+size = 12
+outline_color = Color( 0, 0, 0, 1 )
+font_data = ExtResource( 1 )
+
+[node name="GameOver" type="Panel"]
+visible = false
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+margin_left = -228.0
+margin_top = -98.0
+margin_right = 228.0
+margin_bottom = 98.0
+mouse_filter = 2
+script = ExtResource( 2 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="VBox" type="VBoxContainer" parent="."]
+anchor_right = 1.0
+anchor_bottom = 1.0
+size_flags_horizontal = 3
+size_flags_vertical = 3
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Top" type="MarginContainer" parent="VBox"]
+margin_right = 456.0
+margin_bottom = 100.0
+rect_min_size = Vector2( 0, 100 )
+size_flags_horizontal = 3
+custom_constants/margin_right = 20
+custom_constants/margin_top = 10
+custom_constants/margin_left = 20
+custom_constants/margin_bottom = 10
+
+[node name="VBox" type="VBoxContainer" parent="VBox/Top"]
+margin_left = 20.0
+margin_top = 10.0
+margin_right = 436.0
+margin_bottom = 90.0
+custom_constants/separation = 15
+alignment = 1
+
+[node name="Winner" type="Label" parent="VBox/Top/VBox"]
+margin_top = 8.0
+margin_right = 416.0
+margin_bottom = 36.0
+custom_fonts/font = SubResource( 1 )
+text = "YOU WIN"
+align = 1
+
+[node name="Message" type="Label" parent="VBox/Top/VBox"]
+margin_top = 51.0
+margin_right = 416.0
+margin_bottom = 71.0
+custom_fonts/font = SubResource( 2 )
+text = "You are awesome"
+align = 1
+
+[node name="Bottom" type="MarginContainer" parent="VBox"]
+margin_top = 104.0
+margin_right = 456.0
+margin_bottom = 196.0
+size_flags_horizontal = 3
+size_flags_vertical = 3
+custom_constants/margin_right = 50
+custom_constants/margin_top = 20
+custom_constants/margin_left = 50
+custom_constants/margin_bottom = 20
+
+[node name="HBox" type="HBoxContainer" parent="VBox/Bottom"]
+margin_left = 50.0
+margin_top = 20.0
+margin_right = 406.0
+margin_bottom = 72.0
+size_flags_horizontal = 3
+size_flags_vertical = 3
+custom_constants/separation = 25
+alignment = 1
+
+[node name="PlayAgain" type="Button" parent="VBox/Bottom/HBox"]
+margin_left = 68.0
+margin_right = 156.0
+margin_bottom = 52.0
+custom_fonts/font = SubResource( 3 )
+text = "Play Again"
+
+[node name="Exit" type="Button" parent="VBox/Bottom/HBox"]
+margin_left = 181.0
+margin_right = 287.0
+margin_bottom = 52.0
+custom_fonts/font = SubResource( 4 )
+text = "Exit to menu"
+[connection signal="pressed" from="VBox/Bottom/HBox/PlayAgain" to="." method="_on_PlayAgain_pressed"]
+[connection signal="pressed" from="VBox/Bottom/HBox/Exit" to="." method="_on_Exit_pressed"]

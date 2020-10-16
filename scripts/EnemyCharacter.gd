@@ -13,7 +13,8 @@ func choose_stats():
 		"atk": 2,
 		"def": 1,
 		"mov": 1,
-		"spd": 1
+		"spd": 1,
+		"cost": 3
 	}
 #	match ai_mode:
 #		AIMode.RANDOM:

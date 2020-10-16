@@ -3,7 +3,8 @@ extends Node2D
 class_name Character
 
 export(String) var PlayerName = "Player"
-export(int) var Health = 4
+export(int) var Health = 10
+export(int) var maxEnergy = 10
 export(Resource) var characterClass
 
 # export(Resource) var deck
@@ -16,6 +17,7 @@ var hex_pos = Vector2()
 var moving = false
 var damage = 0
 var moved = 0
+var energy = 0
 
 var advantage = false # if true, will attack first on next turn
 var active = false
@@ -127,6 +129,17 @@ func end_turn():
 func on_pressed_hex(hex):
 	if active and not moving:
 		move_to(hex.get_axial_coords())
+
+func restore_energy(value):
+	energy = min(energy + value, 10)
+
+func consume_energy(value):
+	energy = max(energy - value, 0)
+
+func can_consume_energy(value):
+	if energy - value < 0:
+		return false
+	return true
 
 func get_remaining_health():
 	return Health - damage

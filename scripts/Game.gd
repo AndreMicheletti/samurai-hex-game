@@ -31,6 +31,9 @@ func create_players():
 	enemy.characterClass = global.selectedEnemyClass
 	player.connect("character_defeated", self, "lose_game")
 	enemy.connect("character_defeated", self, "win_game")
+	# set initial energy
+	player.energy = 0
+	enemy.energy = 0
 
 func create_world():
 	world = global.worldScene.instance()
@@ -62,7 +65,6 @@ func reset_turn():
 	player.selected_stats = null
 	enemy.selected_stats = null
 	yield(game_ui.reset(), "completed")
-	yield(game_ui.show(), "completed")
 
 func choose_phase():
 	if state == Phase.GAMEOVER:
@@ -71,6 +73,11 @@ func choose_phase():
 	reset_turn()
 	state = Phase.CHOOSE
 	emit_signal("changed_state", Phase.CHOOSE)
+	# restore energy
+	player.restore_energy(5)
+	enemy.restore_energy(5)
+	game_ui.update_bars()
+	# enemy choose movement
 	enemy.choose_stats()
 	# game_ui.turn_time.start()
 
@@ -81,7 +88,11 @@ func play_phase():
 	state = Phase.PLAY
 	emit_signal("changed_state", Phase.PLAY)
 #	game_ui.turn_time.stop()
-
+	# CONSUME ENERGY
+	player.consume_energy(player.selected_stats["cost"])
+	enemy.consume_energy(enemy.selected_stats["cost"])
+	game_ui.update_bars()
+	
 	# DETERMINE TURN ORDER
 	var turn_order = compare_cards()
 	print("TURN ORDER ", turn_order)

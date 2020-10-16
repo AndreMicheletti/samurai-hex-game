@@ -1,4 +1,4 @@
-[gd_scene load_steps=13 format=2]
+[gd_scene load_steps=16 format=2]
 
 [ext_resource path="res://graphics/gui/yin_yang_frame.png" type="Texture" id=1]
 [ext_resource path="res://fonts/Talk_to_three_headed_monkey.ttf" type="DynamicFontData" id=2]
@@ -10,6 +10,61 @@
 [ext_resource path="res://graphics/gui/chakra_empty.svg" type="Texture" id=8]
 [ext_resource path="res://scenes/gui/Yin.tscn" type="PackedScene" id=9]
 [ext_resource path="res://scripts/DropSlot.gd" type="Script" id=10]
+[ext_resource path="res://scenes/gui/GameOver.tscn" type="PackedScene" id=11]
+
+[sub_resource type="Animation" id=3]
+resource_name = "hide"
+tracks/0/type = "value"
+tracks/0/path = NodePath("Bottom/Energy:rect_position")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0, 1 ),
+"transitions": PoolRealArray( 1, 1 ),
+"update": 0,
+"values": [ Vector2( 0, 0 ), Vector2( 0, 220 ) ]
+}
+tracks/1/type = "value"
+tracks/1/path = NodePath("Bottom/Health:rect_position")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/keys = {
+"times": PoolRealArray( 0, 1 ),
+"transitions": PoolRealArray( 1, 1 ),
+"update": 0,
+"values": [ Vector2( 728, 0 ), Vector2( 728, 220 ) ]
+}
+
+[sub_resource type="Animation" id=4]
+resource_name = "show"
+tracks/0/type = "value"
+tracks/0/path = NodePath("Bottom/Energy:rect_position")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0, 1 ),
+"transitions": PoolRealArray( 1, 1 ),
+"update": 0,
+"values": [ Vector2( 0, 220 ), Vector2( 0, 0 ) ]
+}
+tracks/1/type = "value"
+tracks/1/path = NodePath("Bottom/Health:rect_position")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/keys = {
+"times": PoolRealArray( 0, 1 ),
+"transitions": PoolRealArray( 1, 1 ),
+"update": 0,
+"values": [ Vector2( 728, 220 ), Vector2( 728, 0 ) ]
+}
 
 [sub_resource type="RectangleShape2D" id=1]
 extents = Vector2( 100.673, 65.7447 )
@@ -22,13 +77,35 @@ font_data = ExtResource( 2 )
 [node name="YinYangUI" type="CanvasLayer"]
 script = ExtResource( 5 )
 
+[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
+playback_speed = 2.0
+anims/hide = SubResource( 3 )
+anims/show = SubResource( 4 )
+
 [node name="Tween" type="Tween" parent="."]
+
+[node name="Screen" type="Control" parent="."]
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+margin_left = -600.0
+margin_top = -337.5
+margin_right = 600.0
+margin_bottom = 337.5
+mouse_filter = 2
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="GameOver" parent="Screen" instance=ExtResource( 11 )]
 
 [node name="Bottom" type="Control" parent="."]
 anchor_right = 1.0
 anchor_bottom = 1.0
 margin_top = 400.0
 rect_min_size = Vector2( 0, 250 )
+mouse_filter = 2
 size_flags_horizontal = 3
 size_flags_vertical = 4
 __meta__ = {
@@ -55,8 +132,9 @@ size_flags_vertical = 3
 alignment = 1
 
 [node name="Left" type="MarginContainer" parent="Bottom/Action/Box"]
+margin_top = 220.0
 margin_right = 486.0
-margin_bottom = 220.0
+margin_bottom = 440.0
 mouse_filter = 2
 size_flags_horizontal = 3
 size_flags_vertical = 3
@@ -125,6 +203,9 @@ custom_constants/margin_right = 10
 custom_constants/margin_top = 10
 custom_constants/margin_left = 10
 custom_constants/margin_bottom = 10
+__meta__ = {
+"_edit_lock_": true
+}
 
 [node name="Control" type="Control" parent="Bottom/Action/Box/Center"]
 show_behind_parent = true
@@ -136,6 +217,9 @@ rect_min_size = Vector2( 200, 200 )
 mouse_filter = 2
 size_flags_horizontal = 4
 size_flags_vertical = 4
+__meta__ = {
+"_edit_lock_": true
+}
 
 [node name="Top" type="ReferenceRect" parent="Bottom/Action/Box/Center/Control"]
 show_behind_parent = true
@@ -146,6 +230,7 @@ mouse_filter = 2
 size_flags_horizontal = 0
 size_flags_vertical = 0
 __meta__ = {
+"_edit_lock_": true,
 "_edit_use_anchors_": false
 }
 
@@ -170,6 +255,7 @@ mouse_filter = 2
 size_flags_horizontal = 0
 size_flags_vertical = 0
 __meta__ = {
+"_edit_lock_": true,
 "_edit_use_anchors_": false
 }
 
@@ -201,22 +287,26 @@ size_flags_horizontal = 4
 size_flags_vertical = 4
 texture = ExtResource( 1 )
 __meta__ = {
+"_edit_lock_": true,
 "_edit_use_anchors_": false
 }
 
 [node name="Right" type="MarginContainer" parent="Bottom/Action/Box"]
 margin_left = 714.0
+margin_top = 220.0
 margin_right = 1200.0
-margin_bottom = 220.0
+margin_bottom = 440.0
+mouse_filter = 2
 size_flags_horizontal = 3
 size_flags_vertical = 3
 custom_constants/margin_left = 70
 
 [node name="Grid" type="GridContainer" parent="Bottom/Action/Box/Right"]
 margin_left = 70.0
-margin_right = 486.0
+margin_right = 485.0
 margin_bottom = 220.0
 rect_min_size = Vector2( 0, 220 )
+mouse_filter = 2
 size_flags_horizontal = 3
 size_flags_vertical = 3
 columns = 3
@@ -264,7 +354,9 @@ cost = 2
 anchor_left = 0.0
 anchor_right = 0.0
 margin_left = 0.0
+margin_top = 220.0
 margin_right = 472.0
+margin_bottom = 260.0
 filledTexture = ExtResource( 7 )
 emptyTexture = ExtResource( 8 )
 
@@ -272,7 +364,9 @@ emptyTexture = ExtResource( 8 )
 anchor_left = 1.0
 anchor_right = 1.0
 margin_left = -472.0
+margin_top = 220.0
 margin_right = 0.0
+margin_bottom = 260.0
 filledTexture = ExtResource( 3 )
 current_value = 10
 
@@ -294,11 +388,14 @@ anchor_right = 1.0
 anchor_bottom = 0.5
 margin_top = -22.5
 margin_bottom = 21.5
+mouse_filter = 2
 size_flags_horizontal = 3
 size_flags_vertical = 4
 __meta__ = {
 "_edit_use_anchors_": false
 }
+[connection signal="exit" from="Screen/GameOver" to="." method="_on_GameOver_exit"]
+[connection signal="play_again" from="Screen/GameOver" to="." method="_on_GameOver_play_again"]
 [connection signal="dropped_node" from="Bottom/Action/Box/Center/Control/Top/YinSlot" to="." method="_on_YinSlot_dropped_node"]
 [connection signal="removed_node" from="Bottom/Action/Box/Center/Control/Top/YinSlot" to="." method="_on_YinSlot_removed_node"]
 [connection signal="dropped_node" from="Bottom/Action/Box/Center/Control/Bottom/YangSlot" to="." method="_on_YangSlot_dropped_node"]
