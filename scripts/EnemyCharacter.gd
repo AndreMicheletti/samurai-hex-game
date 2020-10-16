@@ -4,29 +4,30 @@ enum AIMode {RANDOM, BALANCED, AGRESSIVE, DEFENSIVE}
 
 export(AIMode) var ai_mode = AIMode.RANDOM
 
+const random_moves = [
+	{ "atk": 2, "def": 1, "mov": 1, "spd": 1, "cost": 3 }, # balanced
+	{ "atk": 1, "def": 2, "mov": 1, "spd": 1, "cost": 3 }, # balanced 
+	{ "atk": 2, "def": 1, "mov": 2, "spd": 2, "cost": 4 }, # balanced 
+	{ "atk": 0, "def": 4, "mov": 1, "spd": 1, "cost": 4 }, # def
+	{ "atk": 3, "def": 0, "mov": 1, "spd": 1, "cost": 5 }, # atk
+]
+
 # Called when the node enters the scene tree for the first time.
 func _ready():
 	._ready()
 
 func choose_stats():
-	selected_stats = {
-		"atk": 2,
-		"def": 1,
-		"mov": 1,
-		"spd": 1,
-		"cost": 3
-	}
-#	match ai_mode:
-#		AIMode.RANDOM:
-#			randomize()
-#			select_card(randi() % hand.size())
-#		AIMode.BALANCED:
-#			randomize()
-#			select_card(randi() % hand.size())
-#		AIMode.AGGRESSIVE:
-#			pass
-#		AIMode.DEFENSIVE:
-#			pass
+	match ai_mode:
+		AIMode.RANDOM:
+			randomize()
+			selected_stats = random_moves[randi() % random_moves.size()]
+		AIMode.BALANCED:
+			randomize()
+			selected_stats = random_moves[randi() % random_moves.size()]
+		AIMode.AGGRESSIVE:
+			pass
+		AIMode.DEFENSIVE:
+			pass
 
 func play_turn():
 	print("ENEMY PLAY TURN!! ")

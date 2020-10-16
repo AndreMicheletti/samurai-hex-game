@@ -39,6 +39,7 @@ signal pressed_hex
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
+	HexGrid = preload("res://scripts/HexGrid.gd").new()
 	set_click_enabled(true)
 	init_world()
 	build_background()

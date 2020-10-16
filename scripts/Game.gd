@@ -19,6 +19,8 @@ signal changed_state
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
+	for node in get_children():
+		node.free()
 	create_players()
 	create_world()
 	init_ui()
@@ -123,12 +125,14 @@ func play_phase():
 		yield(turn_order[1], "turn_ended")
 		turn_order[1].active = false
 		
-		check_attack(turn_order, 1)
+		attacked = check_attack(turn_order, 0)
+		if attacked is GDScriptFunctionState:
+			attacked = yield(attacked, "completed")
 	else:
 		# SKIP SECOND ON TURN
 		turn_order[1].end_turn()
 	
-	yield(get_tree().create_timer(0.8), "timeout")
+	yield(get_tree().create_timer(0.5), "timeout")
 	# BACK TO CHOOSE PHASE
 	choose_phase()
 

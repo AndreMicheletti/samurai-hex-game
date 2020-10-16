@@ -84,5 +84,6 @@ func hide():
 		$Tween.start()
 
 func show():
-	$Tween.interpolate_property(self, "modulate",  Color("#00FFFFFF"),  Color("#FFFFFFFF"), 0.3)
-	$Tween.start()
+	if not selected:
+		$Tween.interpolate_property(self, "modulate",  Color("#00FFFFFF"),  Color("#FFFFFFFF"), 0.3)
+		$Tween.start()
