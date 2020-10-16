@@ -1,4 +1,4 @@
-extends Panel
+extends Control
 
 var card_resource
 
@@ -12,11 +12,11 @@ func _ready():
 
 func set_resource(card : CardResource):
 	card_resource = card
-	$Margin/VBox/Title/Label.text = str(card.title)
-	$Margin/VBox/Texts/Atk.text = "Atk " + str(card.atk)
-	$Margin/VBox/Texts/Def.text = "Def " + str(card.def)
-	$Margin/VBox/Texts/Mov.text = "Mov " + str(card.mov)
-	$Margin/VBox/Texts/Speed.text = "Spd " + str(card.speed)
+	$Modulate/Margin/Name.text = str(card.title)
+	$Modulate/Margin/Atk.text = str(card.atk)
+	$Modulate/Margin/Def.text = str(card.def)
+	$Modulate/Margin/Mov.text = str(card.mov)
+	$Modulate/Margin/Speed.text = str(card.speed)
 	$Special.emitting = card_resource.special
 
 func _on_Card_gui_input(event):
@@ -40,8 +40,9 @@ func flip():
 func set_flipped_back():
 	enabled = false
 	back = true
-	$backside.visible = true
-	$Margin.visible = false
+	# $Modulate/frontside.visible = false
+	$Modulate/backside.visible = true
+	$Modulate/Margin.visible = false
 	rect_scale = Vector2(-1, 1)
 	$Special.emitting = false
 
@@ -50,6 +51,6 @@ func play_choose():
 	yield($anim, "animation_finished")
 	
 func destroy():
-	$anim.play("destroy")
+	$anim.play("destroy_nice")
 	yield($anim, "animation_finished")
 	queue_free()

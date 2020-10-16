@@ -37,7 +37,7 @@ func create_players():
 	enemy.connect("character_defeated", self, "win_game")
 
 func create_world():
-	world = global.worldScene.instance()
+	world = load(global.worldScene).instance()
 	add_child(world)
 	world.spawn_players(player, enemy)
 	world.init_camera()
@@ -122,7 +122,9 @@ func play_phase():
 		yield(turn_order[1], "turn_ended")
 		turn_order[1].active = false
 		
-		check_attack(turn_order, 1)
+		var res = check_attack(turn_order, 1)
+		if res is GDScriptFunctionState:
+			yield(res, "completed")
 	else:
 		# SKIP SECOND ON TURN
 		turn_order[1].end_turn()
