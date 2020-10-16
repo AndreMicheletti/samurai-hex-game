@@ -351,15 +351,14 @@ columns = 3
 [node name="Yang" parent="Bottom/Action/Box/Right/Grid" instance=ExtResource( 4 )]
 targetName = "YangTarget"
 movement = 2
-speed = 3
-cost = 3
+speed = 2
+cost = 4
 
 [node name="Yang2" parent="Bottom/Action/Box/Right/Grid" instance=ExtResource( 4 )]
 margin_left = 138.0
 margin_right = 272.0
 targetName = "YangTarget"
-movement = 1
-speed = 4
+speed = 3
 cost = 3
 
 [node name="Yang3" parent="Bottom/Action/Box/Right/Grid" instance=ExtResource( 4 )]
@@ -367,7 +366,7 @@ margin_left = 276.0
 margin_right = 410.0
 targetName = "YangTarget"
 movement = 2
-speed = 2
+speed = 1
 cost = 2
 
 [node name="Yang4" parent="Bottom/Action/Box/Right/Grid" instance=ExtResource( 4 )]
@@ -384,8 +383,9 @@ margin_top = 91.0
 margin_right = 272.0
 margin_bottom = 178.0
 targetName = "YangTarget"
-speed = 3
-cost = 2
+movement = 1
+speed = 2
+cost = 3
 
 [node name="Energy" parent="Bottom" instance=ExtResource( 6 )]
 anchor_left = 0.0
