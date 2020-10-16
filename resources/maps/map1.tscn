@@ -1,0 +1,453 @@
+[gd_scene load_steps=10 format=2]
+
+[ext_resource path="res://scripts/Tile.gd" type="Script" id=1]
+[ext_resource path="res://scenes/world/tiles/FlamingBox.tscn" type="PackedScene" id=2]
+[ext_resource path="res://scenes/world/tiles/Wall.tscn" type="PackedScene" id=3]
+[ext_resource path="res://scenes/world/tiles/Sand.tscn" type="PackedScene" id=4]
+[ext_resource path="res://graphics/world/sand2.png" type="Texture" id=5]
+[ext_resource path="res://scripts/World.gd" type="Script" id=6]
+[ext_resource path="res://scripts/Camera.gd" type="Script" id=7]
+[ext_resource path="res://scenes/world/tiles/Box.tscn" type="PackedScene" id=8]
+[ext_resource path="res://graphics/world/sand1.png" type="Texture" id=9]
+
+[node name="World" type="Node2D"]
+script = ExtResource( 6 )
+debug = false
+generate = false
+night = true
+worldZero = Vector2( 0, 0 )
+world_size = 10.0
+playerStart = Vector2( 0, -2 )
+enemyStart = Vector2( 1, 2 )
+boxCount = 14
+obstacles_coords = [ Vector2( 2, -3 ), Vector2( -1, 3 ), Vector2( -1, 1 ), Vector2( 2, -1 ), Vector2( 2, 1 ), Vector2( -1, -1 ) ]
+
+[node name="Backgrounds" type="Node2D" parent="."]
+
+[node name="Tileset" type="Node2D" parent="."]
+
+[node name="Wall" type="Node2D" parent="Tileset" instance=ExtResource( 4 )]
+position = Vector2( 0, 29.4449 )
+script = ExtResource( 1 )
+passable = true
+hex_pos = Vector2( 0, -1 )
+textures_random = [ ExtResource( 9 ), ExtResource( 5 ) ]
+
+[node name="@Wall@7" type="Node2D" parent="Tileset" instance=ExtResource( 4 )]
+script = ExtResource( 1 )
+passable = true
+hex_pos = Vector2( 0, 0 )
+textures_random = [ ExtResource( 9 ), ExtResource( 5 ) ]
+
+[node name="@Wall@8" type="Node2D" parent="Tileset" instance=ExtResource( 4 )]
+position = Vector2( 0, -29.4449 )
+script = ExtResource( 1 )
+passable = true
+hex_pos = Vector2( 0, 1 )
+textures_random = [ ExtResource( 9 ), ExtResource( 5 ) ]
+
+[node name="@Wall@9" type="Node2D" parent="Tileset" instance=ExtResource( 4 )]
+position = Vector2( -25.5, -14.7224 )
+script = ExtResource( 1 )
+passable = true
+hex_pos = Vector2( -1, 1 )
+textures_random = [ ExtResource( 9 ), ExtResource( 5 ) ]
+
+[node name="@Wall@10" type="Node2D" parent="Tileset" instance=ExtResource( 4 )]
+position = Vector2( -25.5, 14.7224 )
+script = ExtResource( 1 )
+passable = true
+hex_pos = Vector2( -1, 0 )
+textures_random = [ ExtResource( 9 ), ExtResource( 5 ) ]
+
+[node name="@Wall@11" type="Node2D" parent="Tileset" instance=ExtResource( 4 )]
+position = Vector2( -25.5, 44.1673 )
+script = ExtResource( 1 )
+passable = true
+hex_pos = Vector2( -1, -1 )
+textures_random = [ ExtResource( 9 ), ExtResource( 5 ) ]
+
+[node name="@Wall@12" type="Node2D" parent="Tileset" instance=ExtResource( 4 )]
+position = Vector2( 25.5, 73.6122 )
+script = ExtResource( 1 )
+passable = true
+hex_pos = Vector2( 1, -3 )
+textures_random = [ ExtResource( 9 ), ExtResource( 5 ) ]
+
+[node name="@Wall@13" type="Node2D" parent="Tileset" instance=ExtResource( 4 )]
+position = Vector2( 51, 29.4449 )
+script = ExtResource( 1 )
+passable = true
+hex_pos = Vector2( 2, -2 )
+textures_random = [ ExtResource( 9 ), ExtResource( 5 ) ]
+
+[node name="@Wall@14" type="Node2D" parent="Tileset" instance=ExtResource( 4 )]
+position = Vector2( 25.5, 44.1673 )
+script = ExtResource( 1 )
+passable = true
+hex_pos = Vector2( 1, -2 )
+textures_random = [ ExtResource( 9 ), ExtResource( 5 ) ]
+
+[node name="@Wall@15" type="Node2D" parent="Tileset" instance=ExtResource( 4 )]
+position = Vector2( 0, 58.8897 )
+script = ExtResource( 1 )
+passable = true
+hex_pos = Vector2( 0, -2 )
+textures_random = [ ExtResource( 9 ), ExtResource( 5 ) ]
+
+[node name="@Wall@16" type="Node2D" parent="Tileset" instance=ExtResource( 4 )]
+position = Vector2( 51, 58.8897 )
+script = ExtResource( 1 )
+passable = true
+hex_pos = Vector2( 2, -3 )
+textures_random = [ ExtResource( 9 ), ExtResource( 5 ) ]
+
+[node name="@Wall@17" type="Node2D" parent="Tileset" instance=ExtResource( 4 )]
+position = Vector2( 25.5, 14.7224 )
+script = ExtResource( 1 )
+passable = true
+hex_pos = Vector2( 1, -1 )
+textures_random = [ ExtResource( 9 ), ExtResource( 5 ) ]
+
+[node name="@Wall@18" type="Node2D" parent="Tileset" instance=ExtResource( 4 )]
+position = Vector2( 51, -29.4449 )
+script = ExtResource( 1 )
+passable = true
+hex_pos = Vector2( 2, 0 )
+textures_random = [ ExtResource( 9 ), ExtResource( 5 ) ]
+
+[node name="@Wall@19" type="Node2D" parent="Tileset" instance=ExtResource( 4 )]
+position = Vector2( 25.5, -14.7224 )
+script = ExtResource( 1 )
+passable = true
+hex_pos = Vector2( 1, 0 )
+textures_random = [ ExtResource( 9 ), ExtResource( 5 ) ]
+
+[node name="@Wall@20" type="Node2D" parent="Tileset" instance=ExtResource( 4 )]
+position = Vector2( 76.5, -14.7224 )
+script = ExtResource( 1 )
+passable = true
+hex_pos = Vector2( 3, -1 )
+textures_random = [ ExtResource( 9 ), ExtResource( 5 ) ]
+
+[node name="@Wall@21" type="Node2D" parent="Tileset" instance=ExtResource( 4 )]
+position = Vector2( 25.5, -73.6122 )
+script = ExtResource( 1 )
+passable = true
+hex_pos = Vector2( 1, 2 )
+textures_random = [ ExtResource( 9 ), ExtResource( 5 ) ]
+
+[node name="@Wall@22" type="Node2D" parent="Tileset" instance=ExtResource( 4 )]
+position = Vector2( 51, -58.8897 )
+script = ExtResource( 1 )
+passable = true
+hex_pos = Vector2( 2, 1 )
+textures_random = [ ExtResource( 9 ), ExtResource( 5 ) ]
+
+[node name="@Wall@23" type="Node2D" parent="Tileset" instance=ExtResource( 4 )]
+position = Vector2( 25.5, -44.1673 )
+script = ExtResource( 1 )
+passable = true
+hex_pos = Vector2( 1, 1 )
+textures_random = [ ExtResource( 9 ), ExtResource( 5 ) ]
+
+[node name="@Wall@24" type="Node2D" parent="Tileset" instance=ExtResource( 4 )]
+position = Vector2( 0, -58.8897 )
+script = ExtResource( 1 )
+passable = true
+hex_pos = Vector2( 0, 2 )
+textures_random = [ ExtResource( 9 ), ExtResource( 5 ) ]
+
+[node name="@Wall@25" type="Node2D" parent="Tileset" instance=ExtResource( 4 )]
+position = Vector2( -25.5, -44.1673 )
+script = ExtResource( 1 )
+passable = true
+hex_pos = Vector2( -1, 2 )
+textures_random = [ ExtResource( 9 ), ExtResource( 5 ) ]
+
+[node name="@Wall@26" type="Node2D" parent="Tileset" instance=ExtResource( 4 )]
+position = Vector2( -51, -29.4449 )
+script = ExtResource( 1 )
+passable = true
+hex_pos = Vector2( -2, 2 )
+textures_random = [ ExtResource( 9 ), ExtResource( 5 ) ]
+
+[node name="@Wall@27" type="Node2D" parent="Tileset" instance=ExtResource( 4 )]
+position = Vector2( -51, 0 )
+script = ExtResource( 1 )
+passable = true
+hex_pos = Vector2( -2, 1 )
+textures_random = [ ExtResource( 9 ), ExtResource( 5 ) ]
+
+[node name="@Wall@28" type="Node2D" parent="Tileset" instance=ExtResource( 4 )]
+position = Vector2( -51, 29.4449 )
+script = ExtResource( 1 )
+passable = true
+hex_pos = Vector2( -2, 0 )
+textures_random = [ ExtResource( 9 ), ExtResource( 5 ) ]
+
+[node name="@Wall@30" type="Node2D" parent="Tileset" instance=ExtResource( 4 )]
+position = Vector2( -25.5, -73.6122 )
+script = ExtResource( 1 )
+passable = true
+hex_pos = Vector2( -1, 3 )
+textures_random = [ ExtResource( 9 ), ExtResource( 5 ) ]
+
+[node name="@Wall@31" type="Node2D" parent="Tileset" instance=ExtResource( 4 )]
+position = Vector2( 0, -88.3346 )
+script = ExtResource( 1 )
+passable = true
+hex_pos = Vector2( 0, 3 )
+textures_random = [ ExtResource( 9 ), ExtResource( 5 ) ]
+
+[node name="@Wall@32" type="Node2D" parent="Tileset" instance=ExtResource( 4 )]
+position = Vector2( 51, -88.3346 )
+script = ExtResource( 1 )
+passable = true
+hex_pos = Vector2( 2, 2 )
+textures_random = [ ExtResource( 9 ), ExtResource( 5 ) ]
+
+[node name="@Wall@33" type="Node2D" parent="Tileset" instance=ExtResource( 4 )]
+position = Vector2( -51, -58.8897 )
+script = ExtResource( 1 )
+passable = true
+hex_pos = Vector2( -2, 3 )
+textures_random = [ ExtResource( 9 ), ExtResource( 5 ) ]
+
+[node name="@Wall@34" type="Node2D" parent="Tileset" instance=ExtResource( 4 )]
+position = Vector2( -76.5, -14.7224 )
+script = ExtResource( 1 )
+passable = true
+hex_pos = Vector2( -3, 2 )
+textures_random = [ ExtResource( 9 ), ExtResource( 5 ) ]
+
+[node name="@Wall@35" type="Node2D" parent="Tileset" instance=ExtResource( 4 )]
+position = Vector2( 51, 0 )
+script = ExtResource( 1 )
+passable = true
+hex_pos = Vector2( 2, -1 )
+textures_random = [ ExtResource( 9 ), ExtResource( 5 ) ]
+
+[node name="@Wall@36" type="Node2D" parent="Tileset" instance=ExtResource( 3 )]
+position = Vector2( -102, -29.4449 )
+script = ExtResource( 1 )
+passable = false
+hex_pos = Vector2( -4, 3 )
+textures_random = [  ]
+
+[node name="@Wall@37" type="Node2D" parent="Tileset" instance=ExtResource( 3 )]
+position = Vector2( -102, 0 )
+script = ExtResource( 1 )
+passable = false
+hex_pos = Vector2( -4, 2 )
+textures_random = [  ]
+
+[node name="@Wall@38" type="Node2D" parent="Tileset" instance=ExtResource( 3 )]
+position = Vector2( -76.5, -44.1673 )
+script = ExtResource( 1 )
+passable = false
+hex_pos = Vector2( -3, 3 )
+textures_random = [  ]
+
+[node name="@Wall@39" type="Node2D" parent="Tileset" instance=ExtResource( 3 )]
+position = Vector2( -76.5, -73.6122 )
+script = ExtResource( 1 )
+passable = false
+hex_pos = Vector2( -3, 4 )
+textures_random = [  ]
+
+[node name="@Wall@40" type="Node2D" parent="Tileset" instance=ExtResource( 3 )]
+position = Vector2( -51, -88.3346 )
+script = ExtResource( 1 )
+passable = false
+hex_pos = Vector2( -2, 4 )
+textures_random = [  ]
+
+[node name="@Wall@41" type="Node2D" parent="Tileset" instance=ExtResource( 3 )]
+position = Vector2( -25.5, -103.057 )
+script = ExtResource( 1 )
+passable = false
+hex_pos = Vector2( -1, 4 )
+textures_random = [  ]
+
+[node name="@Wall@42" type="Node2D" parent="Tileset" instance=ExtResource( 3 )]
+position = Vector2( 0, -117.779 )
+script = ExtResource( 1 )
+passable = false
+hex_pos = Vector2( 0, 4 )
+textures_random = [  ]
+
+[node name="@Wall@43" type="Node2D" parent="Tileset" instance=ExtResource( 3 )]
+position = Vector2( 25.5, -103.057 )
+script = ExtResource( 1 )
+passable = false
+hex_pos = Vector2( 1, 3 )
+textures_random = [  ]
+
+[node name="@Wall@44" type="Node2D" parent="Tileset" instance=ExtResource( 3 )]
+position = Vector2( 51, -117.779 )
+script = ExtResource( 1 )
+passable = false
+hex_pos = Vector2( 2, 3 )
+textures_random = [  ]
+
+[node name="@Wall@45" type="Node2D" parent="Tileset" instance=ExtResource( 3 )]
+position = Vector2( 76.5, -103.057 )
+script = ExtResource( 1 )
+passable = false
+hex_pos = Vector2( 3, 2 )
+textures_random = [  ]
+
+[node name="@Wall@46" type="Node2D" parent="Tileset" instance=ExtResource( 3 )]
+position = Vector2( 76.5, -73.6122 )
+script = ExtResource( 1 )
+passable = false
+hex_pos = Vector2( 3, 1 )
+textures_random = [  ]
+
+[node name="@Wall@47" type="Node2D" parent="Tileset" instance=ExtResource( 3 )]
+position = Vector2( 102, -29.4449 )
+script = ExtResource( 1 )
+passable = false
+hex_pos = Vector2( 4, -1 )
+textures_random = [  ]
+
+[node name="@Wall@48" type="Node2D" parent="Tileset" instance=ExtResource( 3 )]
+position = Vector2( 76.5, -44.1673 )
+script = ExtResource( 1 )
+passable = false
+hex_pos = Vector2( 3, 0 )
+textures_random = [  ]
+
+[node name="@Wall@49" type="Node2D" parent="Tileset" instance=ExtResource( 3 )]
+position = Vector2( 102, 0 )
+script = ExtResource( 1 )
+passable = false
+hex_pos = Vector2( 4, -2 )
+textures_random = [  ]
+
+[node name="@Wall@50" type="Node2D" parent="Tileset" instance=ExtResource( 3 )]
+position = Vector2( 76.5, 14.7224 )
+script = ExtResource( 1 )
+passable = false
+hex_pos = Vector2( 3, -2 )
+textures_random = [  ]
+
+[node name="@Wall@51" type="Node2D" parent="Tileset" instance=ExtResource( 3 )]
+position = Vector2( 76.5, 44.1673 )
+script = ExtResource( 1 )
+passable = false
+hex_pos = Vector2( 3, -3 )
+textures_random = [  ]
+
+[node name="@Wall@52" type="Node2D" parent="Tileset" instance=ExtResource( 3 )]
+position = Vector2( 76.5, 73.6122 )
+script = ExtResource( 1 )
+passable = false
+hex_pos = Vector2( 3, -4 )
+textures_random = [  ]
+
+[node name="@Wall@53" type="Node2D" parent="Tileset" instance=ExtResource( 3 )]
+position = Vector2( 51, 88.3346 )
+script = ExtResource( 1 )
+passable = false
+hex_pos = Vector2( 2, -4 )
+textures_random = [  ]
+
+[node name="@Wall@54" type="Node2D" parent="Tileset" instance=ExtResource( 3 )]
+position = Vector2( 25.5, 103.057 )
+script = ExtResource( 1 )
+passable = false
+hex_pos = Vector2( 1, -4 )
+textures_random = [  ]
+
+[node name="@Wall@55" type="Node2D" parent="Tileset" instance=ExtResource( 3 )]
+position = Vector2( 0, 88.3346 )
+script = ExtResource( 1 )
+passable = false
+hex_pos = Vector2( 0, -3 )
+textures_random = [  ]
+
+[node name="@Wall@56" type="Node2D" parent="Tileset" instance=ExtResource( 3 )]
+position = Vector2( -25.5, 73.6122 )
+script = ExtResource( 1 )
+passable = false
+hex_pos = Vector2( -1, -2 )
+textures_random = [  ]
+
+[node name="@Wall@57" type="Node2D" parent="Tileset" instance=ExtResource( 3 )]
+position = Vector2( -51, 58.8897 )
+script = ExtResource( 1 )
+passable = false
+hex_pos = Vector2( -2, -1 )
+textures_random = [  ]
+
+[node name="@Wall@58" type="Node2D" parent="Tileset" instance=ExtResource( 3 )]
+position = Vector2( -76.5, 44.1673 )
+script = ExtResource( 1 )
+passable = false
+hex_pos = Vector2( -3, 0 )
+textures_random = [  ]
+
+[node name="@Wall@59" type="Node2D" parent="Tileset" instance=ExtResource( 3 )]
+position = Vector2( -76.5, 14.7224 )
+script = ExtResource( 1 )
+passable = false
+hex_pos = Vector2( -3, 1 )
+textures_random = [  ]
+
+[node name="@FlamingBox@61" type="Node2D" parent="Tileset" instance=ExtResource( 2 )]
+position = Vector2( 51, 58.8897 )
+script = ExtResource( 1 )
+passable = false
+hex_pos = Vector2( 2, -3 )
+textures_random = [  ]
+
+[node name="FlamingBox" type="Node2D" parent="Tileset" instance=ExtResource( 2 )]
+position = Vector2( -25.5, -73.6122 )
+script = ExtResource( 1 )
+passable = false
+hex_pos = Vector2( -1, 3 )
+textures_random = [  ]
+
+[node name="Box" type="Node2D" parent="Tileset" instance=ExtResource( 8 )]
+position = Vector2( -25.5, -14.7224 )
+script = ExtResource( 1 )
+passable = false
+hex_pos = Vector2( -1, 1 )
+textures_random = [  ]
+
+[node name="@Box@62" type="Node2D" parent="Tileset" instance=ExtResource( 8 )]
+position = Vector2( 51, 0 )
+script = ExtResource( 1 )
+passable = false
+hex_pos = Vector2( 2, -1 )
+textures_random = [  ]
+
+[node name="@Box@63" type="Node2D" parent="Tileset" instance=ExtResource( 8 )]
+position = Vector2( 51, -58.8897 )
+script = ExtResource( 1 )
+passable = false
+hex_pos = Vector2( 2, 1 )
+textures_random = [  ]
+
+[node name="@Box@64" type="Node2D" parent="Tileset" instance=ExtResource( 8 )]
+position = Vector2( -25.5, 44.1673 )
+script = ExtResource( 1 )
+passable = false
+hex_pos = Vector2( -1, -1 )
+textures_random = [  ]
+
+[node name="Highlights" type="Node2D" parent="."]
+
+[node name="Camera2D" type="Camera2D" parent="."]
+current = true
+zoom = Vector2( 0.5, 0.5 )
+script = ExtResource( 7 )
+
+[node name="Tween" type="Tween" parent="Camera2D"]
+
+[node name="Highlight" type="Polygon2D" parent="."]
+scale = Vector2( 0.7, 0.7 )
+color = Color( 0.160784, 0.34902, 1, 0.576471 )
+polygon = PoolVector2Array( -12.5, 21.6506, 12.5, 21.6506, 25, 0, 12.5, -21.6506, -12.5, -21.6506, -25, 0 )

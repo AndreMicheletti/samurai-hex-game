@@ -352,7 +352,7 @@ columns = 3
 targetName = "YangTarget"
 movement = 2
 speed = 2
-cost = 4
+cost = 3
 
 [node name="Yang2" parent="Bottom/Action/Box/Right/Grid" instance=ExtResource( 4 )]
 margin_left = 138.0

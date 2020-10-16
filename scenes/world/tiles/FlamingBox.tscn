@@ -42,6 +42,6 @@ color_ramp = SubResource( 2 )
 
 [node name="Light" type="Light2D" parent="."]
 texture = ExtResource( 4 )
-energy = 0.75
+energy = 0.65
 range_item_cull_mask = 7
 shadow_enabled = true
