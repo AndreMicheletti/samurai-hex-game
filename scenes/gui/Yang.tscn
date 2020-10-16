@@ -1,7 +1,7 @@
 [gd_scene load_steps=9 format=2]
 
 [ext_resource path="res://graphics/gui/yang.png" type="Texture" id=1]
-[ext_resource path="res://scripts/DragAndDrop.gd" type="Script" id=2]
+[ext_resource path="res://scripts/Yang.gd" type="Script" id=2]
 [ext_resource path="res://graphics/particles/flame_01.png" type="Texture" id=3]
 [ext_resource path="res://fonts/Talk_to_three_headed_monkey.ttf" type="DynamicFontData" id=6]
 
@@ -32,7 +32,6 @@ script = ExtResource( 2 )
 __meta__ = {
 "_edit_use_anchors_": false
 }
-targetName = "YangTarget"
 
 [node name="Texture" type="TextureRect" parent="."]
 anchor_right = 1.0

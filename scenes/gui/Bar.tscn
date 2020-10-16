@@ -1,0 +1,208 @@
+[gd_scene load_steps=4 format=2]
+
+[ext_resource path="res://scripts/Bar.gd" type="Script" id=1]
+[ext_resource path="res://graphics/gui/chakra.svg" type="Texture" id=2]
+[ext_resource path="res://graphics/gui/chakra_empty.svg" type="Texture" id=3]
+
+[node name="Energy" type="HBoxContainer"]
+anchor_left = 0.5
+anchor_right = 0.5
+margin_left = -236.0
+margin_right = 236.0
+margin_bottom = 40.0
+rect_min_size = Vector2( 0, 40 )
+custom_constants/separation = 8
+alignment = 1
+script = ExtResource( 1 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="0" type="ReferenceRect" parent="."]
+margin_right = 40.0
+margin_bottom = 40.0
+rect_min_size = Vector2( 40, 40 )
+
+[node name="Texture" type="TextureRect" parent="0"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+rect_min_size = Vector2( 22, 22 )
+size_flags_horizontal = 3
+size_flags_vertical = 3
+texture = ExtResource( 2 )
+expand = true
+stretch_mode = 6
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="1" type="ReferenceRect" parent="."]
+margin_left = 48.0
+margin_right = 88.0
+margin_bottom = 40.0
+rect_min_size = Vector2( 40, 40 )
+
+[node name="Texture" type="TextureRect" parent="1"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+rect_min_size = Vector2( 22, 22 )
+size_flags_horizontal = 3
+size_flags_vertical = 3
+texture = ExtResource( 2 )
+expand = true
+stretch_mode = 6
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="2" type="ReferenceRect" parent="."]
+margin_left = 96.0
+margin_right = 136.0
+margin_bottom = 40.0
+rect_min_size = Vector2( 40, 40 )
+
+[node name="Texture" type="TextureRect" parent="2"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+rect_min_size = Vector2( 22, 22 )
+size_flags_horizontal = 3
+size_flags_vertical = 3
+texture = ExtResource( 2 )
+expand = true
+stretch_mode = 6
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="3" type="ReferenceRect" parent="."]
+margin_left = 144.0
+margin_right = 184.0
+margin_bottom = 40.0
+rect_min_size = Vector2( 40, 40 )
+
+[node name="Texture" type="TextureRect" parent="3"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+rect_min_size = Vector2( 22, 22 )
+size_flags_horizontal = 3
+size_flags_vertical = 3
+texture = ExtResource( 2 )
+expand = true
+stretch_mode = 6
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="4" type="ReferenceRect" parent="."]
+margin_left = 192.0
+margin_right = 232.0
+margin_bottom = 40.0
+rect_min_size = Vector2( 40, 40 )
+
+[node name="Texture" type="TextureRect" parent="4"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+rect_min_size = Vector2( 22, 22 )
+size_flags_horizontal = 3
+size_flags_vertical = 3
+texture = ExtResource( 2 )
+expand = true
+stretch_mode = 6
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="5" type="ReferenceRect" parent="."]
+margin_left = 240.0
+margin_right = 280.0
+margin_bottom = 40.0
+rect_min_size = Vector2( 40, 40 )
+
+[node name="Texture" type="TextureRect" parent="5"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+rect_min_size = Vector2( 22, 22 )
+size_flags_horizontal = 3
+size_flags_vertical = 3
+texture = ExtResource( 3 )
+expand = true
+stretch_mode = 6
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="6" type="ReferenceRect" parent="."]
+margin_left = 288.0
+margin_right = 328.0
+margin_bottom = 40.0
+rect_min_size = Vector2( 40, 40 )
+
+[node name="Texture" type="TextureRect" parent="6"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+rect_min_size = Vector2( 22, 22 )
+size_flags_horizontal = 3
+size_flags_vertical = 3
+texture = ExtResource( 3 )
+expand = true
+stretch_mode = 6
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="7" type="ReferenceRect" parent="."]
+margin_left = 336.0
+margin_right = 376.0
+margin_bottom = 40.0
+rect_min_size = Vector2( 40, 40 )
+
+[node name="Texture" type="TextureRect" parent="7"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+rect_min_size = Vector2( 22, 22 )
+size_flags_horizontal = 3
+size_flags_vertical = 3
+texture = ExtResource( 3 )
+expand = true
+stretch_mode = 6
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="8" type="ReferenceRect" parent="."]
+margin_left = 384.0
+margin_right = 424.0
+margin_bottom = 40.0
+rect_min_size = Vector2( 40, 40 )
+
+[node name="Texture" type="TextureRect" parent="8"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+rect_min_size = Vector2( 22, 22 )
+size_flags_horizontal = 3
+size_flags_vertical = 3
+texture = ExtResource( 3 )
+expand = true
+stretch_mode = 6
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="9" type="ReferenceRect" parent="."]
+margin_left = 432.0
+margin_right = 472.0
+margin_bottom = 40.0
+rect_min_size = Vector2( 40, 40 )
+
+[node name="Texture" type="TextureRect" parent="9"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+rect_min_size = Vector2( 22, 22 )
+size_flags_horizontal = 3
+size_flags_vertical = 3
+texture = ExtResource( 3 )
+expand = true
+stretch_mode = 6
+__meta__ = {
+"_edit_use_anchors_": false
+}

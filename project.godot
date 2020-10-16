@@ -29,6 +29,11 @@ _global_script_classes=[ {
 "language": "GDScript",
 "path": "res://scripts/resources/DeckResource.gd"
 }, {
+"base": "Control",
+"class": "DragAndDrop",
+"language": "GDScript",
+"path": "res://scripts/DragAndDrop.gd"
+}, {
 "base": "Object",
 "class": "TileLoader",
 "language": "GDScript",
@@ -39,6 +44,7 @@ _global_script_class_icons={
 "Character": "",
 "ClassResource": "",
 "DeckResource": "",
+"DragAndDrop": "",
 "TileLoader": ""
 }
 
