@@ -97,13 +97,21 @@ func play_phase():
 	print("TURN ORDER ", turn_order)
 	
 	var first_char
+	var first_message
+	var second_message
 	if turn_order[0] == player:
 		first_char = "player"
+		first_message = "Your turn"
+		second_message = "Enemy turn"
 	else:
 		first_char = "enemy"
-
-	yield(game_ui.reveal_faster_card(first_char), 'completed')		
+		first_message = "Enemy turn"
+		second_message = "Your turn"
+	
+	yield(game_ui.reveal_faster_card(first_char), 'completed')
 	yield(game_ui.hide_cards(), "completed")
+	
+	yield(game_ui.show_message(first_message), "completed")
 	
 	# FIRST ON TURN
 	turn_order[0].active = true
@@ -116,6 +124,7 @@ func play_phase():
 		attacked = yield(attacked, "completed")
 	
 	if attacked == false:
+		yield(game_ui.show_message(second_message), "completed")
 		# SECOND ON TURN
 		turn_order[1].active = true
 		turn_order[1].play_turn()

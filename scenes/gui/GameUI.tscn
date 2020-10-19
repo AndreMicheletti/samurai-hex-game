@@ -1,36 +1,58 @@
-[gd_scene load_steps=11 format=2]
+[gd_scene load_steps=13 format=2]
 
 [ext_resource path="res://scenes/gui/TurnTimer.tscn" type="PackedScene" id=1]
 [ext_resource path="res://scripts/GameUI.gd" type="Script" id=2]
 [ext_resource path="res://scenes/gui/Deck.tscn" type="PackedScene" id=3]
 [ext_resource path="res://fonts/Talk_to_three_headed_monkey.ttf" type="DynamicFontData" id=4]
 
-[sub_resource type="DynamicFont" id=3]
+[sub_resource type="Animation" id=8]
+resource_name = "show_message"
+length = 4.0
+tracks/0/type = "value"
+tracks/0/path = NodePath("Screen/TurnMessage:rect_position")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0, 1, 3, 4 ),
+"transitions": PoolRealArray( 1, 1, 1, 1 ),
+"update": 0,
+"values": [ Vector2( 500, -60 ), Vector2( 500.5, 315.5 ), Vector2( 500.5, 315.5 ), Vector2( 500, -60 ) ]
+}
+
+[sub_resource type="DynamicFont" id=1]
 size = 20
 outline_color = Color( 0, 0, 0, 1 )
 font_data = ExtResource( 4 )
 
-[sub_resource type="DynamicFont" id=4]
+[sub_resource type="DynamicFont" id=2]
 size = 14
 outline_color = Color( 0, 0, 0, 1 )
 font_data = ExtResource( 4 )
 
-[sub_resource type="DynamicFont" id=5]
+[sub_resource type="DynamicFont" id=3]
 size = 12
+outline_color = Color( 0, 0, 0, 1 )
+font_data = ExtResource( 4 )
+
+[sub_resource type="DynamicFont" id=4]
+size = 12
+outline_color = Color( 0, 0, 0, 1 )
+font_data = ExtResource( 4 )
+
+[sub_resource type="DynamicFont" id=5]
+size = 32
+outline_size = 2
 outline_color = Color( 0, 0, 0, 1 )
 font_data = ExtResource( 4 )
 
 [sub_resource type="DynamicFont" id=6]
-size = 12
-outline_color = Color( 0, 0, 0, 1 )
-font_data = ExtResource( 4 )
-
-[sub_resource type="DynamicFont" id=1]
 size = 18
 outline_color = Color( 0, 0, 0, 1 )
 font_data = ExtResource( 4 )
 
-[sub_resource type="DynamicFont" id=2]
+[sub_resource type="DynamicFont" id=7]
 size = 18
 outline_color = Color( 0, 0, 0, 1 )
 font_data = ExtResource( 4 )
@@ -39,6 +61,10 @@ font_data = ExtResource( 4 )
 script = ExtResource( 2 )
 
 [node name="Tween" type="Tween" parent="."]
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
+playback_speed = 2.0
+anims/show_message = SubResource( 8 )
 
 [node name="Screen" type="Control" parent="."]
 anchor_right = 1.0
@@ -96,7 +122,7 @@ alignment = 1
 margin_top = 8.0
 margin_right = 416.0
 margin_bottom = 36.0
-custom_fonts/font = SubResource( 3 )
+custom_fonts/font = SubResource( 1 )
 text = "YOU WIN"
 align = 1
 
@@ -104,7 +130,7 @@ align = 1
 margin_top = 51.0
 margin_right = 416.0
 margin_bottom = 71.0
-custom_fonts/font = SubResource( 4 )
+custom_fonts/font = SubResource( 2 )
 text = "You are awesome"
 align = 1
 
@@ -133,15 +159,30 @@ alignment = 1
 margin_left = 68.0
 margin_right = 156.0
 margin_bottom = 52.0
-custom_fonts/font = SubResource( 5 )
+custom_fonts/font = SubResource( 3 )
 text = "Play Again"
 
 [node name="Exit" type="Button" parent="Screen/GameOver/VBox/Bottom/HBox"]
 margin_left = 181.0
 margin_right = 287.0
 margin_bottom = 52.0
-custom_fonts/font = SubResource( 6 )
+custom_fonts/font = SubResource( 4 )
 text = "Exit to menu"
+
+[node name="TurnMessage" type="Label" parent="Screen"]
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+margin_left = -100.0
+margin_top = -397.5
+margin_right = 99.0002
+margin_bottom = -353.5
+custom_fonts/font = SubResource( 5 )
+text = "Your turn"
+__meta__ = {
+"_edit_use_anchors_": false
+}
 
 [node name="Top" type="Control" parent="."]
 anchor_right = 1.0
@@ -212,7 +253,7 @@ margin_top = 10.0
 margin_right = 285.0
 margin_bottom = 34.0
 size_flags_horizontal = 3
-custom_fonts/font = SubResource( 1 )
+custom_fonts/font = SubResource( 6 )
 text = "Player"
 align = 1
 valign = 1
@@ -394,7 +435,7 @@ margin_top = 10.0
 margin_right = 285.0
 margin_bottom = 34.0
 size_flags_horizontal = 3
-custom_fonts/font = SubResource( 2 )
+custom_fonts/font = SubResource( 7 )
 text = "Player"
 align = 1
 valign = 1

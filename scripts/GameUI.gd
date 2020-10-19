@@ -165,6 +165,11 @@ func reveal_enemy_card():
 		yield(enemy_center_card.get_child(0).flip(), "completed")
 	yield(get_tree().create_timer(0.1), "timeout")
 
+func show_message(message):
+	$Screen/TurnMessage.text = message
+	$AnimationPlayer.play("show_message")
+	yield($AnimationPlayer, "animation_finished")
+
 func update_decks(_card_dealed):
 	player_deck.set_value(player.deck_count())
 	enemy_deck.set_value(enemy.deck_count())
