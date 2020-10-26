@@ -6,7 +6,7 @@
 script = ExtResource( 1 )
 id = 13
 title = "Enganar"
-mov = 2
+mov = 1
 atk = 2
 def = 3
 speed = 2

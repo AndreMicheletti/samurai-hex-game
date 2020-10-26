@@ -1,6 +1,6 @@
 extends Control
 
-const TIME = 5
+const TIME = 10
 
 onready var timer = $Timer
 onready var progress = $ProgressBar

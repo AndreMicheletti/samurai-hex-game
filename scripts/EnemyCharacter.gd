@@ -66,14 +66,26 @@ func move_random():
 	if adjc.size() <= 0:
 		print("NOWHERE TO MOVE")
 		return
-	# FIND VALID DESTINATION TO MOVE
-	adjc.shuffle()
-	var dest = adjc.pop_front()
-	while dest != null and world.is_obstacle(dest.get_axial_coords()):
-		dest = adjc.pop_front()
+	# FIND VALID DESTINATION CLOSEST TO PLAYER
+	var move_hex = null
+	for dest in adjc:
+		var pos = dest.get_axial_coords()
+		var adjacent = world.is_adjacent(pos, game.player.hex_pos)
+		var obstacle = world.is_obstacle(pos)
+		if adjacent and not obstacle:
+			move_hex = dest
+			break
+	# FIND VALID DESTINATION RANDOM
+	if move_hex == null:
+		move_hex = adjc.pop_front()
+		adjc.shuffle()
+		while move_hex != null and world.is_obstacle(move_hex.get_axial_coords()):
+			move_hex = adjc.pop_front()
 	# MOVE
-	if dest != null:
-		yield(move_to(dest.get_axial_coords()), "completed")
+	if move_hex != null:
+		yield(move_to(move_hex.get_axial_coords()), "completed")
+	else:
+		print(" ----******* OMG COMPLETE MOVEMENT CRASH RIGHT NOW!!!!!!!!!!")
 
 func follow_player():
 	yield(random_wait(), "completed")
@@ -88,10 +100,10 @@ func follow_player():
 		path.append(pos)
 
 	# move following path
-	var hex = path.pop_back()
-	if not hex:
+	if path.size() <= 0:
 		yield(move_random(), "completed")
 	else:
+		var hex = path.pop_back()
 		yield(move_to(hex), "completed")
 
 func end_turn():

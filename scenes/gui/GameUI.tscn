@@ -5,7 +5,7 @@
 [ext_resource path="res://scenes/gui/Deck.tscn" type="PackedScene" id=3]
 [ext_resource path="res://fonts/Talk_to_three_headed_monkey.ttf" type="DynamicFontData" id=4]
 
-[sub_resource type="Animation" id=8]
+[sub_resource type="Animation" id=1]
 resource_name = "show_message"
 length = 4.0
 tracks/0/type = "value"
@@ -21,18 +21,13 @@ tracks/0/keys = {
 "values": [ Vector2( 500, -60 ), Vector2( 500.5, 315.5 ), Vector2( 500.5, 315.5 ), Vector2( 500, -60 ) ]
 }
 
-[sub_resource type="DynamicFont" id=1]
+[sub_resource type="DynamicFont" id=2]
 size = 20
 outline_color = Color( 0, 0, 0, 1 )
 font_data = ExtResource( 4 )
 
-[sub_resource type="DynamicFont" id=2]
-size = 14
-outline_color = Color( 0, 0, 0, 1 )
-font_data = ExtResource( 4 )
-
 [sub_resource type="DynamicFont" id=3]
-size = 12
+size = 14
 outline_color = Color( 0, 0, 0, 1 )
 font_data = ExtResource( 4 )
 
@@ -42,17 +37,22 @@ outline_color = Color( 0, 0, 0, 1 )
 font_data = ExtResource( 4 )
 
 [sub_resource type="DynamicFont" id=5]
+size = 12
+outline_color = Color( 0, 0, 0, 1 )
+font_data = ExtResource( 4 )
+
+[sub_resource type="DynamicFont" id=6]
 size = 32
 outline_size = 2
 outline_color = Color( 0, 0, 0, 1 )
 font_data = ExtResource( 4 )
 
-[sub_resource type="DynamicFont" id=6]
+[sub_resource type="DynamicFont" id=7]
 size = 18
 outline_color = Color( 0, 0, 0, 1 )
 font_data = ExtResource( 4 )
 
-[sub_resource type="DynamicFont" id=7]
+[sub_resource type="DynamicFont" id=8]
 size = 18
 outline_color = Color( 0, 0, 0, 1 )
 font_data = ExtResource( 4 )
@@ -64,7 +64,7 @@ script = ExtResource( 2 )
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="."]
 playback_speed = 2.0
-anims/show_message = SubResource( 8 )
+anims/show_message = SubResource( 1 )
 
 [node name="Screen" type="Control" parent="."]
 anchor_right = 1.0
@@ -122,7 +122,7 @@ alignment = 1
 margin_top = 8.0
 margin_right = 416.0
 margin_bottom = 36.0
-custom_fonts/font = SubResource( 1 )
+custom_fonts/font = SubResource( 2 )
 text = "YOU WIN"
 align = 1
 
@@ -130,7 +130,7 @@ align = 1
 margin_top = 51.0
 margin_right = 416.0
 margin_bottom = 71.0
-custom_fonts/font = SubResource( 2 )
+custom_fonts/font = SubResource( 3 )
 text = "You are awesome"
 align = 1
 
@@ -159,14 +159,14 @@ alignment = 1
 margin_left = 68.0
 margin_right = 156.0
 margin_bottom = 52.0
-custom_fonts/font = SubResource( 3 )
+custom_fonts/font = SubResource( 4 )
 text = "Play Again"
 
 [node name="Exit" type="Button" parent="Screen/GameOver/VBox/Bottom/HBox"]
 margin_left = 181.0
 margin_right = 287.0
 margin_bottom = 52.0
-custom_fonts/font = SubResource( 4 )
+custom_fonts/font = SubResource( 5 )
 text = "Exit to menu"
 
 [node name="TurnMessage" type="Label" parent="Screen"]
@@ -178,7 +178,7 @@ margin_left = -100.0
 margin_top = -397.5
 margin_right = 99.0002
 margin_bottom = -353.5
-custom_fonts/font = SubResource( 5 )
+custom_fonts/font = SubResource( 6 )
 text = "Your turn"
 __meta__ = {
 "_edit_use_anchors_": false
@@ -253,7 +253,7 @@ margin_top = 10.0
 margin_right = 285.0
 margin_bottom = 34.0
 size_flags_horizontal = 3
-custom_fonts/font = SubResource( 6 )
+custom_fonts/font = SubResource( 7 )
 text = "Player"
 align = 1
 valign = 1
@@ -435,7 +435,7 @@ margin_top = 10.0
 margin_right = 285.0
 margin_bottom = 34.0
 size_flags_horizontal = 3
-custom_fonts/font = SubResource( 7 )
+custom_fonts/font = SubResource( 8 )
 text = "Player"
 align = 1
 valign = 1

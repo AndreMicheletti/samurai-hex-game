@@ -156,6 +156,14 @@ func is_obstacle(hex_pos : Vector2):
 		return true
 	return false
 
+func is_adjacent(hex_a : Vector2, hex_b : Vector2):
+	var cell = HexCell.new(hex_a)
+	var adjacent_hexes = cell.get_all_adjacent()
+	for hex in adjacent_hexes:
+		if hex.get_axial_coords() == hex_b:
+			return true
+	return false
+
 func set_click_enabled(value):
 	print("SET WORLD CLICK ENABLED TO ", value)
 	set_process_input(value)

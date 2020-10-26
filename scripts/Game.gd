@@ -2,6 +2,8 @@ extends Node2D
 
 enum Phase {DRAW, CHOOSE, PLAY, GAMEOVER}
 
+export(bool) var TIMER_ENABLED = false
+
 var player_scene = preload("res://scenes/characters/Player.tscn")
 var enemy_scene = preload("res://scenes/characters/Enemy.tscn")
 
@@ -82,7 +84,8 @@ func choose_phase():
 	state = Phase.CHOOSE
 	emit_signal("changed_state", Phase.CHOOSE)
 	enemy.choose_card()
-	game_ui.turn_time.start()
+	if TIMER_ENABLED:
+		game_ui.turn_time.start()
 
 func play_phase():
 	if state != Phase.CHOOSE or state == Phase.GAMEOVER:
@@ -149,14 +152,7 @@ func check_attack(turn_order, index):
 	if attacker.selected_card.atk <= 0:
 		return false
 	
-	var is_adjacent = false
-	var adjacent_hexes = attacker.get_cell().get_all_adjacent()
-	for hex in adjacent_hexes:
-		var pos = hex.get_axial_coords()
-		if pos == defensor.hex_pos:
-			is_adjacent = true
-			break
-
+	var is_adjacent = world.is_adjacent(attacker.hex_pos, defensor.hex_pos)
 	if not is_adjacent:
 		return false
 
